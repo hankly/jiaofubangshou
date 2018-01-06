@@ -184,12 +184,14 @@ padding-top: 5px;
   }
   var tongji=function(id){
     $api.get('http://api.uminfo.cn/app.php/tongji?lorry_id='+id,function(ret){
+if(ret.result==0){
       if(ret.count==0){
         $api.css($api.dom('#tongji'),'display:none');
       }else{
         $api.css($api.dom('#tongji'),'display:block');
         $api.text($api.dom('#tongji'),ret.count);
       }
+    }
    },'json');
   }
 </script>

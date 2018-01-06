@@ -214,20 +214,22 @@
 
 					});
 })
+
 		$api.addEvt($api.dom('#foot'), 'click', function() {
 
 if(id_z&&id_f){
+	api.showProgress({
+			title: '上传中...',
+			text: '先喝杯茶...',
+			modal: true
+		 });
 	$api.post(url+'app.php/addlorry5',{
 				body:{id_pic5:id_z,
 							id_pic6:id_f,
 							lorryid:lorryid,
 						  type:type,}
 			 },function(ret){
-				 api.showProgress({
-	           title: '上传中...',
-	           text: '先喝杯茶...',
-	           modal: true
-	          });
+
 				if(ret.result==0){
 					api.hideProgress();
 					api.toast({

@@ -123,7 +123,7 @@
 				text-align: center;
 			}
 
-			#carlong,#plate_number,#carweight,#cartype {
+			#carlong,#carweight,#cartype {
 				width:60%;
 				height: 32px;
 				line-height: 32px;
@@ -168,6 +168,39 @@
 			select {
        padding: 0 0 0 30px;
       }
+			.province{
+				width:20%;
+				height: 32px;
+				line-height: 32px;
+				font-size: 18px;
+				border-bottom: 1px solid #f16c3c;
+				outline-style: none;
+				border-top: none;
+				border-left: none;
+				border-right: none;
+				display: inline-block;
+				float: left;
+				text-align: center;
+				 padding: 0 0 0 5px;
+			}
+			#plate_number{
+				width:38%;
+				height: 31px;
+				line-height: 31px;
+				font-size: 18px;
+				border-bottom: 1px solid #f16c3c;
+				outline-style: none;
+				border-top: none;
+				border-left: none;
+				border-right: none;
+				display: inline-block;
+				float: left;
+				text-align: center;
+				padding: 0 0 0 5px;
+			}
+			input {
+				-webkit-appearance:none;
+			}
 		</style>
 	</head>
 
@@ -187,7 +220,45 @@
 				<div class="cbox2">
 					<div class="ctitle">信息</div>
 					<div class="ctext">
-						<div class="cname2">车牌</div><input id="plate_number" type="text"></div>
+						<div class="cname2">车牌</div>
+						<select class="province" id='province'>
+							<option value="">省份</option>
+							<option value="京">京</option>
+							<option value="津">津</option>
+							<option value="冀">冀</option>
+							<option value="晋">晋</option>
+							<option value="蒙">蒙</option>
+							<option value="辽">辽</option>
+							<option value="吉">吉</option>
+							<option value="黑">黑</option>
+							<option value="沪">沪</option>
+							<option value="苏">苏</option>
+							<option value="浙">浙</option>
+							<option value="皖">皖</option>
+							<option value="闽">闽</option>
+							<option value="赣">赣</option>
+							<option value="鲁">鲁</option>
+							<option value="豫">豫</option>
+							<option value="鄂">鄂</option>
+							<option value="湘">湘</option>
+							<option value="粤">粤</option>
+							<option value="桂">桂</option>
+							<option value="琼">琼</option>
+							<option value="川">川</option>
+							<option value="贵">贵</option>
+							<option value="云">云</option>
+							<option value="渝">渝</option>
+							<option value="藏">藏</option>
+							<option value="陕">陕</option>
+							<option value="甘">甘</option>
+							<option value="青">青</option>
+							<option value="宁">宁</option>
+							<option value="新">新</option>
+							<option value="港">港</option>
+							<option value="澳">澳</option>
+							<option value="台">台</option>
+						</select>
+						<input type="text" id="plate_number"/></div>
 					<div class="ctext">
 						<div class="cname2">车长</div>
 						           <select name="carlong" id="carlong" >
@@ -284,11 +355,18 @@
 							});
 						}
 						if($api.cssVal($api.dom('.cbox2'),'display')!='none'){
-							var plate_number=$api.val($api.dom('#plate_number'));
+							var province=$api.val($api.dom('#province'));
+							var plate_number=province+''+$api.val($api.dom('#plate_number'));
 							var carlong=$api.val($api.dom('#carlong'));
 							var cartype=$api.val($api.dom('#cartype'));
 							var cweight=$api.val($api.dom('#carweight'));
-											if(!(/^[冀豫云辽黑湘皖鲁苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼渝京津沪新京军空海北沈兰济南广成使领A-Z]{1}[a-zA-Z0-9]{5}[a-zA-Z0-9挂学警港澳]{1}$/.test(plate_number))){
+							if(province.length==0){
+								api.toast({
+									 msg: '车牌省份不为空',
+									 duration: 1000,
+									location: 'middle'
+								});
+							}else if(!(/^[冀豫云辽黑湘皖鲁苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼渝京津沪新京军空海北沈兰济南广成使领A-Z]{1}[a-zA-Z0-9]{5}[a-zA-Z0-9挂学警港澳]{1}$/.test(plate_number))){
 												api.toast({
 													 msg: '车牌格式有误',
 													 duration: 1000,

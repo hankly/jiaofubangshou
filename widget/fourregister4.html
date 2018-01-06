@@ -73,12 +73,12 @@
 			font-size: 20px;
 			border-radius: 10px;
 		}
-		/*.img_j_z,.img_j_f,.img_x_z,.img_x_f{
+		.img_j_z,.img_j_f,.img_x_z,.img_x_f{
 			-ms-transform:rotate(90deg);
 -moz-transform:rotate(90deg);
 -webkit-transform:rotate(90deg);
 -o-transform:rotate(90deg);
-		}*/
+		}
 
 	</style>
 </head>
@@ -495,6 +495,11 @@
 			// alert(j_f)
 
 if(j_z&&j_f&&x_z&&x_f){
+	api.showProgress({
+			title: '上传中...',
+			text: '先喝杯茶...',
+			modal: true
+		 });
 	$api.post(url+'app.php/addlorry3',{
 				body:{pic1:j_z,
 								 pic2:j_f,
@@ -503,11 +508,7 @@ if(j_z&&j_f&&x_z&&x_f){
 								lorryid:lorryid,
 							  type:type,}
 			 },function(ret){
-				 api.showProgress({
-	title: '上传中...',
-	text: '先喝杯茶...',
-	modal: true
-	});
+
 				if(ret.result==0){
 					api.hideProgress();
 					// alert("成功")

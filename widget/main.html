@@ -80,7 +80,7 @@
 
       setInterval('check('+lorryid+','+time+')',3000);
       upload_map(lorryid);
-      setInterval("upload_map("+lorryid+")",3000);
+      setInterval("upload_map("+lorryid+")",10800000);
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
