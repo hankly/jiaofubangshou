@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<title></title>
+		<script type="text/javascript" src="../script/config.js"></script>
+		<style>
+				* {
+				margin: 0 auto;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			/*html,
+			body {
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+				margin: 0;
+				padding: 0;
+			}*/
+			.box{
+				height:90%;
+				width:90%;
+				margin-left:5%;
+				margin-top:5%;
+				/*background-color:rgb(238,238,238);*/
+				border-radius: 10px;
+				background-color:white;
+				border:1px solid grey;
+				background-color: #EEEEEE;
+				color:#333333;
+			}
+		  .ltop{
+		  	width:110px;
+		  	height:110px;
+		  	border-radius: 50%;
+		  	float:left;
+		  	background: url(img/rhead.png);
+		  	background-size: 110px,110px;
+		  	text-align: center;
+		  	border:solid;
+		  	margin-top:10px;
+		  }
+		  .rtop{
+		  	width:65%;
+		  	height:220px;
+		  	float:left;
+		  }
+		  .ltop img{
+		  	width:120px;
+		  	height:120px;
+		  	border-radius: 50%;
+		  	margin-top:20px;
+		  }
+		  .rtop1{
+		  	width:92%;
+		  	height:40px;
+		  	margin-left:8%;
+		  	line-height:40px;
+		  	text-align:left;
+		  	color:rgb(51,51,51);
+		  }
+		  #name{
+		  	width:60%;
+		  	height:40px;
+		  	line-height:40px;
+		  	float:left;
+		  }
+		  #sex{
+		  	width:40%;
+		  	height:40px;
+		  	line-height:40px;
+		    float:left;
+		  }
+		  #center{
+		  	width:90%;
+		  	height:200px;
+		  	margin-left:5%;
+		  }
+		  #ctext{
+		  		width:90%;
+		  		margin-left:5%;
+		  		height:200px;
+		  		border-radius:10px;
+					outline-style: none;
+		  }
+		  #topt{
+		  	width:96px;
+		  	height:30px;
+		  	margin-top:70px;
+		  	line-height:30px;
+		  	background:rgba(0,0,0,0.5);
+		  	border-bottom-left-radius: 110px;
+		    border-bottom-right-radius: 110px;
+		  	color:white;
+		  }
+			select{
+				border:none;
+				list-style: none;
+				outline-style: none;
+				border: none;
+				background: none;
+			-webkit-appearance: none;
+			font-size:18px;
+			color:black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+      <div class="ltop" id="ltop"><div id="topt">上传头像</div></div>
+			<div class="rtop">
+			<div class="rtop1"><div id="name">姓名：</div></div>
+			<div class="rtop1" id="tel">电话：</div>
+			<div class="rtop1" id="plate">车牌：</div>
+			<div class="rtop1" id="type">车型：<select value="" class="vehicle_z" id="vehicle_t"></select></div>
+			<div class="rtop1" id="long">车长：<select value="" class="vehicle_z" id="vehicle_c"></select>m</div>
+			</div>
+			<div class="center">
+				<textarea id="ctext" placeholder="请介绍自己常跑的路线">
+				</textarea>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      var telephone=user.telephone;
+      var time=user.time;
+      // alert(user.lorryid)
+			$api.attr($api.dom('#vehicle_t'),'disabled','true');
+			$api.attr($api.dom('#vehicle_c'),'disabled','true');
+
+
+			$api.post(url+'app.php/persoonmessage',{
+						body:{lorryid:lorryid,}
+					 },function(ret){
+						if(ret.result==0){
+							api.toast({
+								 msg: '成功',
+								 duration: 1000,
+								location: 'middle'
+							});
+							// alert(ret.lorry.type)
+							// alert(ret.lorry.length)
+              $api.text($api.dom('#name'),'姓名：'+ret.lorry.name);
+							$api.text($api.dom('#tel'),'电话：'+ret.lorry.phone);
+							$api.text($api.dom('#plate'),'车牌：'+ret.lorry.plate_number);
+							var typ=ret.lorry.type;
+							var len=ret.lorry.length;
+							$api.get(url+'app.php/lorry_type',function(ret){
+										if(ret.result==0){
+											for(var i=0;i<ret.lorry_type.length;i++){
+												 $api.append($api.dom('#vehicle_t'),'<option value="'+ret.lorry_type[i].lorry_type_id+'" id="ve_size'+ret.lorry_type[i].lorry_type_id+'">'+ret.lorry_type[i].lorry_type_name+'</option>');
+                        $api.attr($api.dom('#ve_size'+typ),'selected','selected');
+											}
+										 }
+									 },'json');
+							$api.get(url+'app.php/lorry_long',function(ret){
+												 if(ret.result==0){
+													 for(var i=0;i<ret.vehiche_long.length;i++){
+															 $api.append($api.dom('#vehicle_c'),'<option value="'+ret.vehiche_long[i].lorry_length_id+'" id="ve_long'+ret.vehiche_long[i].lorry_length_id+'">'+ret.vehiche_long[i].lorry_length+'</option>');
+                           $api.attr($api.dom('#ve_long'+len),'selected','selected');
+													 }
+													}
+												},'json');
+							// $api.attr($api.dom('#ve_long'+ret.lorry.length),'selected','selected');
+							// $api.attr($api.dom('#ve_size'+ret.lorry.type),'selected','selected');
+							if(ret.lorry.route==null){
+                  $api.val($api.dom('#ctext'),'暂无经营范围');
+							}else{
+								$api.val($api.dom('#ctext'),ret.lorry.route);
+							}
+							$api.css($api.dom('#ltop'),'background:url('+ret.lorry.head_img+')');
+							// $api.css($api.dom('#ltop'),'background-image:url(../image/head.png)');
+						 }else{
+							 alert(ret.desc);
+						 }
+					 });
+             var ltop;
+					 $api.addEvt($api.dom("#topt"), 'click', function(){
+						 api.actionSheet({
+								title: '请选择',
+								cancelTitle: '取消',
+								// destructiveTitle: '红色警告按钮',
+								buttons: ['相册','相机']
+						},function(ret,err){
+							if(ret.buttonIndex==1){
+								api.getPicture({
+									sourceType: 'album',
+									encodingType: 'jpg',
+									mediaValue: 'pic',
+									destinationType: 'base64',
+									allowEdit: true,
+									quality: 100,
+									targetWidth: 300,
+									targetHeight: 150,
+									saveToPhotoAlbum: false
+								}, function(ret, err) {
+									if (ret) {
+										if(ret.base64Data){
+											$api.css($api.dom("#ltop"),"background-image:url("+ret.base64Data+")");
+											ltop=ret.base64Data;
+											var intro=$api.val($api.dom('#ctext'));
+											$api.post(url+'app.php/uphead',{
+														body:{lorryid:lorryid,
+																	pic1:ltop,
+																	introduction:intro,}
+													 },function(ret){
+														if(ret.result==0){
+															api.toast({
+																 msg: '成功',
+																 duration: 1000,
+																location: 'middle'
+															});
+														 }else{
+															 alert(ret.desc);
+														 }
+													 });
+										}
+									} else {
+										alert(JSON.stringify(err));
+									}
+								});
+							}else if(ret.buttonIndex==2){
+								api.getPicture({
+									sourceType: 'camera',
+									encodingType: 'jpg',
+									mediaValue: 'pic',
+									destinationType: 'base64',
+									allowEdit: true,
+									quality: 100,
+									targetWidth: 300,
+									targetHeight: 150,
+									saveToPhotoAlbum: false
+								}, function(ret, err) {
+									if (ret) {
+										$api.css($api.dom("#ltop"),"background-image:url("+ret.base64Data+")");
+										ltop=ret.base64Data;
+										var intro=$api.val($api.dom('#ctext'));
+										$api.post(url+'app.php/uphead',{
+													body:{lorryid:lorryid,
+																pic1:ltop,
+																introduction:intro,}
+												 },function(ret){
+													if(ret.result==0){
+														api.toast({
+															 msg: '成功',
+															 duration: 1000,
+															location: 'middle'
+														});
+													 }else{
+														 alert(ret.desc);
+													 }
+												 });
+									} else {
+										alert(JSON.stringify(err));
+									}
+								});
+							}
+						})
+					 });
+                  };
+
+
+
+</script>

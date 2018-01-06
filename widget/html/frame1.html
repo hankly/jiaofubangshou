@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<script type="text/javascript" src="../script/config.js"></script>
+		<style>
+			body{
+				background-color:rgb(238,238,238);
+			}
+			.body_a{
+				padding:1rem;
+				background-color:white;
+			}
+			.body_type{
+				height:35px;
+				font-size:16px;
+				margin:0.2rem;
+				line-height:35px;
+				border-bottom:1px solid rgb(238,238,238);
+			}
+			.vehicle_z{
+				color:#f16c3c;
+				margin-left:20%;
+			}
+			.driving_license{
+				margin-top:10px;
+				background-color:white;
+			}
+			.driving_license_a{
+				padding-top:10px;
+				margin-left:7.5%;
+			}
+
+			.driver_image_a,.driver_image_b{
+				width:30%;
+				margin-left:7.5%;
+				margin-right:7.5%;
+				border-radius:10px;
+				margin-top:1rem;
+				margin-bottom:1rem;
+				height:70px;
+			}
+			.foot_sure{
+				margin-top:10px;
+				background-color:white;
+				padding:30px;
+			}
+			.sure_change,.sure_upl{
+				margin:0 auto;
+				width:50%;
+				height:35px;
+				border-radius:10px;
+				background-color:#f16c3c;
+				text-align:center;
+				line-height:35px;
+				color:white;
+			}
+      input{
+        color:#f16c3c;
+				margin-left:20%;
+        width:45%;
+        border:none;
+        list-style: none;
+        outline-style: none;
+        border: none;
+        background: none;
+        display: inline-block;
+        font-size:18px;
+      }
+			select{
+				border:none;
+				list-style: none;
+				outline-style: none;
+				border: none;
+				background: none;
+			-webkit-appearance: none;
+			font-size:18px;
+			}
+			.img_id_z,.img_id_f{
+				-ms-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+			}
+			.vehicle_c{
+				color:#f16c3c;
+				margin-left:25%;
+			}
+			.vehicle_w{
+				color:#f16c3c;
+				margin-left:15%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="body_a">
+		<div class="body_type">车辆类别<select value="" class="vehicle_w" id="vehicle_z"><option value="0" id="yunshu_a">运输车辆</option><option value="1" id="yunshu_b">派送车辆</option></select></div>
+		<div class="body_type">车牌号<input type="text" value="苏F123456" class="vehicle_z" id="vehicle_p"/></div>
+		<div class="body_type">车长<select value="" class="vehicle_c" id="vehicle_c"></select><span>m</span></div>
+		<div class="body_type" id="body_type3">车型<select value="" class="vehicle_c" id="vehicle_t"></select></div>
+		<div class="body_type" id="body_type4">载重<select value="" class="vehicle_c" id="vehicle_w"></select><span>吨</span></div>
+		</div>
+		<div class="driving_license">
+			<div class="driving_license_a">行驶证</div>
+			<div class="driving_license_b">
+				<img src="../image/id_card_z.png" class="driver_image_a" id="driver_image_a" onclick="openimg(this)"/>
+				<img src="../image/id_card_f.png" class="driver_image_b" id="driver_image_b" onclick="openimg(this)"/>
+			</div>
+		</div>
+		<!-- <div class="foot_sure" id="foot_change">
+			<div class="sure_change">申请修改</div>
+		</div> -->
+
+	</body>
+  <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../script/swipe.js"></script>
+  <script type="text/javascript" src="../script/api.js"></script>
+      <script type="text/javascript">
+			 var x_z,x_f;
+      apiready = function(){
+
+				  var user = $api.getStorage('user');
+					var lorryid=user.lorryid;
+					if(user.flag==1){
+            $api.html($api.dom('body'),'<div>您是派送员</div><div class="foot_sure" id="foot_up"><div class="sure_upl">升级运输车司机</div></div>')
+					}
+					$api.addEvt($api.dom('#foot_up'), 'click',function(){
+						api.openWin({
+							name: 'threeregister3',
+							url:  '../threeregister3.html',
+							pageParam: {
+							lorryid: lorryid,
+						 }
+						});
+					});
+
+				api.addEventListener({
+															name:'viewappear'
+													}, function(ret, err){
+														 api.setScreenOrientation({
+															orientation: 'portrait_up'
+													});
+													});
+
+        $api.attr($api.dom('#vehicle_z'),'disabled','true');
+        $api.attr($api.dom('#vehicle_c'),'disabled','true');
+        $api.attr($api.dom('#vehicle_t'),'disabled','true');
+        $api.attr($api.dom('#vehicle_p'),'disabled','true');
+				$api.attr($api.dom('#vehicle_w'),'disabled','true');
+				$api.attr($api.dom('#driver_image_a'),'disabled','true');
+        $api.attr($api.dom('#driver_image_b'),'disabled','true');
+
+
+        $api.post(url+'app.php/persoonmessage',{
+              body:{lorryid:lorryid,}
+             },function(ret){
+
+              if(ret.result==0){
+                // alert("成功");
+                if(ret.lorry.flag==0){
+                $api.attr($api.dom('#yunshu_a'),'selected','selected');
+                }else{
+                  $api.attr($api.dom('#yunshu_b'),'selected','selected');
+                }
+                // $api.val($api.dom('#vehicle_z'),type);
+								// $api.attr($api.dom('#ve_long'+ret.lorry.length),'selected','selected');
+								// $api.attr($api.dom('#ve_weight'+ret.lorry.deadweight),'selected','selected');
+								// $api.attr($api.dom('#ve_size'+ret.lorry.type),'selected','selected');
+								var len=ret.lorry.length;
+								var dweight=ret.lorry.deadweight;
+								var typ=ret.lorry.type;
+								$api.val($api.dom('#vehicle_p'),ret.lorry.plate_number);
+								$api.attr($api.dom('#driver_image_a'),'src',ret.lorry.driving_license_fp);
+								$api.attr($api.dom('#driver_image_b'),'src',ret.lorry.driving_license_tp);
+								// $api.attr($api.dom('#driver_image_a'), 'onclick','seepicture($api.attr($api.dom("#driver_image_a"),"src"))');
+								// $api.attr($api.dom('#driver_image_b'), 'onclick','seepicture($api.attr($api.dom("#driver_image_b"),"src"))');
+								// var driving_a=ret.lorry.driving_license_fp.split('/');
+								// api.download({
+                //     url: ret.lorry.driving_license_fp,
+                //     savePath: 'fs://'+driving_a[3]+''+driving_a[5],
+                //     report: true,
+                //     cache: true,
+                //     allowResume: true
+                //   }, function(ret, err) {
+                //   });
+								// 	var driving_b=ret.lorry.driving_license_tp.split('/');
+								// 	api.download({
+								// 			url: ret.lorry.driving_license_tp,
+								// 			savePath: 'fs://'+driving_b[3]+''+driving_b[5],
+								// 			report: true,
+								// 			cache: true,
+								// 			allowResume: true
+								// 		}, function(ret, err) {
+								// 		});
+								// 		api.download({
+								// 				url: 'http://files.uminfo.cn:8000/lorry/close.png',
+								// 				savePath: 'fs://2018close1.png',
+								// 				report: true,
+								// 				cache: true,
+								// 				allowResume: true
+								// 			}, function(ret, err) {
+								// 			});
+								$api.get(url+'app.php/lorry_type',function(ret){
+											if(ret.result==0){
+												for(var i=0;i<ret.lorry_type.length;i++){
+													 $api.append($api.dom('#vehicle_t'),'<option value="'+ret.lorry_type[i].lorry_type_id+'" id="ve_size'+ret.lorry_type[i].lorry_type_id+'">'+ret.lorry_type[i].lorry_type_name+'</option>');
+
+					 								$api.attr($api.dom('#ve_size'+typ),'selected','selected');
+												}
+											 }
+										 },'json');
+										 $api.get(url+'app.php/lorry_long',function(ret){
+													 if(ret.result==0){
+														 for(var i=0;i<ret.vehiche_long.length;i++){
+																 $api.append($api.dom('#vehicle_c'),'<option value="'+ret.vehiche_long[i].lorry_length_id+'" id="ve_long'+ret.vehiche_long[i].lorry_length_id+'">'+ret.vehiche_long[i].lorry_length+'</option>');
+																 $api.attr($api.dom('#ve_long'+len),'selected','selected');
+
+														 }
+														}
+													},'json');
+													$api.get(url+'app.php/lorry_weight',function(ret){
+																if(ret.result==0){
+																	for(var i=0;i<ret.vehiche_weight.length;i++){
+																		 $api.append($api.dom('#vehicle_w'),'<option value="'+ret.vehiche_weight[i].lorry_load_id+'" id="ve_weight'+ret.vehiche_weight[i].lorry_load_id+'">'+ret.vehiche_weight[i].lorry_load+'</option>');
+                                   $api.attr($api.dom('#ve_weight'+dweight),'selected','selected');
+																	}
+																 }
+															 },'json');
+               }else{
+                alert(ret.desc);
+               }
+             });
+
+
+        // $api.addEvt($api.dom("#foot_change"), 'click', function(){
+				// 	$api.css($api.dom('.driving_license_b'),'z-index:-1;');
+				// 	if($api.text($api.dom('.sure_change'))=='申请修改'){
+				// 		$api.removeAttr($api.dom('#vehicle_z'),'disabled');
+				// 		$api.removeAttr($api.dom('#vehicle_c'),'disabled');
+				// 		$api.removeAttr($api.dom('#vehicle_t'),'disabled');
+				// 		// $api.removeAttr($api.dom('#vehicle_p'),'disabled');
+				// 		$api.removeAttr($api.dom('#vehicle_w'),'disabled');
+				// 		$api.text($api.dom('.sure_change'),'确认');
+				// 		$api.removeAttr($api.dom('#driver_image_a'), 'onclick');
+				// 		$api.removeAttr($api.dom('#driver_image_b'), 'onclick');
+				// 		$api.attr($api.dom('#driver_image_a'), 'onclick','driver_a()');
+				// 		$api.attr($api.dom('#driver_image_b'), 'onclick','driver_b()');
+				// 	}else{
+				// 		$api.attr($api.dom('#vehicle_z'),'disabled','true');
+		    //     $api.attr($api.dom('#vehicle_c'),'disabled','true');
+		    //     $api.attr($api.dom('#vehicle_t'),'disabled','true');
+		    //     $api.attr($api.dom('#vehicle_p'),'disabled','true');
+				// 		$api.attr($api.dom('#vehicle_w'),'disabled','true');
+				// 		$api.text($api.dom('.sure_change'),'申请修改');
+				// 		$api.removeAttr($api.dom('#driver_image_a'), 'onclick');
+        //     $api.removeAttr($api.dom('#driver_image_b'), 'onclick');
+				// 		$api.attr($api.dom('#driver_image_a'), 'onclick','seepicture($api.attr($api.dom("#driver_image_a"),"src"))');
+				// 		$api.attr($api.dom('#driver_image_b'), 'onclick','seepicture($api.attr($api.dom("#driver_image_b"),"src"))');
+				// 		var type=$api.val($api.dom('#vehicle_z'));
+				// 		var platenumber=$api.val($api.dom('#vehicle_p'));
+				// 		var clong=$api.val($api.dom('#vehicle_c'));
+				// 		var ctype=$api.val($api.dom('#vehicle_t'));
+				// 		var cweight=$api.val($api.dom('#vehicle_w'));
+				// 		alert(type+"//"+clong+'//'+ctype+'//'+cweight)
+				// 		$api.post(url+'app.php/updriveringpic',{
+		    //           body:{lorryid:lorryid,
+				// 						    type:type,
+				// 								clong:clong,
+				// 								ctype:ctype,
+				// 								cweight:cweight,
+				// 					      pic3:x_z,
+				// 							  pic4:x_f,}
+		    //          },function(ret){
+		    //           if(ret.result==0){
+		    //             alert(ret.desc);
+        //             location.reload();
+		    //            }else{
+		    //              alert(ret.desc);
+		    //            }
+		    //          });
+				//
+				// 	}
+        // });
+}
+
+			// 	var driver_a=function(){
+			// 			api.actionSheet({
+			// 				 title: '请选择',
+			// 				 cancelTitle: '取消',
+			// 				 // destructiveTitle: '红色警告按钮',
+			// 				 buttons: ['相册','相机']
+			// 		 },function(ret,err){
+			// 			 if(ret.buttonIndex==1){
+			// 				 api.getPicture({
+			// 					 sourceType: 'album',
+			// 					 encodingType: 'jpg',
+			// 					 mediaValue: 'pic',
+			// 					 destinationType: 'base64',
+			// 					 allowEdit: true,
+			// 					 quality: 100,
+			// 					 targetWidth: 300,
+			// 					 targetHeight: 150,
+			// 					 saveToPhotoAlbum: false
+			// 				 }, function(ret, err) {
+			// 					 if (ret) {
+			// 						 if(ret.base64Data){
+			// 							 $api.attr($api.dom("#driver_image_a"), "src",ret.base64Data);
+			// 							 x_z=ret.base64Data;
+			// 						 }
+			// 					 } else {
+			// 						 alert(JSON.stringify(err));
+			// 					 }
+			// 				 });
+			// 			 }else if(ret.buttonIndex==2){
+			// 				 api.getPicture({
+			// 					 sourceType: 'camera',
+			// 					 encodingType: 'jpg',
+			// 					 mediaValue: 'pic',
+			// 					 destinationType: 'base64',
+			// 					 allowEdit: true,
+			// 					 quality: 100,
+			// 					 targetWidth: 300,
+			// 					 targetHeight: 150,
+			// 					 saveToPhotoAlbum: false
+			// 				 }, function(ret, err) {
+			// 					 if (ret) {
+			// 						 if(ret.base64Data){
+			// 							 $api.attr($api.dom("#driver_image_a"), "src",ret.base64Data);
+			// 							 x_z=ret.base64Data;
+			// 						 }
+			// 					 } else {
+			// 						 alert(JSON.stringify(err));
+			// 					 }
+			// 				 });
+			// 			 }
+			// 		 })
+			// 		}
+			 //
+			 //
+			//  var driver_b=function(){
+			// 	 api.actionSheet({
+			// 			title: '请选择',
+			// 			cancelTitle: '取消',
+			// 			// destructiveTitle: '红色警告按钮',
+			// 			buttons: ['相册','相机']
+			// 	},function(ret,err){
+			// 		if(ret.buttonIndex==1){
+			// 			api.getPicture({
+			// 				sourceType: 'album',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_b"), "src",ret.base64Data);
+			// 						x_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}else if(ret.buttonIndex==2){
+			// 			api.getPicture({
+			// 				sourceType: 'camera',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_b"), "src",ret.base64Data);
+			// 						x_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}
+			// 	})
+			//  };
+
+			//  var seepicture=function(pab){
+			// 	 var pa1=pab.split('/');
+			// 	 var dialogBox = api.require('dialogBox');
+			// 	 dialogBox.discount({
+			// 			 rect: {
+			// 					 w: 400,
+			// 					 h: 150
+			// 			 },
+			// 			 styles: {
+			// 					 bg: '#FFF',
+			// 					 image: {
+			// 							 path: 'fs://'+pa1[3]+''+pa1[5],
+			// 							 marginB: 200,
+			// 					 },
+			// 					 cancel: {
+			// 							 icon: 'fs://2018close1.png',
+			// 							 w: 50,
+			// 							 h: 50
+			// 					 }
+			// 			 }
+			// 	 }, function(ret) {
+			// 			 // alert(JSON.stringify(ret));
+			// 			 if (ret.eventType == 'cancel') {
+			// 					 dialogBox.close({
+			// 							 dialogName: 'discount'
+			// 					 });
+			// 			 }
+			// 	 });
+			//  }
+			function openimg(ret) {
+	var src = ret.getAttribute("src");
+	api.openFrame({
+		name : 'imgshow',
+		url : 'ImageShow.html',
+		rect : {
+			x : 0,
+			y : 0,
+			w : 'auto',
+			h : 'auto'
+		},
+		bounces : false,
+		bgColor : 'rgba(0,0,0,0.6)',
+		pageParam : {
+			url : src
+		}
+	});
+}
+      </script>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<title></title>
+	<script type="text/javascript" src="script/config.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color:white;
+		}
+		.box {
+			width: 100%;
+			height: 100%;
+		}
+
+		.top {
+			height: 50px;
+			width: 100%;
+			margin-top: 50px;
+			line-height: 50px;
+			text-align: center;
+			font: 20px "微软雅黑";
+			color: rgb(17, 64, 108);
+		}
+
+		.center {
+			width: 70%;
+			text-align: center;
+			height: 400px;
+      margin:0 auto;
+		}
+
+		.title {
+			width: 60%;
+			margin-top: 10px;
+			text-align: right;
+			color: rgb(17, 64, 108);
+		}
+
+		.fp {
+			height: 70px;
+			width: 50%;
+			margin-left: 45%;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
+    .fp>img{
+    	border-radius: 10px;
+    }
+		.tp {
+			height: 70px;
+			width: 50%;
+			margin-left: 45%;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
+
+		.foot {
+			width: 64%;
+			margin-left: 18%;
+			height: 44px;
+			background-color:#f16c3c;
+			line-height: 44px;
+			text-align: center;
+			color: white;
+			font-size: 20px;
+			border-radius: 10px;
+		}
+    .cen{
+      width:100%;
+      height:50px;
+    }
+    .sign_up{
+      width:100px;
+      text-align:center;
+    }
+    .sign_success{
+      font-size:20px;
+    }
+	</style>
+</head>
+
+<body>
+	<div class="box">
+		<div class="top"></div>
+		<div class="center">
+       <img src="image/sign-check-icon.png" class="sign_up"/>
+       <div class="sign_success">恭喜您注册成功!</div>
+       <div class="become_to">您已成为派送员</div>
+		</div>
+		<div class="foot" id="foot">完成</div>
+	</div>
+</body>
+<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="script/local.js"></script>
+<script type="text/javascript" src="script/APICloud-rest.js"></script>
+<script type="text/javascript" src="script/api.js"></script>
+<script>
+	apiready = function() {
+    var phone=api.pageParam.telephone;
+		var type=api.pageParam.type;
+		if(type==1){
+       $api.text($api.dom('.become_to'),'您已成为派送司机');
+		}else{
+       $api.text($api.dom('.become_to'),'您已成为运输司机');
+		}
+    $api.addEvt($api.dom("#foot"), 'click',function(){
+      api.openWin({
+        name: 'index',
+        url:  './index.html',
+        pageParam: {
+        telephone:phone
+       }
+      });
+    });
+}
+</script>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.box {
+			width: 100%;
+			height: 100%;
+			margin: 0 auto;
+		}
+
+		.b1 {
+			width: 100%;
+			height: 30px;
+			background: #F15A24;
+		}
+
+		.b11 {
+			width: 80px;
+			height: 30px;
+			text-align: center;
+			float: left;
+		}
+
+		.b11 img {
+			/*width: 30px;*/
+			height: 25px;
+      margin-top:2.5px;
+		}
+
+		.b12 {
+			width: 408px;
+			height: 30px;
+			text-align: center;
+			color: white;
+			float: left;
+			line-height: 30px;
+		}
+
+		.b13 {
+			width: 80px;
+			height: 30px;
+			text-align: center;
+			color: white;
+			float: left;
+			line-height: 30px;
+		}
+
+		.b2 {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			line-height: 250px;
+			color: #EDE4C7;
+			font-size: 40px;
+      z-index:9999;
+		}
+
+		.b3 {
+		  position:absolute;
+      bottom:0;
+			width: 100%;
+			height: 30px;
+			background: #F15A24;
+			text-align: center;
+			color: white;
+			line-height: 30px;
+		}
+    .time{
+      width:100%;
+      text-align:right;
+      color:#999999;
+    }
+	</style>
+
+	<body>
+		<div class="box">
+			<div class="b2">收货人在此签字</div>
+      <div class="time"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../script/local.js"></script>
+	<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		user = $api.getStorage('user');
+		var time = user.time;
+		var lorry_id = user.lorry_id;
+				if(user==null){
+          api.openWin({
+              name: 'fiveregister1',
+              url: '../fiveregister1.html',
+          });
+     }
+		 $(window).on("orientationchange",function(event){
+		   alert("方向是：" + event.orientation);
+		 });
+// function timeyun(){
+//   var da=new Date();
+//   $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+// }
+     var qid;
+		apiready = function() {
+       qid=api.pageParam.scheduling_id;
+      //  var da=new Date();
+      //  $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+      // setInterval('timeyun()',1000);
+			api.setScreenOrientation({
+				orientation: 'landscape_left'
+			});
+			// api.addEventListener({
+			// 	name: 'keyback'
+			// }, function(ret, err) {
+			// 	// alert('按了返回键');
+			// 	var drawingBoard = api.require('drawingBoard');
+			// 	drawingBoard.close();
+			// });
+			var drawingBoard = api.require('drawingBoard');
+			drawingBoard.open({
+				rect: {
+					x:0,
+					y:30,
+					w:700,
+					h:250
+				},
+				styles: {
+					brush: {
+						color: '#000000',
+						width: 6
+					},
+					bgColor: ''
+				},
+				fixedOn: api.signimage
+			});
+		}
+
+    $api.addEvt($api.dom(".b2"), 'touchstart', function(){
+        $api.text($api.dom(".b2"),'');
+
+    });
+
+	</script>
+	<!-- <script type="text/javascript">
+		// $(".b13").on("click", function() {
+		// 	var drawingBoard = api.require('drawingBoard');
+		// 	drawingBoard.clear();
+		// })
+    $api.addEvt($api.dom('.b13'), 'click', function(){
+      	var drawingBoard = api.require('drawingBoard');
+      	drawingBoard.clear();
+    });
+
+    $api.addEvt($api.dom('.b11'), 'click', function(){
+      var drawingBoard = api.require('drawingBoard');
+      drawingBoard.close();
+      api.openWin({
+          name: 'main',
+          url: '../main.html',
+      });
+        // var drawingBoard = api.require('drawingBoard');
+        // drawingBoard.clear();
+    });
+
+		$api.addEvt($api.dom('.b3'), 'click', function(){
+      var drawingBoard = api.require('drawingBoard');
+			drawingBoard.save({
+				savePath: 'fs://drawingBoard/result.png',
+				copyToAlbum: false
+			}, function(ret) {
+				//alert(JSON.stringify(ret));
+				// $('.i1').val(qid);
+				// $('.i2').val(lorry_id);
+				// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+        $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+			});
+			drawingBoard.close();
+			var a = null;
+			var trans = api.require('trans');
+			trans.decodeImgToBase64({
+				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+			}, function(ret, err) {
+				if(ret.status) {
+					//alert(JSON.stringify(ret));
+					a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
+					//alert(a);
+					$.ajax({
+						url: 'http://api.uminfo.cn/app_lorry.php/sureschedule',
+						dataType: 'json',
+						type: 'post',
+						ContentType: "application/json;charset=utf-8",
+						data: JSON.stringify({
+							schedule_id: qid,
+							lorry_id: lorry_id,
+							pic: a,
+							time1: time
+						}),
+						success: function(msg) {
+							if(msg.result == 0) {
+								alert("提交成功");
+								var drawingBoard = api.require('drawingBoard');
+								drawingBoard.close();
+                api.openWin({
+                    name: 'main',
+                    url: '../main.html',
+                });
+							} else if(msg.result == 9) {
+								  $api.setStorage("user",null);
+								alert(msg.desc);
+                api.openWin({
+                    name: 'index',
+                    url: '../index.html',
+                });
+							} else {
+								alert(msg.desc);
+
+							}
+						},
+						error: function(xhr) {
+							alert(xhr);
+
+						}
+					});
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}); -->
+		// $(".b11").on("click", function() {
+		// 	var drawingBoard = api.require('drawingBoard');
+		// 	drawingBoard.close();
+		// 	window.history.back();
+		// })
+	<!-- </script> -->
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<script type="text/javascript" src="script/config.js"></script>
+		<style>
+		*{
+			margin: 0;
+			padding: 0;
+	     }
+			 body{
+				background-color:white;
+			 }
+	   .box{
+     	   	width:100%;
+		   	height:100%;
+				background-color:white;
+     	   }
+     	   .top{
+     	   	width:100%;
+     	   	height:100px;
+     	   	margin-top:100px;
+     	   	text-align:center;
+     	   	line-height:100px;
+     	   }
+     	   .top img{
+     	   	  border-radius: 50%;
+     	   	  height:100px;
+     	   	  width:100px;
+     	   }
+			.center {
+				height: 150px;
+				width: 100%;
+				text-align: center;
+			}
+     	   .center2 {
+				height: 32px;
+				margin-top: 40px;
+				/*line-height: 50px;*/
+				text-align: center;
+				width: 70%;
+				color: rgb(1, 158, 213);
+				margin-left:15%;
+				border-bottom:1px solid #f16c3c;
+			}
+
+			.mobile_a{
+				height:28px;
+				vertical-align:top;
+				float:left;
+				margin-left:20px;
+				margin-right:8px;
+			}
+			.password_a{
+				height:28px;
+				vertical-align:top;
+				float:left;
+				margin-left:20px;
+			}
+			 ::-webkit-input-placeholder {
+				/* WebKit browsers */
+				color: rgb(138, 171, 202);
+				font-size:18px;
+			}
+			.center2 input{
+				height:32px;
+				width:65%;
+				border:none;
+				list-style: none;
+				outline-style: none;
+				border: none;
+				background: none;
+				display: inline-block;
+				float: left;
+				margin-left: 10px;
+				font-size:18px;
+			}
+			.foot{
+				width:64%;
+				margin-left:18%;
+				height:40px;
+				background-color:#f16c3c;
+				line-height:40px;
+				text-align: center;
+				color:white;
+				font-size:20px;
+				border-radius: 10px;
+				margin-top: 20px;
+			}
+			.foot1{
+				width:64%;
+				margin-left:18%;
+				height:30px;
+				margin-top:10px;
+			}
+			.foot1_2{
+				height:30px;
+				line-height:30px;
+				float:left;
+				width:50%;
+				color:#f16c3c;
+			}
+			.foot1_3{
+				height:30px;
+				line-height:30px;
+				float:left;
+				width:50%;
+				color:#f16c3c;
+				text-align: right;
+			}
+			.duigou{
+				width:20px;
+				text-align:right;
+				vertical-align:middle;
+				border-radius:5px;
+			}
+			.jizhu{
+				text-align:right;
+				margin-right:20%;
+				margin-top: 20px;
+				color:#f16c3c;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+		     <div class="top"><img src="image/logo.png"/></div>
+		     <div class="center">
+
+				<div class="center2">
+					<img src="image/mobile.png" class="mobile_a"><input type="text" class="center2_1" placeholder="手机号" id="mobile">
+				</div>
+				<div class="center2">
+				<img src="image/password.png" class="password_a"><input type="password" class="center2_1" placeholder="密码" id="password">
+			  </div>
+        <div class="jizhu"><img src="image/duigou2.png" class="duigou"/>记住密码</div>
+		     </div>
+
+		     <div class="foot" id="foot">登录</div>
+		     <div class="foot1"><div class="foot1_2">注册</div><div class="foot1_3">忘记密码</div></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="script/local.js"></script>
+	<script type="text/javascript" src="script/APICloud-rest.js"></script>
+	<script type="text/javascript" src="script/api.js"></script>
+	<script>
+	apiready = function(){
+		var pressIndex=0;
+		api.addEventListener({
+														name : 'keyback'
+										}, function(ret, err) {
+														pressIndex++;
+														api.toast({
+																		msg : '再按一次退出应用',
+																		duration : 1000,
+																		location : 'middle'
+														});
+														setTimeout(function() {
+																		pressIndex = 0;
+														}, 1000);
+														if (pressIndex >= 2) {
+																api.toLauncher();
+														}
+										});
+		$api.val($api.dom('#password'),'');
+    setTimeout(addEventListener,3000);
+		var pressIndex=0;
+		$api.val($api.dom('#password'),'');
+		// api.addEventListener({
+		//                         name : 'keyback'
+		//                 }, function(ret, err) {
+		//                         pressIndex++;
+		//                         api.toast({
+		//                                 msg : '再按一次退出应用',
+		//                                 duration : 1000,
+		//                                 location : 'middle'
+		//                         });
+		//                         setTimeout(function() {
+		//                                 pressIndex = 0;
+		//                         }, 1000);
+		//                         if (pressIndex >= 2) {
+		//                                 api.closeWidget({
+		//                                         silent : true
+		//                                 });
+		//                         }
+		//                 });
+		if(api.pageParam.telephone!=null){
+       $api.val($api.dom('#mobile'),api.pageParam.telephone);
+		}else if($api.getStorage('password')){
+       $api.val($api.dom('#mobile'),$api.getStorage('password').mobile);
+			 $api.val($api.dom('#password'),$api.getStorage('password').pass);
+			 api.openWin({
+				 name: 'main',
+				 url:  './main.html',
+			 });
+		}else if($api.getStorage('user')){
+       $api.val($api.dom('#mobile'),$api.getStorage('user').telephone);
+			 $api.val($api.dom('#password'),$api.getStorage('user').pass);
+		}
+
+
+		api.addEventListener({
+													name:'viewappear'
+											}, function(ret, err){
+												 api.setScreenOrientation({
+													orientation: 'portrait_up'
+											});
+											});
+	$api.addEvt($api.dom('#foot'), 'click', function(){
+						var mobile=$api.val($api.dom('#mobile'));
+						var password=$api.val($api.dom('#password'));
+						        if(mobile.length==0){
+											api.toast({
+												 msg: '手机号码不能为空',
+												 duration: 1000,
+												location: 'middle'
+											});
+										}else if(password.length==0){
+											api.toast({
+												 msg: '密码不能为空',
+												 duration: 1000,
+												location: 'middle'
+											});
+										}else if(!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/.test(mobile))){
+											api.toast({
+												 msg: '手机号码不正确',
+												 duration: 1000,
+												location: 'middle'
+											});
+
+										}else if(password.length<6||password.length>20){
+											api.toast({
+												 msg: '手机号或密码不正确',
+												 duration: 1000,
+												location: 'middle'
+											});
+										}else{
+											$api.post(url+'app.php/lorrysign',{
+														body:{tel:mobile,
+																	password:password,}
+													 },function(ret){
+														if(ret.result==0){
+															api.toast({
+																 msg: "登录成功",
+																 duration: 1000,
+																location: 'middle'
+															});
+															// api.openFrame({
+															//   url: './firstregister2.html?lorryid='+ret.lorryid,
+															//  });
+															var key = 'user';
+					                    var user = {};
+					                  	user.time=ret.time;
+					                    user.lorryid=ret.lorry.app_lorry_id;
+                              user.telephone=ret.lorry.phone;
+															user.flag=ret.lorry.flag;
+															user.pass= password;
+					                    $api.setStorage(key, user);
+															// alert($api.attr($api.dom('.duigou'),'src'));
+															if($api.attr($api.dom('.duigou'),'src')=='image/duigou1.png'){
+																var key1= 'password';
+																var user1 = {};
+																user1.mobile= mobile;
+																user1.pass= password;
+																$api.setStorage(key1, user1);
+															}else{
+																$api.rmStorage('password');
+															}
+															 api.openWin({
+																 name: 'main',
+																 url:  './main.html',
+															 });
+															 setTimeout("api.closeWin()",600);
+														 }else{
+															 alert('手机号或密码不正确');
+														 }
+													 });
+												 }
+											 });
+							$api.addEvt($api.dom('.foot1_2'), 'click', function(){
+								api.openWin({
+									name: 'fiveregister1',
+									url:  './fiveregister1.html',
+								});
+							});
+
+							$api.addEvt($api.dom('.foot1_3'), 'click',function(){
+								api.openWin({
+									name: 'password_first',
+									url:  'html/password_first.html'
+								});
+							});
+             $api.addEvt($api.dom('.jizhu'), 'click',function(){
+							 if($api.attr($api.dom('.duigou'),'src')=='image/duigou1.png'){
+                 $api.attr($api.dom('.duigou'),'src','image/duigou2.png');
+							 }else{
+                $api.attr($api.dom('.duigou'),'src','image/duigou1.png');
+							 }
+
+						 });
+
+						}
+						function addEventListener(){
+						api.addEventListener({
+						        name:'offline'
+						      },function(ret,err){
+						        var connectionType = ret.connectionType;
+						        api.alert({
+						          title: '提示消息',
+						          msg: '当前网络不可用，请检查网络设置',
+						          buttons: ['确定']
+						        });
+
+						         Jurl="main.html";
+						      });
+
+						}
+	</script>
+</html>

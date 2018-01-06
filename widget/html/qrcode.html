@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+</head>
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<style>
+header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;margin-top:22px;}
+header b{ width: 42px; height: 100%; display: inline-block; position: relative; z-index: 1; background: url() no-repeat center; background-size: 70% auto;  }
+header b.ic-back{ background-image: url(../image/back.png);background-size:auto; }
+/*header b.ic-check{ background-image: url(../image/ic-check.png); float: right; }*/
+header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+	*{
+        	margin: 0;
+        	padding: 0;
+        }
+
+        	.top{
+        		width:100%;
+        		height:50px;
+        		background:#FFCF09;
+        	}
+        	.top1{
+        		width:10%;
+        		height:30px;
+        		float:left;
+        		margin-left:5%;
+        		margin-top:10px;
+        	}
+        	.box{
+        		width: 100%;
+        		height: 100%;
+        	}
+        	.top1 img{
+        		width:30px;
+        		height:30px;
+        	}
+        	.top2{
+        		width:70%;
+        		height:50px;
+        		text-align:center;
+        		line-height:50px;
+        		float:left;
+        	}
+        	#code{
+        		width:200px;
+        		height:200px;
+        		margin: 150px auto;
+        	}
+            .foot10 {
+                width: 100%;
+                height: 40px;
+                position: fixed;
+                bottom: 0;
+                background: black;
+            }
+
+            .foot10 img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .foot10_1 {
+                width: 34%;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                float: left;
+            }
+
+            .foot10_2 {
+                width: 33%;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                float: left;
+            }
+
+            .foot10_3 {
+                width: 33%;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                float: left;
+            }
+
+</style>
+<body>
+  <div id="wrap" class="flex-wrap flex-vertical" >
+      <header class="border-b" >
+          <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+          <div class="title">请扫二维码</div>
+      </header>
+  </div>
+  <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/jquery.qrcode.js"></script>
+<script type="text/javascript" src="../script/qrcode.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+ <div id="code" ></div>
+ <script type="text/javascript">
+ apiready = function(){
+      scheduling_id=api.pageParam.scheduling_id;
+ //   alert(id);
+      $("#code").qrcode({
+       render: "table", //table方式
+       width: 200, //宽度
+       height:200, //高度
+       text:scheduling_id //任意内容
+    });
+
+ }
+
+ </script>
+
+</div>
+<!-- <script type="text/javascript">
+    $(".foot10_1").on("click",function(){
+        window.location.href="first.html";
+    })
+    $(".foot10_2").on("click",function(){
+        window.location.href="del.html";
+    })
+    $(".foot10_3").on("click",function(){
+        window.location.href="message.html";
+    })
+</script> -->
+</body>
+</html>

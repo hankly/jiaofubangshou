@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+    <script type="text/javascript" src="../script/config.js"></script>
+		<style>
+		body{
+			background-color:#999999;
+		}
+    .lert{
+      width:100%;
+      /*height:200px;*/
+      /*position: absolute;
+      top:0;
+      left:0;*/
+			margin:0 auto;
+      background-color:white;
+      z-index:9999;
+      /*display:none;*/
+    }
+    .box1_top{
+      width:60px;
+      margin:0 auto;
+      margin-top:200px;
+    }
+    .box1_top2{
+      width:180px;
+      margin:0 auto;
+    }
+    #table{
+      width:250px;
+      margin:0 auto;
+    }
+    td{
+      text-align:center;
+    }
+    .lert_sure{
+      width:250px;
+      margin:10px auto;
+      color:white;
+			height:40px;
+    }
+    .lert_sure_a{
+      background-color:#f16c3c;
+      width:80px;
+			height:30px;
+      float:left;
+			line-height:30px;
+      text-align:center;
+      border-radius:5px;
+    }
+    .lert_sure_b{
+      background-color:#f16c3c;
+			width:80px;
+			height:30px;
+      float:right;
+			line-height:30px;
+      text-align:center;
+      margin-left:50px;
+      border-radius:5px;
+    }
+		</style>
+	</head>
+  <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/jquery.qrcode.js"></script>
+<script type="text/javascript" src="../script/qrcode.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+	<body>
+    <div class="lert">
+      <div class="box1_top">注意:</div>
+      <div class="box1_top2">该清单中存在到付运单：</div>
+      <table id="table"  border="1px" cellspacing="0" cellpadding="0">
+            <thead>
+              <tr>
+                <th>运单号</th>
+                <th>应付金额</th>
+              </tr>
+            </thead>
+        <tbody id="tb3">
+
+        </tbody>
+      </table>
+      <div class="lert_sure">
+        <div class="lert_sure_a">确认</div>
+        <div class="lert_sure_b">取消</div>
+      </div>
+    </div>
+	</body>
+  <script type="text/javascript">
+  apiready = function(){
+    var scheduling_id=api.pageParam.scheduling_id;
+    var apptype=api.pageParam.apptype;
+		var is_wuliu=api.pageParam.is_wuliu;
+    $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+             if(ret.result==0){
+							 api.toast({
+									msg: "成功",
+									duration: 1000,
+								 location: 'middle'
+							 });
+							//  alert(ret.orderCosts.length)
+                             for(var i=0;i<ret.orderCosts.length;i++){
+                               $api.append($api.dom('#tb3'),'<tr><td>'+ret.orderCosts[i].order_id+'</td><td>'+ret.orderCosts[i].order_cost+'元</td></tr>');
+                             }
+														//  alert(ret.orderCosts.length)
+                            }else{
+                              // alert(ret.desc);
+                              // $api.text($api.dom('.box1_top2'),'该清单中不存在到付运单');
+                              // $api.css($api.dom('#table'),'display:none');
+															// alert(apptype)
+                            }
+                       },'json');
+    api.addEventListener({
+                          name:'viewappear'
+                      }, function(ret, err){
+                         api.setScreenOrientation({
+                          orientation: 'auto_portrait'
+                      });
+                      });
+    $api.addEvt($api.dom('.lert_sure_a'), 'click',function(){
+      if(apptype==1){
+
+        api.openWin({
+            name: 'select_delivery',
+            url: './select_delivery.html',
+            pageParam: {
+                scheduling_id: scheduling_id,
+								is_wuliu:is_wuliu,
+           }
+        });
+
+      }else{
+        api.openWin({
+            name: 'signmain',
+            url: './signmain.html',
+            pageParam: {
+                  scheduling_id:scheduling_id,
+									is_wuliu:is_wuliu,
+                    }
+        });
+
+      }
+
+      // api.openWin({
+      //     name: 'qrcode',
+      //     url: './qrcode.html',
+      //     pageParam: {
+      //           scheduling_id:api.pageParam.scheduling_id
+      //             }
+      // });
+    });
+    // $api.addEvt($api.dom('.sign'), 'click',function(){
+    //   api.openWin({
+    //       name: 'signmain',
+    //       url: './signmain.html',
+    //       pageParam: {
+    //             scheduling_id:api.pageParam.scheduling_id
+    //               }
+    //   });
+    // });
+    $api.addEvt($api.dom('.lert_sure_b'), 'click',function(){
+      api.closeWin({
+          name: 'warn'
+      });
+    });
+  }
+  </script>
+</html>

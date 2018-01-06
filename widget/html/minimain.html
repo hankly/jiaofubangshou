@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../script/config.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <style>
+        header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;z-index:999;padding-top:22px;}
+        header b{ width: 42px; height: 42px; display: inline-block; position: relative; z-index: 9999; background: url() no-repeat center; background-size: 70% auto;  }
+        header b.ic-back{ background-image: url(../image/back.png);background-size:auto; }
+        /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right;}*/
+        header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+
+        /*.scheduling_a{
+          margin:1.5rem;
+          height:150px;
+        }
+        .scheduling_a_id_a{
+          width:100%;
+          height:40px;
+          font-size:16px;
+        }
+
+        .scheduling_id{
+            width:100%;
+          color:#f16c3c;
+        }
+        .scheduling_name{
+          height:30px;
+          margin-top:10px;
+          line-height:30px;
+        }
+        .scheduling_name,.scheduling_address,.scheduling_phone{
+          line-height:30px;
+        }
+        .scheduling_line{
+          height:0;
+          width:100%;
+          border-top:1px solid #d2d2d2;
+          margin-top:10px;
+        }*/
+    </style>
+</head>
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical" >
+        <header class="border-b" >
+            <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+            <div class="title"></div>
+            <!-- <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b> -->
+        </header>
+        <div id="main" class="flex-con" >
+
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+    apiready = function(){
+      api.addEventListener({
+                            name:'viewappear'
+                        }, function(ret, err){
+                           api.setScreenOrientation({
+                            orientation: 'portrait_up'
+                        });
+                        });
+      $api.text( $api.dom(".title"),api.pageParam.name);
+      if(api.pageParam.name=='我的名片'){
+        api.openFrame({
+            name: 'mingpian1',
+            url: './mingpian.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            }
+        });
+      }else if(api.pageParam.name=='历史单据'){
+        api.openFrame({
+            name: 'scheduling_history',
+            url: './scheduling_history.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            }
+        });
+      }else if(api.pageParam.name=="货物交付"){
+        api.openFrame({
+            name: 'scheduling_z',
+            url: './scheduling_z.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            }
+});
+}
+}
+
+</script>

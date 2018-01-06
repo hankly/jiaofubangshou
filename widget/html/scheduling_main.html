@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+        header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;padding-top:22px;}
+        header b{ width: 42px; height:42px; display: inline-block; position: relative; z-index: 1; background: url() no-repeat center; background-size: 70% auto;  }
+        header b.ic-back{ background-image: url(../image/back.png);background-size:auto; }
+        /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right; }*/
+        header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+        #foot{
+          position:relative;;
+          margin:10%;
+          width:90%;
+          height:50px;
+          bottom:0;
+          left:0;
+          font-size:18px;
+        }
+        .foot_sure{
+          padding-left:17%;
+          padding-right:17%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+        .foot_cancle{
+          padding-left:17%;
+          padding-right:17%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical" >
+        <header class="border-b" >
+            <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+            <div class="title" id="title"></div>
+            <!-- <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b> -->
+        </header>
+        <div id="main" class="flex-con" >
+
+        </div>
+        <div id="foot">
+            <span class="foot_sure" id="foot_sure">确认</span>
+            <span class="foot_cancle" id="foot_cancle">取消</span>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+      $api.text($api.dom("#title"),api.pageParam.name);
+        api.openFrame({
+            name: 'scheduling',
+            url: './scheduling.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            },
+            pageParam: {
+                  scheduling_id:api.pageParam.scheduling_id
+                    }
+});
+$api.addEvt($api.dom("#foot_sure"), 'click', function(){
+  var scheduling_id=api.pageParam.scheduling_id;
+  var user = $api.getStorage('user');
+  var lorryid=user.lorryid;
+  // alert(scheduling_id)
+  $api.post(url+'app.php/suresc1',{
+        body:{schedule_id:scheduling_id,
+              lorryid:lorryid,}
+       },function(ret){
+        if(ret.result==0){
+          api.toast({
+             msg: ret.desc,
+             duration: 1000,
+            location: 'middle'
+          });
+          api.openWin({
+              name: 'main',
+              url: '../main.html',
+            });
+
+         }else{
+           api.toast({
+              msg: ret.desc,
+              duration: 1000,
+             location: 'middle'
+           });
+           setTimeout("api.closeToWin({name:'main'})",1000);
+         }
+       });
+
+});
+$api.addEvt($api.dom("#foot_cancle"), 'click', function(){
+  var scheduling_id=api.pageParam.scheduling_id;
+  var user = $api.getStorage('user');
+  var lorryid=user.lorryid;
+  api.openWin({
+      name: 'main',
+      url: '../main.html',
+  });
+
+});
+
+}
+
+
+</script>

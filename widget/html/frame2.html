@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<script type="text/javascript" src="../script/config.js"></script>
+		<style>
+			body{
+				background-color:rgb(238,238,238);
+			}
+			.body_a{
+				padding:1rem;
+				background-color:white;
+			}
+			.body_type{
+				height:35px;
+				font-size:16px;
+				margin:0.2rem;
+				line-height:35px;
+				border-bottom:1px solid rgb(238,238,238);
+			}
+			.vehicle_z{
+				color:rgb(1,158,213);
+				margin-left:20%;
+			}
+			.driving_license{
+				margin-top:10px;
+				background-color:white;
+			}
+			.driving_license_a{
+				padding-top:10px;
+				margin-left:7.5%;
+			}
+			.driver_image_a,.driver_image_b{
+				width:30%;
+				margin-left:7.5%;
+				margin-right:7.5%;
+				border-radius:10px;
+				margin-top:1rem;
+				margin-bottom:1rem;
+				height:60px;
+			}
+			.foot_sure{
+				margin-top:10px;
+				background-color:white;
+				padding:30px;
+				padding-left:0px;
+			}
+			.sure_change{
+				margin:0 auto;
+				width:50%;
+				height:35px;
+				border-radius:10px;
+				background-color:rgb(1,158,213);
+				text-align:center;
+				line-height:35px;
+				color:white;
+			}
+
+      .name{
+        height:20px;
+        margin-left:5px;
+        margin-right:10px;
+				vertical-align: middle;
+      }
+      .tel{
+        height:25px;
+        margin-right:10px;
+        margin-left:8px;
+				vertical-align: middle;
+      }
+      .id_card{
+       height:20px;
+       margin-right:5px;
+			 vertical-align: middle;
+      }
+      input{
+        height:32px;
+        width:65%;
+        border:none;
+        list-style: none;
+        outline-style: none;
+        border: none;
+        background: none;
+        display: inline-block;
+        font-size:18px;
+      }
+			.driving_license_change,.id_license_change{
+				margin-left:55%;
+				color:#f16c3c;
+			}
+			.account_setting{
+				margin-left:7.5%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="body_a">
+		<div class="body_type"><img src="../image/name.png" class="name"/><input type="text" placeholder="姓名" id="name_z"/></div>
+		<div class="body_type"><img src="../image/mobile.png" class="tel"><input type="text" placeholder="手机号" id="tel_z"/></div>
+		<div class="body_type"><img src="../image/identity_card.png" class="id_card"/><input type="text" placeholder="身份证" id="id_z"/></div>
+		</div>
+		<div class="driving_license" id="driving_lic">
+			<!-- <div class="driving_license_a"><img src="../image/driver.png" class="id_card"/>驾驶证<span class="driving_license_change">修改</span></div> -->
+			<div class="driving_license_a"><img src="../image/driver.png" class="id_card"/>驾驶证</div>
+			<div class="driving_license_b">
+				<img src="../image/id_card_z.png" class="driver_image_a" id="driver_image_a" onclick="openimg(this)"/>
+				<img src="../image/id_card_f.png" class="driver_image_b" id="driver_image_b" onclick="openimg(this)"/>
+			</div>
+		</div>
+		<div class="driving_license">
+			<!-- <div class="driving_license_a"><img src="../image/identity_card.png" class="id_card"/>身份证<span class="id_license_change">修改</span></div> -->
+			<div class="driving_license_a"><img src="../image/identity_card.png" class="id_card"/>身份证</div>
+			<div class="driving_license_b">
+				<img src="../image/id_card_z.png" class="driver_image_a" id="id_image_a" onclick="openimg(this)"/>
+				<img src="../image/id_card_f.png" class="driver_image_b" id="id_image_b" onclick="openimg(this)"/>
+			</div>
+		</div>
+		<div class="foot_sure">
+		<div class="account_setting"><img src="../image/install.png" class="id_card"/>账号设置</div>
+	  </div>
+		<!-- <div class="foot_sure">
+			<div class="sure_change">申请修改</div>
+		</div> -->
+	</body>
+  <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../script/swipe.js"></script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+			var id_z,id_f;
+			var j_z,j_f;
+      apiready = function(){
+				$api.attr($api.dom('#name_z'),'disabled','true');
+				$api.attr($api.dom('#tel_z'),'disabled','true');
+				$api.attr($api.dom('#id_z'),'disabled','true');
+				api.addEventListener({
+															name:'viewappear'
+													}, function(ret, err){
+														 api.setScreenOrientation({
+															orientation: 'portrait_up'
+													});
+													});
+        var user = $api.getStorage('user');
+        var lorryid=user.lorryid;
+				var flag=user.flag;
+				if(flag==1){
+					$api.css($api.dom('#driving_lic'),'display:none;');
+				}
+        $api.post(url+'app.php/persoonmessage',{
+              body:{lorryid:lorryid,}
+             },function(ret){
+              if(ret.result==0){
+								api.toast({
+									 msg: '成功',
+									 duration: 1000,
+									location: 'middle'
+								});
+								$api.val($api.dom('#name_z'),ret.lorry.name);
+								$api.val($api.dom('#tel_z'),ret.lorry.phone);
+                var id_number=ret.lorry.id_number;
+								var id_bian=id_number.substring(0,4)+'******'+id_number.substring(14);
+								$api.val($api.dom('#id_z'),id_bian);
+								$api.attr($api.dom('#driver_image_a'),'src',ret.lorry.driver_license_fp);
+								$api.attr($api.dom('#driver_image_b'),'src',ret.lorry.driver_license_tp);
+								$api.attr($api.dom('#id_image_a'),'src',ret.lorry.identity_card_z);
+								$api.attr($api.dom('#id_image_b'),'src',ret.lorry.identity_card_f);
+								// var driver_a=ret.lorry.driver_license_fp.split('/');
+								// api.download({
+								// 		url: ret.lorry.driver_license_fp,
+								// 		savePath: 'fs://'+driver_a[3]+''+driver_a[5],
+								// 		report: true,
+								// 		cache: true,
+								// 		allowResume: true
+								// 	}, function(ret, err) {
+								// 	});
+								// 	var driver_b=ret.lorry.driver_license_tp.split('/');
+								// 	api.download({
+								// 			url: ret.lorry.driver_license_tp,
+								// 			savePath: 'fs://'+driver_b[3]+''+driver_b[5],
+								// 			report: true,
+								// 			cache: true,
+								// 			allowResume: true
+								// 		}, function(ret, err) {
+								// 		});
+								// 		var identity_card_z=ret.lorry.identity_card_z.split('/');
+								// 		api.download({
+								// 				url: ret.lorry.identity_card_z,
+								// 				savePath: 'fs://'+identity_card_z[3]+''+identity_card_z[5],
+								// 				report: true,
+								// 				cache: true,
+								// 				allowResume: true
+								// 			}, function(ret, err) {
+								// 			});
+								// 			var identity_card_f=ret.lorry.identity_card_f.split('/');
+								// 			api.download({
+								// 					url: ret.lorry.identity_card_f,
+								// 					savePath: 'fs://'+identity_card_f[3]+''+identity_card_f[5],
+								// 					report: true,
+								// 					cache: true,
+								// 					allowResume: true
+								// 				}, function(ret, err) {
+								// 				});
+								// 		api.download({
+								// 				url: 'http://files.uminfo.cn:8000/lorry/close.png',
+								// 				savePath: 'fs://2018close1.png',
+								// 				report: true,
+								// 				cache: true,
+								// 				allowResume: true
+								// 			}, function(ret, err) {
+								// 			});
+               }else{
+                 alert(ret.desc);
+               }
+             });
+
+        // $api.addEvt($api.dom(".driving_license_change"), 'click', function(){
+				//
+				// 	if($api.text($api.dom('.driving_license_change'))=='修改'){
+				// 		$api.text($api.dom('.driving_license_change'),'确认');
+				// 		$api.removeAttr($api.dom('#driver_image_a'), 'onclick');
+				// 		$api.removeAttr($api.dom('#driver_image_b'), 'onclick');
+				// 		$api.attr($api.dom('#driver_image_a'), 'onclick','driver_a()');
+				// 		$api.attr($api.dom('#driver_image_b'), 'onclick','driver_b()');
+				//
+				// 	}else{
+				// 		$api.removeAttr($api.dom('#driver_image_a'), 'onclick');
+				// 		$api.removeAttr($api.dom('#driver_image_b'), 'onclick');
+				//
+				// 		$api.attr($api.dom('#driver_image_a'), 'onclick','seepicture($api.attr($api.dom("#driver_image_a"),"src"))');
+				// 		$api.attr($api.dom('#driver_image_b'), 'onclick','seepicture($api.attr($api.dom("#driver_image_b"),"src"))');
+        //      $api.text($api.dom('.driving_license_change'),'修改');
+				// 		 $api.post(url+'app.php/updriverpic',{
+				// 					 body:{lorryid:lorryid,
+				// 								 pic1:j_z,
+				// 								 pic2:j_f,}
+				// 					},function(ret){
+				// 					 if(ret.result==0){
+				// 						 alert("成功");
+        //              location.reload();
+				// 						}else{
+				// 							alert(ret.desc);
+				// 						}
+				// 					});
+				// 	}
+        // });
+
+
+				// $api.addEvt($api.dom(".id_license_change"), 'click', function(){
+        //   	if($api.text($api.dom('.id_license_change'))=='修改'){
+				// 		$api.text($api.dom('.id_license_change'),'确认');
+				// 		$api.removeAttr($api.dom('#id_image_a'), 'onclick');
+				// 		$api.removeAttr($api.dom('#id_image_b'), 'onclick');
+				// 		$api.attr($api.dom('#id_image_a'), 'onclick','ida_image()');
+				// 		$api.attr($api.dom('#id_image_b'), 'onclick','idb_image()');
+				// 	}else{
+				// 		 $api.removeAttr($api.dom('#id_image_a'), 'onclick');
+				// 		 $api.removeAttr($api.dom('#id_image_b'), 'onclick');
+				// 		 $api.attr($api.dom('#id_image_a'), 'onclick','seepicture($api.attr($api.dom("#id_image_a"),"src"))');
+				// 		 $api.attr($api.dom('#id_image_b'), 'onclick','seepicture($api.attr($api.dom("#id_image_b"),"src"))');
+				// 		 $api.text($api.dom('.id_license_change'),'修改');
+				// 		 $api.post(url+'app.php/updriverpic',{
+				// 					 body:{lorryid:lorryid,
+				// 								 pic1:id_z,
+				// 								 pic2:id_f,}
+				// 					},function(ret){
+				// 					 if(ret.result==0){
+				// 						 alert("成功");
+        //              location.reload();
+				// 						}else{
+				// 							alert(ret.desc);
+				// 						}
+				// 					});
+				// 	}
+				// });
+
+
+				$api.addEvt($api.dom('.account_setting'), 'click',function(){
+					api.openWin({
+						name: 'change_password',
+						url:  './change_password.html',
+					});
+				});
+
+       }
+
+
+
+			// var driver_a=function(){
+			// 	 api.actionSheet({
+			// 			title: '请选择',
+			// 			cancelTitle: '取消',
+			// 			// destructiveTitle: '红色警告按钮',
+			// 			buttons: ['相册','相机']
+			// 	},function(ret,err){
+			// 		if(ret.buttonIndex==1){
+			// 			api.getPicture({
+			// 				sourceType: 'album',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_a"), "src",ret.base64Data);
+			// 						j_z=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}else if(ret.buttonIndex==2){
+			// 			api.getPicture({
+			// 				sourceType: 'camera',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_a"), "src",ret.base64Data);
+			// 						j_z=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}
+			// 	})
+			//  };
+			//
+			//
+			//
+			// var driver_b=function(){
+			// 	 api.actionSheet({
+			// 			title: '请选择',
+			// 			cancelTitle: '取消',
+			// 			// destructiveTitle: '红色警告按钮',
+			// 			buttons: ['相册','相机']
+			// 	},function(ret,err){
+			// 		if(ret.buttonIndex==1){
+			// 			api.getPicture({
+			// 				sourceType: 'album',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_b"), "src",ret.base64Data);
+			// 						j_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}else if(ret.buttonIndex==2){
+			// 			api.getPicture({
+			// 				sourceType: 'camera',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#driver_image_b"), "src",ret.base64Data);
+			// 						j_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}
+			// 	})
+			//  };
+			//
+			//
+			// var ida_image=function(){
+			// 	 api.actionSheet({
+			// 			title: '请选择',
+			// 			cancelTitle: '取消',
+			// 			// destructiveTitle: '红色警告按钮',
+			// 			buttons: ['相册','相机']
+			// 	},function(ret,err){
+			// 		if(ret.buttonIndex==1){
+			// 			api.getPicture({
+			// 				sourceType: 'album',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#id_image_a"), "src",ret.base64Data);
+			// 						id_z=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}else if(ret.buttonIndex==2){
+			// 			api.getPicture({
+			// 				sourceType: 'camera',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#id_image_a"), "src",ret.base64Data);
+			// 						id_z=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}
+			// 	})
+			//  };
+			//
+			//
+			//
+			// var idb_image=function(){
+			// 	 api.actionSheet({
+			// 			title: '请选择',
+			// 			cancelTitle: '取消',
+			// 			// destructiveTitle: '红色警告按钮',
+			// 			buttons: ['相册','相机']
+			// 	},function(ret,err){
+			// 		if(ret.buttonIndex==1){
+			// 			api.getPicture({
+			// 				sourceType: 'album',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#id_image_b"), "src",ret.base64Data);
+			// 						id_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}else if(ret.buttonIndex==2){
+			// 			api.getPicture({
+			// 				sourceType: 'camera',
+			// 				encodingType: 'jpg',
+			// 				mediaValue: 'pic',
+			// 				destinationType: 'base64',
+			// 				allowEdit: true,
+			// 				quality: 100,
+			// 				targetWidth: 300,
+			// 				targetHeight: 150,
+			// 				saveToPhotoAlbum: false
+			// 			}, function(ret, err) {
+			// 				if (ret) {
+			// 					if(ret.base64Data){
+			// 						$api.attr($api.dom("#id_image_b"), "src",ret.base64Data);
+			// 						id_f=ret.base64Data;
+			// 					}
+			// 				} else {
+			// 					alert(JSON.stringify(err));
+			// 				}
+			// 			});
+			// 		}
+			// 	})
+			//  };
+			//  var seepicture=function(pab){
+			// 	 var pa1=pab.split('/');
+			// 	 var dialogBox = api.require('dialogBox');
+			// 	 dialogBox.discount({
+			// 			 rect: {
+			// 					 w: 300,
+			// 					 h: 150
+			// 			 },
+			// 			 styles: {
+			// 					 bg: '#FFF',
+			// 					 image: {
+			// 							 path: 'fs://'+pa1[3]+''+pa1[5],
+			// 							 marginB: 200,
+			// 					 },
+			// 					 cancel: {
+			// 							 icon: 'fs://2018close1.png',
+			// 							 w: 50,
+			// 							 h: 50
+			// 					 }
+			// 			 }
+			// 	 }, function(ret) {
+			// 			 // alert(JSON.stringify(ret));
+			// 			 if (ret.eventType == 'cancel') {
+			// 					 dialogBox.close({
+			// 							 dialogName: 'discount'
+			// 					 });
+			// 			 }
+			// 	 });
+			//  }
+			function openimg(ret) {
+	var src = ret.getAttribute("src");
+	api.openFrame({
+		name : 'imgshow',
+		url : 'ImageShow.html',
+		rect : {
+			x : 0,
+			y : 0,
+			w : 'auto',
+			h : 'auto'
+		},
+		bounces : false,
+		bgColor : 'rgba(0,0,0,0.6)',
+		pageParam : {
+			url : src
+		}
+	});
+}
+      </script>
+</html>

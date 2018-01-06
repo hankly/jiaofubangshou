@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+        header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;padding-top:22px;}
+        header b{ width: 42px; height:42px; display: inline-block; position: relative; z-index: 1; background: url() no-repeat center; background-size: 70% auto;  }
+        header b.ic-back{ background-image: url(../image/back.png);background-size:auto; }
+        /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right; }*/
+        header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+        #foot_a{
+          position:relative;;
+          padding-left:10%;
+          padding-right:10%;
+          width:80%;
+          height:45px;
+          bottom:0;
+          left:0;
+          font-size:14px;
+        }
+        #foot_b{
+          position:relative;;
+          margin-left:10%;
+          margin-right:10%;
+          width:80%;
+          height:45px;
+          bottom:0;
+          left:0;
+          font-size:14px;
+        }
+        #foot_sure_c{
+          padding-left:10%;
+          padding-right:10%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+        #foot_sure_p{
+          padding-left:12.2%;
+          padding-right:12.2%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+        #foot_cancle_s{
+          padding-left:14.8%;
+          padding-right:14.8%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+        #foot_cancle_g{
+          padding-left:14.8%;
+          padding-right:14.8%;
+          padding-top:10px;
+          padding-bottom:10px;
+          background-color:#f16c3c;
+          color:white;
+          border-radius:10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <header class="border-b">
+            <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+            <div class="title" id="title">清单交付</div>
+            <!-- <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b> -->
+        </header>
+        <div id="main" class="flex-con">
+
+        </div>
+        <div id="foot_a">
+            <span class="foot_sure" id="foot_sure_c">物流公司收货</span>
+            <span class="foot_cancle" id="foot_sure_p">收货人签收</span>
+        </div>
+        <!-- <div id="foot_b">
+            <span class="foot_sure" id="foot_cancle_s">申请退单</span>
+            <span class="foot_cancle" id="foot_cancle_g">事故出险</span>
+        </div> -->
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var leng=0;
+var is_true;
+    apiready = function(){
+      api.addEventListener({
+                            name:'viewappear'
+                        }, function(ret, err){
+                           api.setScreenOrientation({
+                            orientation: 'portrait_up'
+                        });
+                      });
+      // $api.text($api.dom("#title"),api.pageParam.name);
+      var scheduling_id=api.pageParam.scheduling_id;
+
+        api.openFrame({
+            name: 'scheduling_waitsend',
+            url: './scheduling_waitsend.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            },
+            pageParam: {
+                scheduling_id: scheduling_id,
+           }
+});
+
+$api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+         leng=ret.result;
+      },'json');
+
+      $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+               is_true=ret.result;
+            },'json');
+
+$api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
+  var name=$api.text($api.dom("#foot_sure_c"));
+  if(is_true==0){
+  if(leng!=0){
+    api.openWin({
+        name: 'select_delivery',
+        url: './select_delivery.html',
+        pageParam: {
+            scheduling_id: scheduling_id,
+            is_wuliu:1,
+       }
+    });
+  }else{
+    api.openWin({
+      name:'warn',
+      url:'./warn.html',
+      pageParam:{
+        scheduling_id: scheduling_id,
+        apptype:1,
+        is_wuliu:1,
+      }
+    });
+  }
+}else{
+  api.toast({
+          msg :'请物流公司确认',
+          duration : 1000,
+          location : 'middle'
+  });
+}
+  // api.openWin({
+  //     name: 'select_delivery',
+  //     url: './select_delivery.html',
+  //     pageParam: {
+  //         scheduling_id: scheduling_id,
+  //    }
+  // });
+
+});
+$api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
+  // api.openWin({
+  //     name: 'signmain',
+  //     url: './signmain.html',
+  //     pageParam: {
+  //         scheduling_id: scheduling_id,
+  //    }
+  // });
+  if(is_true==0){
+  if(leng!=0){
+    api.openWin({
+        name: 'signmain',
+        url: './signmain.html',
+        pageParam: {
+            scheduling_id: scheduling_id,
+            is_wuliu:2,
+       }
+    });
+  }else{
+    api.openWin({
+      name:'warn',
+      url:'./warn.html',
+      pageParam:{
+        scheduling_id: scheduling_id,
+        apptype:2,
+        is_wuliu:2,
+      }
+    });
+  }
+}else{
+  api.toast({
+          msg :'请物流公司确认',
+          duration : 1000,
+          location : 'middle'
+  });
+}
+
+});
+
+}
+
+
+</script>

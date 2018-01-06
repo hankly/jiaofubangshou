@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<title></title>
+		<script type="text/javascript" src="script/config.js"></script>
+		<style>
+				* {
+				margin: 0 auto;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			html,
+			body {
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+				margin: 0;
+				padding: 0;
+
+			}
+			.box{
+				height:90%;
+				width:90%;
+				margin-left:5%;
+				margin-top:5%;
+				/*background-color:rgb(238,238,238);*/
+				border-radius: 10px;
+				background-color:white;
+				border:1px solid grey;
+				background-color: #EEEEEE;
+				color:#333333;
+			}
+		  .ltop{
+		  	width:110px;
+		  	height:110px;
+		  	border-radius: 50%;
+		  	float:left;
+		  	background: url(img/rhead.png);
+		  	background-size: 110px,110px;
+
+		  	text-align: center;
+
+		  	border:solid;
+		  	margin-top:10px;
+		  }
+		  .rtop{
+		  	width:65%;
+		  	height:220px;
+		  	float:left;
+
+
+		  }
+		  .ltop img{
+		  	width:120px;
+		  	height:120px;
+		  	border-radius: 50%;
+		  	margin-top:20px;
+		  }
+		  .rtop1{
+		  	width:92%;
+		  	height:40px;
+		  	margin-left:8%;
+		  	line-height:40px;
+		  	text-align:left;
+		  	color:rgb(51,51,51);
+		  }
+		  #name{
+		  	width:60%;
+		  	height:40px;
+		  	line-height:40px;
+		  	float:left;
+		  }
+		  #sex{
+		  	width:40%;
+		  	height:40px;
+		  	line-height:40px;
+		    float:left;
+		  }
+		  #center{
+		  	width:90%;
+		  	height:200px;
+		  	margin-left:5%;
+		  }
+		  #ctext{
+		  		width:90%;
+		  		margin-left:5%;
+		  		height:200px;
+		  		border-radius:10px;
+		  }
+		  #topt{
+		  	width:96px;
+		  	height:30px;
+		  	margin-top:70px;
+		  	line-height:30px;
+		  	background:rgba(0,0,0,0.5);
+		  	border-bottom-left-radius: 110px;
+		    border-bottom-right-radius: 110px;
+		  	color:white;
+		  }
+		</style>
+	</head>
+	<body>
+		<div class="box">
+            <div class="ltop"><div id="topt">上传头像</div></div>
+			<div class="rtop">
+			<div class="rtop1"><div id="name">姓名：</div><div id="sex">性别：</div></div>
+			<div class="rtop1">电话：<div id="tel"></div></div>
+			<div class="rtop1">车牌：<div id="plate"></div></div>
+			<div class="rtop1">车型：<div id="type"></div></div>
+			<div class="rtop1">车长：<div id="long"></div></div>
+			</div>
+			<div class="center">
+				<textarea id="ctext">
+				</textarea>
+			</div>
+		</div>
+	</body>
+</html>

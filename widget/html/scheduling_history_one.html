@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>清单号</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+}
+/*body{
+    top:22px;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+}*/
+.top{
+  width:100%;
+  height:50px;
+  position: fixed;
+  background:#FFCF09;
+}
+.top1{
+ width:10%;
+ height:30px;
+ float:left;
+ margin-left:5%;
+ margin-top:10px;
+}
+.top1 img{
+width:30px;
+height:30px;
+ }
+.top2{
+width:70%;
+height:50px;
+text-align:center;
+line-height:50px;
+float:left;
+}
+.center{
+    width: 100%;
+    height: 200px;
+}
+.center_1{
+  width: 15%;
+  float: left;
+  /* border: 1px solid red; */
+  height: 40px;
+  margin-top: 10px;
+  text-align: right;
+}
+.center_2{
+    width: 84%;
+    /*height: 50px;
+    float: left;*/
+    margin-left: 15%;
+    line-height: 50px;
+    font-size: 18px;
+}
+.center_3{
+    width: 15%;
+    float: left;
+    /* border: 1px solid red; */
+    height: 40px;
+    margin-top: 10px;
+    text-align: right;
+}
+.center_1 img{
+    height: 23px;
+}
+.center_3 img{
+    height: 30px;
+}
+.center_4{
+    width: 84%;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+}
+.xian{
+    width: 100%;
+    height: 1px;
+    background: #ECECEC;
+}
+.left{
+    width: 20%;
+    float: left;
+}
+.foot{
+    width: 100%;
+    overflow: auto;
+}
+.but{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #FFCF09;
+    position: fixed;
+    bottom: 0;
+  }
+  .foot_1{
+    width: 100%;
+    height: 60px;
+    float: left;
+    margin-top: 5px;
+    overflow: hidden;
+  }
+   .foot_2{
+    width: 100%;
+    height: 200px;
+    float: left;
+    margin-top: 5px;
+    overflow: hidden;
+  }
+  .foot1{
+    width: 70%;
+    height: 30px;
+    float: left;
+    margin-left: 10%;
+    font-size: 14px;
+  }
+  .foot2{
+    float:right;
+    width: 20%;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .foot2 img{
+    width: 30px;
+    height: 30px;
+  }
+  .foot3{
+    float: left;
+    width: 70%;
+    height: 30px;
+    margin-left: 10%;
+    font-size: 14px;
+  }
+  .s1{
+    display: inline-block;
+    width: 7px;
+  }
+  .xian1{
+    width: 100%;
+    height: 1px;
+    background: #ECECEC;
+    float: left;
+  }
+  .box2{
+    width: 80%;
+    height: 400px;
+    position: fixed;
+    left: 10%;
+    top: 150px;
+    background: white;
+    z-index: 100;
+    border: 1px solid green;
+    display: none;
+  }
+  .qx{
+    width: 40%;
+    height: 25px;
+    float: right;
+    text-align:right;
+  }
+  .qx img{
+    width: 25px;
+    height: 25px;
+  }
+  .box3{
+    width: 80%;
+    float: left;
+    margin-left: 10%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+  }
+  .s2{
+    display: inline-block;
+    width: 7px;
+  }
+  .s3{
+    display: inline-block;
+    width: 28px;
+  }
+  .xx{
+    width: 80%;
+    float: left;
+    margin-left: 10%;
+    text-align: center;
+    height: 50px;
+  }
+  .kong{
+    display: inline-block;
+    width: 16px;
+  }
+  .con{
+    width: 100%;
+    overflow: auto;
+  }
+  .but1{
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    text-align: center;
+  }
+  .but2{
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    text-align: center;
+    background: #E4E4E4;
+  }
+   .centerbox{
+          	width: 100%;
+          }
+          .scheduling_a{
+          margin:1.5rem;
+        }
+
+
+        .scheduling_id{
+            width:100%;
+          color:#f16c3c;
+          height:30px;
+          font-size:16px;
+
+        }
+        .order_id{
+        	width:100%;
+        	margin-top:5px;
+        	height:25px;
+          font-size:16px;
+        }
+
+        .order_intro{
+        	height:130px;
+          display:none;
+          margin-left:10%;
+          margin-right:10px;
+        }
+        .order_xian{
+          height:0;
+          width:100%;
+          border-top:1px solid #999999;
+        }
+        .disp{
+          display:block;
+        }
+        .order_goods{
+        	float:left;
+        }
+        .look_more{
+        	float:right;
+        	background-color:#f16c3c;
+
+        	border-radius:10px;
+        	font-size:16px;
+        	line-height:50px;
+          color:white;
+          margin:5px;
+          margin-right:10%;
+          width:80px;
+          text-align:center;
+        }
+        .order_goods_z{
+        	height:60px;
+          margin-left:10%;
+        }
+        #sure_img_z{
+          width:60%;
+          margin-left:20%;
+        }
+        .schedule_sure_company{
+          width:60%;
+          margin-left:20%;
+          text-align:center;
+          margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="centerbox" id="centerbox">
+    <div class="center">
+        <div class="center_1"><img src="../image/rname.png" alt=""></div>
+        <div class="center_4"><p>收货人:<span id="customer_name"></span></p></div>
+        <div class="center_1"><img src="../image/rtels.png" alt="" style="margin-right:3px;"></div>
+        <div class="center_4"><p>手<span class="kong"></span>机:<span id="customer_phone"></span></p></div>
+        <div class="center_3"><img src="../image/3.png" alt=""></div>
+        <div class="center_4"><p>发<span class="kong"></span>站:<span id="sendcity"></span></p></div>
+        <div class="center_3"><img src="../image/1.png" alt=""></div>
+        <div class="center_4"><p>到<span class="kong"></span>站:<span id="acceptcity"></span></p></div>
+
+    </div>
+      <div class="center_2"><p>地<span class="kong"></span>址:<span id="accept_address"></span></p></div>
+    <div class="xian"></div>
+    </div>
+    <img src="" id="sure_img_z"/>
+
+</body>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+    apiready = function(){
+      var scheduling_id=api.pageParam.scheduling_id;
+      // $api.text($api.dom('#scheduling_id_a'),scheduling_id);
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      $api.get(url+'app.php/getOrderCosts?schedule_id='+scheduling_id,function(ret){
+
+          if(ret.result==0){
+            // api.toast({
+            //    msg: '成功',
+            //    duration: 1000,
+            //   location: 'middle'
+            // });
+  if(ret.orderCosts.length>0){
+  for(var a=0;a<msg.orderCosts.length;a++){
+      var c="<tr><td>"+msg.orderCosts[a].order_id+"</td><td>"+msg.orderCosts[a].order_cost+"元</td></tr>";
+      $("#tb3").append(c);
+        }
+     }
+   }
+        },'json');
+
+        $api.get(url+'app.php/sandoandg?schedule_id='+scheduling_id,function(ret){
+                 if(ret.result==0){
+                   api.toast({
+                      msg: '成功',
+                      duration: 1000,
+                     location: 'middle'
+                   });
+                                 $api.text($api.dom('#customer_name'),ret.schedule.name);
+                                 $api.text($api.dom('#customer_phone'),ret.schedule.phone);
+                                 $api.text($api.dom('#sendcity'),ret.schedule.sendcity);
+                                 $api.text($api.dom('#acceptcity'),ret.schedule.receivecity);
+                                 $api.text($api.dom('#accept_address'),ret.schedule.receiveraddress);
+                                 if(ret.schedule.pic.substring(0,4)=='http'){
+                                   $api.attr($api.dom('#sure_img_z'),'src',ret.schedule.pic);
+                                 }else{
+                                  $api.css($api.dom('#sure_img_z'),'display:none');
+                                  $api.append($api.dom('body'),'<div class="schedule_sure_company">'+ret.schedule.pic+'</div>');
+
+                                 }
+
+                                 for(var i=0;i<ret.goods.length;i++){
+                                   $api.append($api.dom('#centerbox'),
+                                  //  '<div class="order_id">'+
+                                  //                      '运单号:<span>'+ret.goods[i].order_id+'</span><span class="look_more" id="r'+ret.goods[i].order_id+'" >查看更多</span>'+
+                                  //                    '</div>'+
+                                  //                    '<div class="order_intro" id="d'+ret.goods[i].order_id+'">'+
+                                  //                    '<div class="order_id">'+
+                                  //                      '货物名称:<span>'+ret.goods[i].goods_name+'</span>'+
+                                  //                    '</div>'+
+                                                     '<div class="order_goods_z">'+
+                                                     '<div class="order_goods">'+
+                                                     '<div class="order_id">'+
+                                                     '运单号:<span>'+ret.goods[i].order_id+'</span>'+
+                                                      '</div>'+
+                                                      '<div class="order_id">'+
+                                                       '货物名称:<span>'+ret.goods[i].goods_name+'</span>'+
+                                                      '</div></div>'+
+                                                       '<div class="look_more" id="r'+ret.goods[i].order_id+'">查看更多</div></div>'+
+                                                        '<div class="order_intro" id="d'+ret.goods[i].order_id+'">'+
+                                                     '<div class="order_id">'+
+                                                       '件数:<span>'+ret.goods[i].goods_count+'</span>'+
+                                                     '</div>'+
+                                                     '<div class="order_id">'+
+                                                       '体积:<span>'+ret.goods[i].goods_capacity+'</span>'+
+                                                     '</div>'+
+                                                     '<div class="order_id">'+
+                                                       '重量:<span>'+ret.goods[i].goods_weight+'</span>'+
+                                                     '</div>'+
+                                                     '<div class="order_id">'+
+                                                       '包装:<span>'+ret.goods[i].goods_package+'</span>'+
+                                                     '</div>'+
+                                                     '<div class="order_xian"></div></div>');
+
+                                                     $api.addEvt($api.dom("#r"+ret.goods[i].order_id), 'click', function(){
+
+                                                      var did=$api.attr(this,'id').substring(1);
+                                                      $api.toggleCls($api.dom("#d"+did), 'disp');
+                                                      if($api.hasCls($api.dom("#d"+did),'disp')){
+                                                        $api.text($api.dom("#r"+did),"收起");
+                                                      }else{
+                                                        $api.text($api.dom("#r"+did),"查看更多");
+                                                      }
+                                                     });
+
+                                 }
+                                }else{
+                                  alert(ret.desc);
+                                }
+                           },'json');
+
+    }
+
+    </script>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+        .swipe {overflow: hidden;position: relative;}
+        .swipe-wrap {overflow: hidden; position: relative;}
+        .swipe-wrap .swipe-con { float:left; position: relative;}
+        .swipe-wrap .swipe-con img{ width:100%; vertical-align: middle;  }
+        #main{ padding: 2px; background-color: #e5e5e5;}
+        #main .flex-vertical .layout{ background:#e66961 url() right bottom no-repeat; margin: 1.5rem;  padding: 1rem; background-size: auto 50%; line-height: 2rem;  color: white; font-size: 1.8rem;border-radius:1rem;height:110px;}
+        #main .flex-vertical .layout p{ font-size: 1rem; }
+        #main .flex-vertical .layout.ic-hot{ background-color:#f16c3c;font-size: 1.6rem;}
+        #main .flex-vertical .layout.ic-tag{ background-color: #f3845c;font-size: 1.6rem;}
+        #main .flex-vertical .layout.ic-like{ background-color:#f3845c;font-size: 1.6rem;}
+        #main .flex-vertical .layout.ic-lable{background-color: #f16c3c;font-size: 1.6rem;}
+    .flex-2{ -webkit-box-flex: 2;     -webkit-flex: 2;    flex: 2; }
+    .hover{ opacity: .8; }
+    .my_card{
+      margin:1.5rem;
+      margin-top:2rem;
+      margin-bottom:2rem;
+      /*background-size: auto 50%;*/
+    }
+    .my_card_a{
+       color: white;
+      border-radius:1rem;
+      font-size: 1.6rem;
+      background-color:#f16c3c;
+      padding-left:30%;
+      height:50px;
+    }
+    .my_message,.delivery,.qr_code{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+padding-top: 5px;
+    }
+    .my_message_z,.delivery_z,.qr_code_z,.order_acc{
+      padding-top: 10px;
+        text-align:center;
+    }
+</style>
+</head>
+<body>
+  <div id="wrap" class="flex-wrap flex-vertical" >
+      <div id="main" class="flex-wrap flex-con" >
+           <div class="flex-con flex-wrap flex-vertical">
+               <div tapmode="hover" onclick="funOpenArticle( this );" class="flex-wrap flex-con flex-2 layout-wrap">
+                   <div class="flex-con layout ic-hot">
+                     <div class="qr_code">
+                       <img src="../image/scan_a_QR_code.png" style="width:60%;margin:0 auto;"/>
+                     </div>
+                      <div class="qr_code_z">扫码接单</div>
+                   </div>
+               </div>
+               <div tapmode="hover" onclick="funOpenArticle1( this );"  class="flex-wrap flex-con flex-2 layout-wrap">
+                   <div class="flex-con layout ic-tag">
+                     <div class="delivery">
+                       <img src="../image/History_list.png" style="width:60%;"/>
+                     </div>
+                       <div class="delivery_z">历史单据</div>
+                   </div>
+               </div>
+           </div>
+           <div class="flex-wrap flex-con flex-vertical">
+               <div tapmode="hover" onclick="funOpenArticle3(this)"  class="flex-wrap flex-con layout-wrap">
+
+                   <div class="flex-con layout ic-like">
+                     <div style="width:50px;height:50px;background-color:red;position:absolute;border-radius:25px;right:1.2rem;top:1.0rem;text-align:center;line-height:50px;display:none;" id="tongji"></div>
+                     <div class="my_message">
+                      <img src="../image/delivery.png" style="width:55%;"/>
+
+                     </div>
+                      <div class="order_acc">货物交付</div>
+                   </div>
+               </div>
+               <div class="flex-wrap flex-con">
+                  <div tapmode="hover" onclick="message()"  class="flex-wrap flex-con layout-wrap">
+                   <div class="flex-con layout ic-lable">
+                     <div class="my_message">
+                      <img src="../image/my_message.png" style="width:60%;"/>
+                    </div>
+                    <div class="my_message_z">我的消息</div>
+                   </div>
+                  </div>
+               </div>
+           </div>
+      </div>
+      <div class="my_card">
+           <div  class="my_card_a" tapmode="hover" onclick="funOpenArticle2(this);">
+               <img src="../image/card.png" style="width:20%;margin:10px auto;float:left;"/>
+               <div style="float:left;line-height:50px;margin-left:5px;" id="mingpian">我的名片</div>
+           </div>
+      </div>
+  </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+      api.closeWin({
+         name: 'signmain',
+         animation:{
+           type:"none",
+         }
+      });
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      tongji(lorryid);
+     setInterval('tongji('+lorryid+')',3000);
+    };
+    var mySwipe = new Swipe($api.dom('.swipe'), {
+        speed: 400,
+        auto: 3000,
+        continuous: true,
+        disableScroll: false,
+        stopPropagation: false,
+        transitionEnd: function(index, elem) {
+
+        }
+    });
+    function funOpenArticle( tag ){
+
+        var scanner = api.require('scanner');
+    scanner.open(function(ret, err) {
+        if (ret.msg) {
+          $api.append($api.dom('body'), '<audio src="../image/Win.mp3" controls="controls" preload id="music1" hidden>');
+          $api.dom('#music1').play();
+          api.openWin({
+            name: 'scheduling_main',
+            url:  './scheduling_main.html',
+            pageParam: {
+              name:$api.text( $api.dom(".qr_code_z")),
+              scheduling_id:ret.msg,
+            }
+          });
+            // alert(JSON.stringify(ret.msg));
+        } else {
+            // alert(JSON.stringify(err));
+        }
+      });
+
+  }
+    function funOpenArticle2(tdg){
+    api.openWin({
+      name: 'mingpian',
+      url:  './minimain.html',
+      pageParam: {
+        name:$api.text( $api.dom("#mingpian")),
+      }
+    });
+  };
+  function funOpenArticle1(tdg){
+    api.openWin({
+        name: 'delivery_z',
+        url: './minimain.html',
+        pageParam: {
+            name: $api.text( $api.dom(".delivery_z")),
+       }
+    });
+  }
+  function funOpenArticle3(tdg){
+    api.openWin({
+        name: 'order_acc',
+        url: './minimain.html',
+        pageParam: {
+            name: $api.text( $api.dom(".order_acc")),
+       }
+    });
+  }
+  function message(){
+    api.toast({
+       msg: '暂未开放',
+       duration: 2000,
+      location: 'middle'
+    });
+  }
+  var tongji=function(id){
+    $api.get('http://api.uminfo.cn/app.php/tongji?lorry_id='+id,function(ret){
+      if(ret.count==0){
+        $api.css($api.dom('#tongji'),'display:none');
+      }else{
+        $api.css($api.dom('#tongji'),'display:block');
+        $api.text($api.dom('#tongji'),ret.count);
+      }
+   },'json');
+  }
+</script>
+</html>
