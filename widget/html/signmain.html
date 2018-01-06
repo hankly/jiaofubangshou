@@ -140,6 +140,7 @@ function timeyun(){
 			});
        qid=api.pageParam.scheduling_id;
 			 is_wuliu=api.pageParam.is_wuliu;
+			 alert(is_wuliu);
 			 $api.text($api.dom("#scheduling_id"),"清单号:"+qid);
       //  api.openFrame({
       //      name: 'signimage',
@@ -264,13 +265,17 @@ function timeyun(){
 
 							      }
 							  });
-								$api.post(url+'msend.php/schedules_sign',{
-											body: {
-											 scheduling_id:qid,
-										 }
-									 },function(ret){
-									// alert(ret.desc);
-								},'json');
+
+                if(is_wuliu==2){
+									$api.post(url+'msend.php/schedules_sign',{
+												body: {
+												 scheduling_id:qid,
+											 }
+										 },function(ret){
+										// alert(ret.desc);
+									},'json');
+								}
+
 								// alert("提交成功");
 								api.toast({
 									 msg: "提交成功",
