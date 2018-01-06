@@ -302,6 +302,7 @@
 	</script> -->
 	<script>
 	apiready = function(){
+		setTimeout("api.closeWin({name:'firstregister2'})",600);
 		$api.val($api.dom('#plate_number'),'');
 		$api.val($api.dom('#carlong'),'');
 		$api.val($api.dom('#cartype'),'');
@@ -400,7 +401,7 @@
 															plate_number:plate_number,}
 														 },function(ret){
 															if(ret.result==0){
-																setTimeout("api.closeWin({name:'firstregister2'})",600);
+
 																api.toast({
 																	 msg: '成功',
 																	 duration: 1000,

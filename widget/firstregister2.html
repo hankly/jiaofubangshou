@@ -128,6 +128,7 @@
 	<script type="text/javascript" src="script/api.js"></script>
 	<script>
 	apiready = function(){
+		setTimeout("api.closeWin({name:'fiveregister1'})",600);
 		$api.val($api.dom('#name'),'');
 		$api.val($api.dom('#idcard'),'');
   var lorryid=api.pageParam.lorryid;
@@ -177,7 +178,7 @@
 																 lorryid: ret.lorryid
 																}
 															 });
-															 setTimeout("api.closeWin({name:'fiveregister1'})",600);
+
 														 }else{
 															 alert(ret.desc);
 														 }

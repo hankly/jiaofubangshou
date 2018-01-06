@@ -79,9 +79,9 @@
     }
 		.img_id_z,.img_id_f{
 			-ms-transform:rotate(90deg);
--moz-transform:rotate(90deg);
--webkit-transform:rotate(90deg);
--o-transform:rotate(90deg);
+      -moz-transform:rotate(90deg);
+      -webkit-transform:rotate(90deg);
+      -o-transform:rotate(90deg);
 		}
 	</style>
 </head>
@@ -105,6 +105,7 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script>
 	apiready = function() {
+		setTimeout("api.closeWin({name:'threeregister3'})",600);
 		$api.attr($api.dom("#img_id_z"), "src",'image/id_card_z.png');
 		$api.attr($api.dom("#img_id_f"), "src",'image/id_card_z.png');
      var id_z,id_f;
@@ -122,7 +123,7 @@
 									encodingType: 'jpg',
 									mediaValue: 'pic',
 									destinationType: 'base64',
-									allowEdit: true,
+									allowEdit: false,
 									quality: 100,
 									targetWidth: 300,
 									targetHeight: 300,
@@ -143,7 +144,7 @@
 									encodingType: 'jpg',
 									mediaValue: 'pic',
 									destinationType: 'base64',
-									allowEdit: true,
+									allowEdit: false,
 									quality: 100,
 									targetWidth: 300,
 									targetHeight: 300,
@@ -174,7 +175,7 @@
 									encodingType: 'jpg',
 									mediaValue: 'pic',
 									destinationType: 'base64',
-									allowEdit: true,
+									allowEdit: false,
 									quality: 100,
 									targetWidth: 300,
 									targetHeight: 300,
@@ -195,7 +196,7 @@
 									encodingType: 'jpg',
 									mediaValue: 'pic',
 									destinationType: 'base64',
-									allowEdit: true,
+									allowEdit: false,
 									quality: 100,
 									targetWidth: 300,
 									targetHeight: 300,
@@ -231,7 +232,7 @@ if(id_z&&id_f){
 			 },function(ret){
 
 				if(ret.result==0){
-setTimeout("api.closeWin({name:'threeregister3'})",600);
+
 					api.hideProgress();
 					api.toast({
 						 msg: '上传成功',

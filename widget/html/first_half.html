@@ -101,6 +101,33 @@
 				vertical-align:top;
 				float:left;
 			}
+			#foot{
+				position:relative;;
+				margin:10%;
+				width:90%;
+				height:50px;
+				bottom:0;
+				left:0;
+				font-size:18px;
+			}
+			.foot_sure{
+				padding-left:17%;
+				padding-right:17%;
+				padding-top:10px;
+				padding-bottom:10px;
+				background-color:#f16c3c;
+				color:white;
+				border-radius:10px;
+			}
+			.foot_cancle{
+				padding-left:17%;
+				padding-right:17%;
+				padding-top:10px;
+				padding-bottom:10px;
+				background-color:#f16c3c;
+				color:white;
+				border-radius:10px;
+			}
 		</style>
 	</head>
 	<body>
@@ -117,7 +144,11 @@
 					<img src="../image/password.png" class="password_a"/><input type="password" class="center2_1" placeholder="确认新密码(6~20位)" id="password_s" style="margin-left=28px;"/>
 				</div>
 			</div>
-			<div class="foot">确认</div>
+			<!-- <div class="foot">确认</div> -->
+			<div id="foot">
+					<span class="foot_sure" id="foot_sure">确认</span>
+					<span class="foot_cancle" id="foot_cancle">取消</span>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
@@ -131,7 +162,7 @@
     $api.val($api.dom('#password_o'),'');
     $api.val($api.dom('#password_n'),'');
     $api.val($api.dom('#password_s'),'');
-	$api.addEvt($api.dom('.foot'), 'click', function(){
+	$api.addEvt($api.dom('#foot_sure'), 'click', function(){
         var password_o=$api.val($api.dom("#password_o"));
         var password_n=$api.val($api.dom("#password_n"));
         var password_s=$api.val($api.dom("#password_s"));
@@ -189,18 +220,18 @@
 															// api.openFrame({
 															//   url: './firstregister2.html?lorryid='+ret.lorryid,
 															//  });
-                              api.closeWin({
-                                 name: 'main',
-                                 animation:{
-                                   type:"none",
-                                 }
-                              });
-                              api.closeWin({
-                                 name: 'first_half',
-                                 animation:{
-                                   type:"none",
-                                 }
-                              });
+															$api.rmStorage('password');
+															var key = 'user';
+															var user = {};
+															var aa=$api.getStorage(key);
+															user.time=aa.time;
+															user.lorryid=aa.lorryid;
+															 user.telephone=aa.telephone;
+															user.flag= aa.flag
+															user.pass= '';
+															$api.setStorage(key, user);
+															setTimeout("api.closeWin({name:'first_half'})",550);
+															setTimeout("api.closeWin({name:'main'})",550);
 															 api.openWin({
 																 name: 'index',
 																 url:  '../index.html',
@@ -210,7 +241,11 @@
 														 }
 													 });
 												 }
-												 })
+											 });
+											 $api.addEvt($api.dom('#foot_cancle'), 'click',function(){
+												 api.closeWin();
+											 });
+
             }
 	</script>
 </html>
