@@ -400,6 +400,7 @@
 															plate_number:plate_number,}
 														 },function(ret){
 															if(ret.result==0){
+																setTimeout("api.closeWin({name:'firstregister2'})",600);
 																api.toast({
 																	 msg: '成功',
 																	 duration: 1000,
