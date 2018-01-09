@@ -192,6 +192,7 @@
 		//                                 });
 		//                         }
 		//                 });
+
 		if(api.pageParam.telephone!=null){
        $api.val($api.dom('#mobile'),api.pageParam.telephone);
 		}else if($api.getStorage('password')){
@@ -204,7 +205,13 @@
 			 });
 		}else if($api.getStorage('user')){
        $api.val($api.dom('#mobile'),$api.getStorage('user').telephone);
-			 $api.val($api.dom('#password'),$api.getStorage('user').pass);
+			 if(api.pageParam.pass!=null){
+        $api.val($api.dom('#password'),api.pageParam.pass);
+				$api.attr($api.dom('.duigou'),'src','image/duigou1.png');
+			}else{
+				$api.val($api.dom('#password'),'');
+			}
+
 		}
 
 
@@ -270,8 +277,10 @@
 															if($api.attr($api.dom('.duigou'),'src')=='image/duigou1.png'){
 																var key1= 'password';
 																var user1 = {};
+
 																user1.mobile= mobile;
 																user1.pass= password;
+
 																$api.setStorage(key1, user1);
 															}else{
 																$api.rmStorage('password');
