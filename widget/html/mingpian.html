@@ -286,7 +286,7 @@
 					 });
 
 
-					 $api.addEvt($api.dom("#ctext"), 'blur',function(){
+					 $api.addEvt($api.dom("#ctext"), 'keyup',function(){
 						 var intro=$api.val($api.dom('#ctext'));
 						 $api.post(url+'app.php/upintro',{
 									 body:{lorryid:lorryid,
