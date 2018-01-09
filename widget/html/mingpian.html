@@ -180,10 +180,10 @@
 								$api.val($api.dom('#ctext'),ret.lorry.route);
 							}
 							var	head_img=ret.lorry.head_img;
-							// if(ret.lorry.head_img==null){
-              //     var head_img='../image/rhead.png';
-							// }
-							$api.css($api.dom('#ltop'),'background:url('+head_img+')');
+							if(ret.lorry.head_img==null){
+                  var head_img='../image/rhead.png';
+							}
+							$api.css($api.dom('#ltop'),'background:url('+head_img+');width:110px;height:110px;background-size: 110px,110px;');
 							// $api.css($api.dom('#ltop'),'background-image:url(../image/head.png)');
 						 }else{
 							 alert(ret.desc);
@@ -231,7 +231,7 @@
 													 });
 										}
 									} else {
-										alert(JSON.stringify(err));
+										// alert(JSON.stringify(err));
 									}
 								});
 							}else if(ret.buttonIndex==2){
@@ -266,12 +266,32 @@
 													 }
 												 });
 									} else {
-										alert(JSON.stringify(err));
+										// alert(JSON.stringify(err));
 									}
 								});
 							}
 						})
 					 });
+
+
+					 $api.addEvt($api.dom("#ctext"), 'blur',function(){
+						 var intro=$api.val($api.dom('#ctext'));
+						 $api.post(url+'app.php/upintro',{
+									 body:{lorryid:lorryid,
+												 introduction:intro,}
+									},function(ret){
+									 if(ret.result==0){
+										 api.toast({
+												msg: '成功',
+												duration: 1000,
+											 location: 'middle'
+										 });
+										}else{
+											alert(ret.desc);
+										}
+									});
+					 });
+
                   };
 
 
