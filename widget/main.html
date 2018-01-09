@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <style>
-        header{ background-color: #f2f2f2; }
+        header{ background-color: #f16c3c; }
         header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
         header ul li.active{ display: block; }
         #footer{  background-color: #f2f2f2; }
@@ -56,6 +56,7 @@
 <script type="text/javascript" src="script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
+      api.closeToWin({name:'main'});
       var pressIndex=0;
       api.addEventListener({
                               name : 'keyback'
@@ -73,6 +74,7 @@
                                   api.toLauncher();
                               }
                       });
+
       setTimeout(addEventListener,3000);
       var user = $api.getStorage('user');
       var lorryid=user.lorryid;

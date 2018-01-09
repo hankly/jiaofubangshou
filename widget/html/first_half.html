@@ -128,6 +128,9 @@
 				color:white;
 				border-radius:10px;
 			}
+			input {
+				-webkit-tap-highlight-color:transparent;
+			}
 		</style>
 	</head>
 	<body>
@@ -216,7 +219,7 @@
                                }
 													 },function(ret){
 														if(ret.result==0){
-															alert("成功")
+															alert("成功");
 															// api.openFrame({
 															//   url: './firstregister2.html?lorryid='+ret.lorryid,
 															//  });
@@ -230,14 +233,17 @@
 															user.flag= aa.flag
 															user.pass= '';
 															$api.setStorage(key, user);
-															setTimeout("api.closeWin({name:'first_half'})",550);
-															setTimeout("api.closeWin({name:'main'})",550);
+															setTimeout("api.closeWin({name:'first_half'})",750);
+															setTimeout("api.closeWin({name:'main'})",650);
 															 api.openWin({
 																 name: 'index',
 																 url:  '../index.html',
 															 });
 														 }else{
 															 alert(ret.desc);
+															 $api.val($api.dom('#password_o'),'');
+															 $api.val($api.dom('#password_n'),'');
+															 $api.val($api.dom('#password_s'),'');
 														 }
 													 });
 												 }

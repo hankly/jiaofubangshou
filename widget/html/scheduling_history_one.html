@@ -346,13 +346,20 @@ float:left;
                                  $api.text($api.dom('#sendcity'),ret.schedule.sendcity);
                                  $api.text($api.dom('#acceptcity'),ret.schedule.receivecity);
                                  $api.text($api.dom('#accept_address'),ret.schedule.receiveraddress);
-                                 if(ret.schedule.pic.substring(0,4)=='http'){
-                                   $api.attr($api.dom('#sure_img_z'),'src',ret.schedule.pic);
-                                 }else{
-                                  $api.css($api.dom('#sure_img_z'),'display:none');
-                                  $api.append($api.dom('body'),'<div class="schedule_sure_company">'+ret.schedule.pic+'</div>');
-
+                                 if(ret.schedule.pic!=null){
+                                   if(ret.schedule.pic.substring(0,4)=='http'){
+                                     $api.attr($api.dom('#sure_img_z'),'src',ret.schedule.pic);
+                                   }else{
+                                    $api.css($api.dom('#sure_img_z'),'display:none');
+                                    $api.append($api.dom('body'),'<div class="schedule_sure_company">'+ret.schedule.pic+'</div>');
+                                   }
                                  }
+                                //  if(ret.schedule.pic.substring(0,4)=='http'){
+                                //    $api.attr($api.dom('#sure_img_z'),'src',ret.schedule.pic);
+                                //  }else{
+                                //   $api.css($api.dom('#sure_img_z'),'display:none');
+                                //   $api.append($api.dom('body'),'<div class="schedule_sure_company">'+ret.schedule.pic+'</div>');
+                                //  }
 
                                  for(var i=0;i<ret.goods.length;i++){
                                    $api.append($api.dom('#centerbox'),

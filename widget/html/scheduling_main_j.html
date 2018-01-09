@@ -134,6 +134,33 @@ $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
 
 $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
   var name=$api.text($api.dom("#foot_sure_c"));
+  var bMap = api.require('bMap');
+  bMap.getLocation({
+      accuracy: '10m',
+      autoStop: false,
+      filter: 1
+  }, function(ret, err) {
+      if (ret.status) {
+        $api.post(url+'app.php/last_map',{
+         body:{
+              schedule_id:scheduling_id,
+              longitude:ret.lon,
+              latitude:ret.lat,
+              }
+         },function(ret){
+           api.toast({
+              msg: ret.desc,
+              duration: 1000,
+             location: 'middle'
+           });
+       },'json');
+
+      } else {
+          // alert(err.code);
+
+      }
+  });
+
   if(is_true==0){
   if(leng!=0){
     api.openWin({

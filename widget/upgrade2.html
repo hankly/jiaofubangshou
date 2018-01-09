@@ -21,10 +21,10 @@
 		}
 
 		.top {
-			height:40px;
+			height: 50px;
 			width: 100%;
-			margin-top: 10px;
-			line-height: 40px;
+			margin-top: 30px;
+			line-height: 50px;
 			text-align: center;
 			font: 20px "微软雅黑";
 			color: rgb(17, 64, 108);
@@ -79,20 +79,20 @@
 -webkit-transform:rotate(90deg);
 -o-transform:rotate(90deg);
 		}
-		.left_z{
-			width:40%;
-			margin-left:5%;
-			margin-right:5%;
-			float:left;
-			height:150px;
-		}
-		.right_f{
-			width:40%;
-			margin-left:5%;
-			margin-right:5%;
-			float:left;
-			height:150px;
-		}
+    .left_z{
+      width:40%;
+      margin-left:5%;
+      margin-right:5%;
+      float:left;
+      height:150px;
+    }
+    .right_f{
+      width:40%;
+      margin-left:5%;
+      margin-right:5%;
+      float:left;
+      height:150px;
+    }
 		input {
 			-webkit-tap-highlight-color:transparent;
 		}
@@ -101,35 +101,37 @@
 
 <body>
 	<div class="box">
-		<div class="top">第5步:请上传您的证件信息</div>
+		<div class="top">第2步:请上传您的证件信息</div>
 		<div class="center">
-			<div style="height:210px;">
-			<div class="title">请上传驾驶证</div>
-			<div class="left_z">
-					 <div style="width:100%;height:30px;line-height:30px;">正面</div>
-					 <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_j_z"/>
-			</div>
-			<div class="right_f">
-					 <div style="width:100%;height:30px;line-height:30px;">反面</div>
-					 <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_j_f"/>
-			</div>
-		  </div>
-			<!-- <div class="fp" ><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_j_z"/></div>
+      <div style="height:220px;">
+      <div class="title">请上传驾驶证</div>
+      <div class="left_z">
+           <div style="width:100%;height:30px;line-height:30px;">正面</div>
+           <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_j_z"/>
+      </div>
+      <div class="right_f">
+           <div style="width:100%;height:30px;line-height:30px;">反面</div>
+           <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_j_f"/>
+      </div>
+      </div>
+			<!-- <div class="title">请上传驾驶证</div>
+			<div class="fp" ><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_j_z"/></div>
 			<div class="fp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_j_f"/></div> -->
-      <div style="height:210px;">
-			<div class="title">请上传行驶证</div>
-			<div class="left_z">
-					 <div style="width:100%;height:30px;line-height:30px;">正面</div>
-					 <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_x_z"/>
-			</div>
-			<div class="right_f">
-					 <div style="width:100%;height:30px;line-height:30px;">反面</div>
-					 <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_x_f"/>
-			</div>
-		  </div>
-			<!-- <div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_x_z"/></div>
+			<!-- <div class="title">请上传行驶证</div>
+			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_x_z"/></div>
 			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_x_f"/></div> -->
-		</div>
+      <div style="height:220px;">
+      <div class="title">请上传行驶证</div>
+      <div class="left_z">
+           <div style="width:100%;height:30px;line-height:30px;">正面</div>
+           <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_x_z"/>
+      </div>
+      <div class="right_f">
+           <div style="width:100%;height:30px;line-height:30px;">反面</div>
+           <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_x_f"/>
+      </div>
+      </div>
+    </div>
 		<div class="foot" id="foot">确定</div>
 	</div>
 </body>
@@ -139,7 +141,8 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script>
 	apiready = function() {
-			setTimeout("api.closeWin({name:'fiveregister5'})",600);
+			setTimeout("api.closeWin({name:'main'})",600);
+      setTimeout("api.closeWin({name:'upgrade1'})",650);
 		$api.attr($api.dom("#img_j_z"), "src",'image/plus.png');
 		$api.attr($api.dom("#img_j_f"), "src",'image/plus.png');
 		$api.attr($api.dom("#img_x_z"), "src",'image/plus.png');
@@ -565,14 +568,20 @@ if(j_z&&j_f&&x_z&&x_f){
 						 duration: 1000,
 						location: 'middle'
 					});
+          var key = 'user';
+          var user = {};
+          var aa=$api.getStorage(key);
+          user.time=aa.time;
+          user.lorryid=aa.lorryid;
+           user.telephone=aa.telephone;
+          user.flag= type;
+          user.pass= aa.pass;
+          $api.setStorage(key, user);
+          setTimeout("api.closeWin({name:'upgrade2'})",600);
 					api.openWin({
-						name: 'signup_success',
-						url:  './signup_success.html',
+						name: 'main',
+						url:  './main.html',
 						slidBackEnabled:false,
-						pageParam: {
-						telephone: ret.phone,
-						type:type
-					 }
 					});
 				 }else{
 					 api.toast({

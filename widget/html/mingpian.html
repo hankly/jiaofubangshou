@@ -37,7 +37,7 @@
 		  	height:110px;
 		  	border-radius: 50%;
 		  	float:left;
-		  	background: url(img/rhead.png);
+		  	/*background: url(../image/rhead.png);*/
 		  	background-size: 110px,110px;
 		  	text-align: center;
 		  	border:solid;
@@ -178,7 +178,11 @@
 							}else{
 								$api.val($api.dom('#ctext'),ret.lorry.route);
 							}
-							$api.css($api.dom('#ltop'),'background:url('+ret.lorry.head_img+')');
+							var	head_img=ret.lorry.head_img;
+							// if(ret.lorry.head_img==null){
+              //     var head_img='../image/rhead.png';
+							// }
+							$api.css($api.dom('#ltop'),'background:url('+head_img+')');
 							// $api.css($api.dom('#ltop'),'background-image:url(../image/head.png)');
 						 }else{
 							 alert(ret.desc);

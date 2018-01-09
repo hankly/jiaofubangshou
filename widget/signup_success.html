@@ -117,9 +117,12 @@
 		setTimeout("api.closeWin({name:'fiveregister5'})",800);
 		setTimeout("api.closeWin({name:'threeregister3'})",850);
     $api.addEvt($api.dom("#foot"), 'click',function(){
+			$api.rmStorage('password');
+			$api.rmStorage('user');
       api.openWin({
         name: 'index',
         url:  './index.html',
+				slidBackEnabled:false,
         pageParam: {
         telephone:phone
        }

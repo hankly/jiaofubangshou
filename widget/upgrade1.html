@@ -206,16 +206,16 @@
 
 	<body>
 		<div class="box">
-			<div class="top">第3步:请选择您的车辆信息</div>
+			<div class="top">第1步:请选择您的车辆信息</div>
 			<div class="center">
 				<div class="cbox1">
 					<div class="ctitle">类型</div>
 					<div id="pcar"><img id="pimg" src="image/rgchose.png">
 						<div class="cname">运输车辆</div>
 					</div>
-					<div id="ycar"><img id="yimg" src="image/rchose.png">
+					<!-- <div id="ycar"><img id="yimg" src="image/rchose.png">
 						<div class="cname">派送车辆</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="cbox2">
 					<div class="ctitle">信息</div>
@@ -411,8 +411,8 @@
 																//   url: './firstregister2.html?lorryid='+ret.lorryid,
 																//  });
 																 api.openWin({
-																	 name: 'fiveregister5',
-																	 url:  './fiveregister5.html',
+																	 name: 'upgrade2',
+																	 url:  './upgrade2.html',
 																	 slidBackEnabled:false,
 																	 pageParam: {
 																	 lorryid: ret.lorryid,
@@ -430,13 +430,13 @@
 													 }
 						}else{
 							api.openWin({
-								name: 'fiveregister5',
-								url:  './fiveregister5.html',
+								name: 'main',
+								url:  './main.html',
 								slidBackEnabled:false,
-								pageParam: {
-								lorryid: api.pageParam.lorryid,
-								type:1
-							 }
+							// 	pageParam: {
+							// 	lorryid: api.pageParam.lorryid,
+							// 	type:1
+							//  }
 							});
 						}
 					})

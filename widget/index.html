@@ -124,7 +124,7 @@
 				color:#f16c3c;
 			}
 			input {
-				-webkit-appearance:none;
+				-webkit-tap-highlight-color:transparent;
 			}
 		</style>
 	</head>
@@ -152,6 +152,7 @@
 	<script type="text/javascript" src="script/api.js"></script>
 	<script>
 	apiready = function(){
+		setTimeout("api.closeWin({name:'password_second'})",550);
 		var pressIndex=0;
 		api.addEventListener({
 														name : 'keyback'
@@ -199,6 +200,7 @@
 			 api.openWin({
 				 name: 'main',
 				 url:  './main.html',
+				 slidBackEnabled:false,
 			 });
 		}else if($api.getStorage('user')){
        $api.val($api.dom('#mobile'),$api.getStorage('user').telephone);
@@ -276,6 +278,7 @@
 															 api.openWin({
 																 name: 'main',
 																 url:  './main.html',
+																  slidBackEnabled:false,
 															 });
 															 setTimeout("api.closeWin()",600);
 														 }else{
@@ -294,7 +297,7 @@
 							$api.addEvt($api.dom('.foot1_3'), 'click',function(){
 								api.openWin({
 									name: 'password_first',
-									url:  'html/password_first.html'
+									url:  'html/password_first.html',
 								});
 							});
              $api.addEvt($api.dom('.jizhu'), 'click',function(){
