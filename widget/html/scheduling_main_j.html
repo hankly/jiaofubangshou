@@ -139,7 +139,7 @@ $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
   var bMap = api.require('bMap');
   bMap.getLocation({
       accuracy: '10m',
-      autoStop: false,
+      autoStop: true,
       filter: 1
   }, function(ret, err) {
       if (ret.status) {

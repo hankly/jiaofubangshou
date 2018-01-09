@@ -81,7 +81,7 @@
       var time=user.time;
 
       upload_map(lorryid);
-      setInterval("upload_map("+lorryid+")",10800000);
+      setInterval("upload_map("+lorryid+")",5000);
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
@@ -156,7 +156,7 @@
       var bMap = api.require('bMap');
       bMap.getLocation({
           accuracy: '10m',
-          autoStop: false,
+          autoStop: true,
           filter: 1
       }, function(ret, err) {
           if (ret.status) {
