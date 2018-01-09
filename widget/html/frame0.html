@@ -103,6 +103,7 @@ padding-top: 5px;
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript" src="../script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
       api.closeWin({
@@ -127,7 +128,10 @@ padding-top: 5px;
         }
     });
     function funOpenArticle( tag ){
-
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      var time=user.time;
+      check(lorryid,time);
         var scanner = api.require('scanner');
     scanner.open(function(ret, err) {
         if (ret.msg) {
@@ -149,6 +153,10 @@ padding-top: 5px;
 
   }
     function funOpenArticle2(tdg){
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      var time=user.time;
+      check(lorryid,time);
     api.openWin({
       name: 'mingpian',
       url:  './minimain.html',
@@ -158,6 +166,10 @@ padding-top: 5px;
     });
   };
   function funOpenArticle1(tdg){
+    var user = $api.getStorage('user');
+    var lorryid=user.lorryid;
+    var time=user.time;
+    check(lorryid,time);
     api.openWin({
         name: 'delivery_z',
         url: './minimain.html',
@@ -167,6 +179,10 @@ padding-top: 5px;
     });
   }
   function funOpenArticle3(tdg){
+    var user = $api.getStorage('user');
+    var lorryid=user.lorryid;
+    var time=user.time;
+    check(lorryid,time);
     api.openWin({
         name: 'order_acc',
         url: './minimain.html',
@@ -176,6 +192,10 @@ padding-top: 5px;
     });
   }
   function message(){
+    var user = $api.getStorage('user');
+    var lorryid=user.lorryid;
+    var time=user.time;
+    check(lorryid,time);
     api.toast({
        msg: '暂未开放',
        duration: 2000,

@@ -14,7 +14,6 @@ var check=function(id,time){
            var key = 'user';
            var user = {};
            var aa=$api.getStorage(key);
-           user.time=aa.time;
            user.lorryid=aa.lorryid;
             user.telephone=aa.telephone;
            user.flag= aa.flag

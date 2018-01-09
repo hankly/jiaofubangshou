@@ -80,7 +80,6 @@
       var lorryid=user.lorryid;
       var time=user.time;
 
-      setInterval('check('+lorryid+','+time+')',3000);
       upload_map(lorryid);
       setInterval("upload_map("+lorryid+")",10800000);
       api.addEventListener({
@@ -129,6 +128,10 @@
 
     // 随意切换按钮
     function randomSwitchBtn( tag ) {
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      var time=user.time;
+      check(lorryid,time);
         if( tag == $api.dom('#footer li.active') )return;
         var eFootLis = $api.domAll('#footer li'),
             eHeaderLis = $api.domAll('header li'),
