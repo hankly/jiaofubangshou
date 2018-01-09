@@ -210,6 +210,11 @@
 									saveToPhotoAlbum: false
 								}, function(ret, err) {
 									if (ret) {
+										api.showProgress({
+												title: '上传中...',
+												text: '先喝杯茶...',
+												modal: true
+											 });
 										if(ret.base64Data){
 											$api.css($api.dom("#ltop"),"background-image:url("+ret.base64Data+")");
 											ltop=ret.base64Data;
@@ -220,6 +225,7 @@
 																	introduction:intro,}
 													 },function(ret){
 														if(ret.result==0){
+															api.hideProgress();
 															api.toast({
 																 msg: '成功',
 																 duration: 1000,
@@ -247,6 +253,11 @@
 									saveToPhotoAlbum: false
 								}, function(ret, err) {
 									if (ret) {
+										api.showProgress({
+												title: '上传中...',
+												text: '先喝杯茶...',
+												modal: true
+											 });
 										$api.css($api.dom("#ltop"),"background-image:url("+ret.base64Data+")");
 										ltop=ret.base64Data;
 										var intro=$api.val($api.dom('#ctext'));
@@ -256,6 +267,7 @@
 																introduction:intro,}
 												 },function(ret){
 													if(ret.result==0){
+														api.hideProgress();
 														api.toast({
 															 msg: '成功',
 															 duration: 1000,
