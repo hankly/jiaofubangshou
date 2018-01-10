@@ -238,6 +238,80 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
 }
 
 });
+var user = $api.getStorage('user');
+var lorry_id=user.lorryid;
+$api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
+  api.confirm({
+    title: '申请退单',
+    msg: '退单上报',
+    buttons: ['确定', '取消']
+}, function(ret, err) {
+    var index = ret.buttonIndex;
+    alert(index)
+    if(index==1){
+      $api.post(url+'app.php/change_orders_status',{
+       body:{
+            scheduling_id:scheduling_id,
+            lorryid:lorry_id,
+            }
+       },function(ret){
+         if(ret.result==0){
+           api.toast({
+              msg:'申请中，待审核',
+              duration: 2000,
+             location: 'middle'
+           });
+           api.closeToWin({
+             name:'main'
+           });
+         }else{
+           api.toast({
+              msg:'申请失败',
+              duration: 2000,
+             location: 'middle'
+           });
+         }
+     },'json');
+    }
+ });
+});
+
+$api.addEvt($api.dom("#foot_cancle_g"),'click',function(){
+  api.confirm({
+    title: '事故出险',
+    msg: '事故出险上报',
+    buttons: ['确定', '取消']
+}, function(ret, err) {
+    var index = ret.buttonIndex;
+    if(index==1){
+      $api.post(url+'app.php/change_orders_status2',{
+       body:{
+            scheduling_id:scheduling_id,
+            lorryid:lorry_id,
+            }
+       },function(ret){
+         if(ret.result==0){
+           api.toast({
+              msg:'已经上报物流公司',
+              duration: 2000,
+             location: 'middle'
+           });
+           api.closeToWin({
+             name:'main'
+           });
+         }else{
+           api.toast({
+              msg:'上报失败',
+              duration: 2000,
+             location: 'middle'
+           });
+         }
+
+     },'json');
+   }
+});
+
+});
 
 }
 
