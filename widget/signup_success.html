@@ -119,6 +119,7 @@
     $api.addEvt($api.dom("#foot"), 'click',function(){
 			$api.rmStorage('password');
 			$api.rmStorage('user');
+			$api.clearStorage();
       api.openWin({
         name: 'index',
         url:  './index.html',

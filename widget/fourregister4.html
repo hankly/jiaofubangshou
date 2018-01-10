@@ -106,10 +106,10 @@
 <script>
 	apiready = function() {
 			setTimeout("api.closeWin({name:'fiveregister5'})",600);
-		$api.attr($api.dom("#img_j_z"), "src",'image/plus.png');
-		$api.attr($api.dom("#img_j_f"), "src",'image/plus.png');
-		$api.attr($api.dom("#img_x_z"), "src",'image/plus.png');
-		$api.attr($api.dom("#img_x_f"), "src",'image/plus.png');
+			$api.attr($api.dom("#img_j_z"), "src",'image/id_card_z.png');
+			$api.attr($api.dom("#img_j_f"), "src",'image/id_card_f.png');
+			$api.attr($api.dom("#img_x_z"), "src",'image/id_card_z.png');
+			$api.attr($api.dom("#img_x_f"), "src",'image/id_card_f.png');
     var j_z,j_f,x_z,x_f;
     var lorryid=api.pageParam.lorryid;
 		 var type=api.pageParam.type;
@@ -181,7 +181,7 @@
 
 					 var shootPicture = api.require("shootPicture");
 							shootPicture.shoot(function(ret, err) {
-							api.alert({msg:ret.imagePath});
+							// api.alert({msg:ret.imagePath});
 							$api.attr($api.dom("#img_j_z"), "src",ret.imagePath);
 							var trans = api.require('trans');
 							trans.decodeImgToBase64({
@@ -292,7 +292,7 @@
 					// 			});
 					var shootPicture = api.require("shootPicture");
 						 shootPicture.shoot(function(ret, err) {
-						 api.alert({msg:ret.imagePath});
+						//  api.alert({msg:ret.imagePath});
 						 $api.attr($api.dom("#img_j_f"), "src",ret.imagePath);
 						 var trans = api.require('trans');
 						 trans.decodeImgToBase64({
@@ -403,7 +403,7 @@
 					// 			});
 					var shootPicture = api.require("shootPicture");
 						 shootPicture.shoot(function(ret, err) {
-						 api.alert({msg:ret.imagePath});
+						//  api.alert({msg:ret.imagePath});
 						 $api.attr($api.dom("#img_x_z"), "src",ret.imagePath);
 						 var trans = api.require('trans');
 						 trans.decodeImgToBase64({
@@ -514,7 +514,7 @@
 					// 			});
 					var shootPicture = api.require("shootPicture");
 						 shootPicture.shoot(function(ret, err) {
-						 api.alert({msg:ret.imagePath});
+						//  api.alert({msg:ret.imagePath});
 						 $api.attr($api.dom("#img_x_f"), "src",ret.imagePath);
 						 var trans = api.require('trans');
 						 trans.decodeImgToBase64({

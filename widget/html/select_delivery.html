@@ -113,7 +113,7 @@
   }
 
 function check_scheduling(lorry_id,scheduling_id){
-	$api.get(url+'app.php/check_scheduling?lorry_id=lorry_id&scheduling_id=scheduling_id',function(ret){
+	$api.get(url+'app.php/check_scheduling?lorry_id='+lorry_id+'&scheduling_id='+scheduling_id+'',function(ret){
 			 if(ret.result==0){
 				 api.closeToWin({
 	           name: 'main'
