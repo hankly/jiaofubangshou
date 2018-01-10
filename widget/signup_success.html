@@ -104,6 +104,9 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script>
 	apiready = function() {
+		// $api.rmStorage('password');
+		// $api.rmStorage('user');
+
     var phone=api.pageParam.telephone;
 		var type=api.pageParam.type;
 		if(type==1){
@@ -113,21 +116,23 @@
 		}
 		setTimeout("api.closeWin({name:'fiveregister1'})",650);
 		setTimeout("api.closeWin({name:'firstregister2'})",600);
-		setTimeout("api.closeWin({name:'fourregister4'})",550);
+		setTimeout("api.closeWin({name:'fourregister4'})",700);
 		setTimeout("api.closeWin({name:'fiveregister5'})",800);
 		setTimeout("api.closeWin({name:'threeregister3'})",850);
+
     $api.addEvt($api.dom("#foot"), 'click',function(){
-			$api.rmStorage('password');
-			$api.rmStorage('user');
-			$api.clearStorage();
-      api.openWin({
-        name: 'index',
-        url:  './index.html',
-				slidBackEnabled:false,
-        pageParam: {
-        telephone:phone
-       }
-      });
+			api.closeWin({name:'index'});
+      setTimeout("api.closeWin({name:'index'})",500);
+			setTimeout("api.openWin({name:'index',url:'./index.html',slidBackEnabled:false,pageParam:{telephone:"+phone+"}})",700);
+      $api.clearStorage();
+      // api.openWin({
+      //   name: 'index',
+      //   url:  './index.html',
+			// 	slidBackEnabled:false,
+      //   pageParam: {
+      //   telephone:phone
+      //  }
+      // });
     });
 }
 </script>

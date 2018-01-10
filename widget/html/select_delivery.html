@@ -109,7 +109,7 @@
 
 		var user = $api.getStorage('user');
 		var lorryid=user.lorryid;
-		setInterval("check_scheduling("+lorryid+","+scheduling_id+")",5000);
+		setInterval("check_scheduling("+lorryid+",'"+scheduling_id+"')",3000);
   }
 
 function check_scheduling(lorry_id,scheduling_id){
