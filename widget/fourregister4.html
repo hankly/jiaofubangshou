@@ -8,94 +8,80 @@
 	<title></title>
 	<script type="text/javascript" src="script/config.js"></script>
 	<style>
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	body{
-		background-color:white;
-	}
-	.box {
-		width: 100%;
-		height: 100%;
-	}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color:white;
+		}
+		.box {
+			width: 100%;
+			height: 100%;
+		}
 
-	.top {
-		height: 50px;
-		width: 100%;
-		margin-top: 30px;
-		line-height: 50px;
-		text-align: center;
-		font: 20px "微软雅黑";
-		color: rgb(17, 64, 108);
-	}
+		.top {
+			height: 50px;
+			width: 100%;
+			margin-top: 30px;
+			line-height: 50px;
+			text-align: center;
+			font: 20px "微软雅黑";
+			color: rgb(17, 64, 108);
+		}
 
-	.center {
-		margin:0 auto;
-		width:70%;
-		text-align: center;
-		height: 440px;
-	}
+		.center {
+			margin:0 auto;
+			width:70%;
+			text-align: center;
+			height: 440px;
+		}
 
-	.title {
-		width: 60%;
-		margin-top: 10px;
-		text-align: right;
-		color: rgb(17, 64, 108);
-	}
+		.title {
+			width: 60%;
+			margin-top: 10px;
+			text-align: right;
+			color: rgb(17, 64, 108);
+		}
 
-	.fp {
-		height: 80px;
-		width: 90%;
-		margin:0 auto;
-		margin-top: 8px;
-		border-radius: 10px;
-	}
-	.fp>img,.tp>img{
-		border-radius: 10px;
-	}
-	.tp {
-		height: 80px;
-		width: 90%;
-		margin:0 auto;
-		margin-top: 8px;
-		border-radius: 10px;
-	}
+		.fp {
+			height: 80px;
+			width: 90%;
+			margin:0 auto;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
+    .fp>img,.tp>img{
+    	border-radius: 10px;
+    }
+		.tp {
+			height: 80px;
+			width: 90%;
+			margin:0 auto;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
 
-	.foot {
-		width: 64%;
-		margin-left: 18%;
-		height: 44px;
-		background-color: #f16c3c;
-		line-height: 44px;
-		text-align: center;
-		color: white;
-		font-size: 20px;
-		border-radius: 10px;
-	}
-	.img_j_z,.img_j_f,.img_x_z,.img_x_f{
-		-ms-transform:rotate(90deg);
+		.foot {
+			width: 64%;
+			margin-left: 18%;
+			height: 44px;
+			background-color: #f16c3c;
+			line-height: 44px;
+			text-align: center;
+			color: white;
+			font-size: 20px;
+			border-radius: 10px;
+		}
+		/*.img_j_z,.img_j_f,.img_x_z,.img_x_f{
+			-ms-transform:rotate(90deg);
 -moz-transform:rotate(90deg);
 -webkit-transform:rotate(90deg);
 -o-transform:rotate(90deg);
-	}
-	.left_z{
-		width:40%;
-		margin-left:5%;
-		margin-right:5%;
-		float:left;
-		height:150px;
-	}
-	.right_f{
-		width:40%;
-		margin-left:5%;
-		margin-right:5%;
-		float:left;
-		height:150px;
-	}
-	input {
-		-webkit-tap-highlight-color:transparent;
-	}
+		}*/
+		input {
+			-webkit-tap-highlight-color:transparent;
+		}
 	</style>
 </head>
 
@@ -103,32 +89,12 @@
 	<div class="box">
 		<div class="top">第5步:请上传您的证件信息</div>
 		<div class="center">
-			<div style="height:210px;">
 			<div class="title">请上传驾驶证</div>
-			<div class="left_z">
-					 <div style="width:100%;height:30px;line-height:30px;">正面</div>
-					 <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_j_z"/>
-			</div>
-			<div class="right_f">
-					 <div style="width:100%;height:30px;line-height:30px;">反面</div>
-					 <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_j_f"/>
-			</div>
-		  </div>
-			<!-- <div class="fp" ><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_j_z"/></div>
-			<div class="fp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_j_f"/></div> -->
-      <div style="height:210px;">
+			<div class="fp" ><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_j_z"/></div>
+			<div class="fp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_j_f"/></div>
 			<div class="title">请上传行驶证</div>
-			<div class="left_z">
-					 <div style="width:100%;height:30px;line-height:30px;">正面</div>
-					 <img src="image/id_card_z.png" style="height:100%;width:100%;" id="img_x_z"/>
-			</div>
-			<div class="right_f">
-					 <div style="width:100%;height:30px;line-height:30px;">反面</div>
-					 <img src="image/id_card_f.png" style="height:100%;width:100%;" id="img_x_f"/>
-			</div>
-		  </div>
-			<!-- <div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_x_z"/></div>
-			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_x_f"/></div> -->
+			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_x_z"/></div>
+			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_x_f"/></div>
 		</div>
 		<div class="foot" id="foot">确定</div>
 	</div>
@@ -212,10 +178,23 @@
 					// 					alert(JSON.stringify(err));
 					// 				}
 					// 			});
-					var shootPicture = api.require("shootPicture");
-						 shootPicture.shoot(function(ret, err) {
-						 api.alert({msg:ret.imagePath});
-					 });
+
+					 var shootPicture = api.require("shootPicture");
+							shootPicture.shoot(function(ret, err) {
+							api.alert({msg:ret.imagePath});
+							$api.attr($api.dom("#img_j_z"), "src",ret.imagePath);
+							var trans = api.require('trans');
+							trans.decodeImgToBase64({
+								imgPath:ret.imagePath
+							}, function(msg, err) {
+								if(msg.status) {
+									//alert(JSON.stringify(ret));
+									j_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+								} else {
+								 //  alert(JSON.stringify(err));
+								}
+							});
+						});
 							}
 
 					});
@@ -314,6 +293,18 @@
 					var shootPicture = api.require("shootPicture");
 						 shootPicture.shoot(function(ret, err) {
 						 api.alert({msg:ret.imagePath});
+						 $api.attr($api.dom("#img_j_f"), "src",ret.imagePath);
+						 var trans = api.require('trans');
+						 trans.decodeImgToBase64({
+							 imgPath:ret.imagePath
+						 }, function(msg, err) {
+							 if(msg.status) {
+								 //alert(JSON.stringify(ret));
+								 j_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+							 } else {
+								//  alert(JSON.stringify(err));
+							 }
+						 });
 					 });
 							}
 
@@ -413,6 +404,18 @@
 					var shootPicture = api.require("shootPicture");
 						 shootPicture.shoot(function(ret, err) {
 						 api.alert({msg:ret.imagePath});
+						 $api.attr($api.dom("#img_x_z"), "src",ret.imagePath);
+						 var trans = api.require('trans');
+						 trans.decodeImgToBase64({
+							 imgPath:ret.imagePath
+						 }, function(msg, err) {
+							 if(msg.status) {
+								 //alert(JSON.stringify(ret));
+								 x_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+							 } else {
+								//  alert(JSON.stringify(err));
+							 }
+						 });
 					 });
 							}
 
@@ -510,9 +513,21 @@
 					// 				}
 					// 			});
 					var shootPicture = api.require("shootPicture");
-	           shootPicture.shoot(function(ret, err) {
-			       api.alert({msg:ret.imagePath});
-	         });
+						 shootPicture.shoot(function(ret, err) {
+						 api.alert({msg:ret.imagePath});
+						 $api.attr($api.dom("#img_x_f"), "src",ret.imagePath);
+						 var trans = api.require('trans');
+						 trans.decodeImgToBase64({
+							 imgPath:ret.imagePath
+						 }, function(msg, err) {
+							 if(msg.status) {
+								 //alert(JSON.stringify(ret));
+								 x_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+							 } else {
+								//  alert(JSON.stringify(err));
+							 }
+						 });
+					 });
 							}
 
 					});

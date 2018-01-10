@@ -40,10 +40,8 @@
 		.title {
 			width: 60%;
 			margin-top: 10px;
-			text-align: center;
+			text-align: right;
 			color: rgb(17, 64, 108);
-			margin:0 auto;
-			margin-bottom:50px;
 		}
 
 		.fp {
@@ -74,7 +72,6 @@
 			color: white;
 			font-size: 20px;
 			border-radius: 10px;
-			margin-bottom:20px;
 		}
     .cen{
       width:100%;
@@ -82,23 +79,9 @@
     }
 		.img_id_z,.img_id_f{
 			-ms-transform:rotate(90deg);
-      -moz-transform:rotate(90deg);
-      -webkit-transform:rotate(90deg);
-      -o-transform:rotate(90deg);
-		}
-    .left_z{
-    	width:40%;
-			margin-left:5%;
-			margin-right:5%;
-			float:left;
-			height:150px;
-    }
-		.right_f{
-			width:40%;
-			margin-left:5%;
-			margin-right:5%;
-			float:left;
-			height:150px;
+-moz-transform:rotate(90deg);
+-webkit-transform:rotate(90deg);
+-o-transform:rotate(90deg);
 		}
 		input {
 			-webkit-tap-highlight-color:transparent;
@@ -111,18 +94,10 @@
 		<div class="top">第4步:请上传您的证件信息</div>
 		<div class="center">
 			<div class="title">请上传身份证</div>
-      <!-- <div class="cen"></div>
+      <div class="cen"></div>
 			<div class="fp" ><div style="float:left;width:30%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:65%;height:100%;float:left;" id="img_id_z"/></div>
       <div class="cen"></div>
-			<div class="fp"><div style="float:left;width:30%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:65%;height:100%;float:left;" id="img_id_f"/></div> -->
-      <div class="left_z">
-           <div style="width:100%;height:70px;line-height:70px;">正面</div>
-					 <img src="image/plus.png" style="height:100%;width:100%;" id="img_id_z"/>
-      </div>
-			<div class="right_f">
-           <div style="width:100%;height:70px;line-height:70px;">反面</div>
-					 <img src="image/plus.png" style="height:100%;width:100%;" id="img_id_f"/>
-			</div>
+			<div class="fp"><div style="float:left;width:30%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:65%;height:100%;float:left;" id="img_id_f"/></div>
 		</div>
 		<div class="foot" id="foot">下一步</div>
 	</div>
@@ -190,6 +165,18 @@
 								var shootPicture = api.require("shootPicture");
 									 shootPicture.shoot(function(ret, err) {
 									 api.alert({msg:ret.imagePath});
+									 $api.attr($api.dom("#img_id_z"), "src",ret.imagePath);
+									 var trans = api.require('trans');
+									 trans.decodeImgToBase64({
+										 imgPath:ret.imagePath
+									 }, function(msg, err) {
+										 if(msg.status) {
+											 //alert(JSON.stringify(ret));
+											 id_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+										 } else {
+											//  alert(JSON.stringify(err));
+										 }
+									 });
 								 });
 							}
 
@@ -246,6 +233,18 @@
 								var shootPicture = api.require("shootPicture");
 									 shootPicture.shoot(function(ret, err) {
 									 api.alert({msg:ret.imagePath});
+									 $api.attr($api.dom("#img_id_f"), "src",ret.imagePath);
+									 var trans = api.require('trans');
+									 trans.decodeImgToBase64({
+										 imgPath:ret.imagePath
+									 }, function(msg, err) {
+										 if(msg.status) {
+											 //alert(JSON.stringify(ret));
+											 id_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+										 } else {
+											//  alert(JSON.stringify(err));
+										 }
+									 });
 								 });
 							}
 
