@@ -153,7 +153,7 @@
 	<script>
 	apiready = function(){
 		setTimeout("api.closeWin({name:'password_second'})",550);
-
+    setTimeout("api.closeWin({name:'main'})",500);
 		var pressIndex=0;
 		api.addEventListener({
 														name : 'keyback'
@@ -200,11 +200,12 @@
        $api.val($api.dom('#mobile'),$api.getStorage('password').mobile);
 			 $api.val($api.dom('#password'),$api.getStorage('password').pass);
 			 $api.attr($api.dom('.duigou'),'src','image/duigou1.png');
-			 api.openWin({
-				 name: 'main',
-				 url:  './main.html',
-				 slidBackEnabled:false,
-			 });
+			//  api.openWin({
+			// 	 name: 'main',
+			// 	 url:  './main.html',
+			// 	 slidBackEnabled:false,
+			//  });
+			 setTimeout("api.openWin({name: 'main',url:'./main.html',slidBackEnabled:false,})",650);
 		}else if($api.getStorage('user')){
        $api.val($api.dom('#mobile'),$api.getStorage('user').telephone);
 			 if(api.pageParam.pass!=null){

@@ -74,10 +74,10 @@
 		// alert(is_wuliu);
 //   alert(id);
     $(".code").qrcode({
-     render: "table", //table方式
-     width: 200, //宽度
-     height:200, //高度
-     text:scheduling_id //任意内容
+     render: "table",
+     width: 200,
+     height:200,
+     text:scheduling_id
   });
     api.addEventListener({
                           name:'viewappear'
@@ -105,6 +105,21 @@
                   }
       });
     });
+
+		var user = $api.getStorage('user');
+		var lorryid=user.lorryid;
+		setInterval("check_scheduling("+lorryid+","+scheduling_id+")",5000);
   }
+
+function check_scheduling(lorry_id,scheduling_id){
+	$api.get(url+'app.php/check_scheduling?lorry_id=lorry_id&scheduling_id=scheduling_id',function(ret){
+			 if(ret.result==0){
+				 api.closeToWin({
+	           name: 'main'
+          });
+			 }
+		 },'json');
+}
+
   </script>
 </html>

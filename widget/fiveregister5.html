@@ -167,26 +167,30 @@
 									}
 								});
 							}else if(ret.buttonIndex==2){
-								api.getPicture({
-									sourceType: 'camera',
-									encodingType: 'jpg',
-									mediaValue: 'pic',
-									destinationType: 'base64',
-									allowEdit: false,
-									quality: 100,
-									targetWidth: 300,
-									targetHeight: 300,
-									saveToPhotoAlbum: false
-								}, function(ret, err) {
-									if (ret) {
-										if(ret.base64Data){
-											$api.attr($api.dom("#img_id_z"), "src",ret.base64Data);
-										}
-										id_z=ret.base64Data;
-									} else {
-										alert(JSON.stringify(err));
-									}
-								});
+								// api.getPicture({
+								// 	sourceType: 'camera',
+								// 	encodingType: 'jpg',
+								// 	mediaValue: 'pic',
+								// 	destinationType: 'base64',
+								// 	allowEdit: false,
+								// 	quality: 100,
+								// 	targetWidth: 300,
+								// 	targetHeight: 300,
+								// 	saveToPhotoAlbum: false
+								// }, function(ret, err) {
+								// 	if (ret) {
+								// 		if(ret.base64Data){
+								// 			$api.attr($api.dom("#img_id_z"), "src",ret.base64Data);
+								// 		}
+								// 		id_z=ret.base64Data;
+								// 	} else {
+								// 		alert(JSON.stringify(err));
+								// 	}
+								// });
+								var shootPicture = api.require("shootPicture");
+									 shootPicture.shoot(function(ret, err) {
+									 api.alert({msg:ret.imagePath});
+								 });
 							}
 
 					});
@@ -219,26 +223,30 @@
 									}
 								});
 							}else if(ret.buttonIndex==2){
-								api.getPicture({
-									sourceType: 'camera',
-									encodingType: 'jpg',
-									mediaValue: 'pic',
-									destinationType: 'base64',
-									allowEdit: false,
-									quality: 100,
-									targetWidth: 300,
-									targetHeight: 300,
-									saveToPhotoAlbum: false
-								}, function(ret, err) {
-									if (ret) {
-										if(ret.base64Data){
-											$api.attr($api.dom("#img_id_f"), "src",ret.base64Data);
-										}
-										id_f=ret.base64Data;
-									} else {
-										alert(JSON.stringify(err));
-									}
-								});
+								// api.getPicture({
+								// 	sourceType: 'camera',
+								// 	encodingType: 'jpg',
+								// 	mediaValue: 'pic',
+								// 	destinationType: 'base64',
+								// 	allowEdit: false,
+								// 	quality: 100,
+								// 	targetWidth: 300,
+								// 	targetHeight: 300,
+								// 	saveToPhotoAlbum: false
+								// }, function(ret, err) {
+								// 	if (ret) {
+								// 		if(ret.base64Data){
+								// 			$api.attr($api.dom("#img_id_f"), "src",ret.base64Data);
+								// 		}
+								// 		id_f=ret.base64Data;
+								// 	} else {
+								// 		alert(JSON.stringify(err));
+								// 	}
+								// });
+								var shootPicture = api.require("shootPicture");
+									 shootPicture.shoot(function(ret, err) {
+									 api.alert({msg:ret.imagePath});
+								 });
 							}
 
 					});
