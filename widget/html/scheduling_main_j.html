@@ -52,6 +52,7 @@
           background-color:#f16c3c;
           color:white;
           border-radius:10px;
+
         }
         #foot_cancle_s{
           padding-left:14.8%;
@@ -61,6 +62,7 @@
           background-color:#f16c3c;
           color:white;
           border-radius:10px;
+          text-align: center;
         }
         #foot_cancle_g{
           padding-left:14.8%;
@@ -89,8 +91,8 @@
             <span class="foot_cancle" id="foot_sure_p">收货人签收</span>
         </div>
         <div id="foot_b">
-            <span class="foot_sure" id="foot_cancle_s">申请退单</span>
-            <span class="foot_cancle" id="foot_cancle_g">事故出险</span>
+            <div class="foot_sure" id="foot_cancle_s">申请退单</div>
+            <!-- <span class="foot_cancle" id="foot_cancle_g">事故出险</span> -->
         </div>
     </div>
 </body>
@@ -247,7 +249,7 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
     buttons: ['确定', '取消']
 }, function(ret, err) {
     var index = ret.buttonIndex;
-    alert(index)
+    // alert(index)
     if(index==1){
       $api.post(url+'app.php/change_orders_status',{
        body:{
@@ -270,11 +272,11 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
                        latitude:msg.lat,
                        }
                   },function(ret1){
-                    api.toast({
-                       msg: ret1.desc,
-                       duration: 1000,
-                      location: 'middle'
-                    });
+                    // api.toast({
+                    //    msg: ret1.desc,
+                    //    duration: 1000,
+                    //   location: 'middle'
+                    // });
                 },'json');
 
                } else {
@@ -287,9 +289,10 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
               duration: 2000,
              location: 'middle'
            });
-           api.closeToWin({
-             name:'main'
-           });
+          //  api.closeToWin({
+          //    name:'main'
+          //  });
+           setTimeout("api.closeToWin({name:'main'})",2000);
          }else{
            api.toast({
               msg:'申请失败',
