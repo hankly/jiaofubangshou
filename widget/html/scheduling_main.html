@@ -98,7 +98,7 @@ $api.addEvt($api.dom("#foot_sure"), 'click', function(){
               name: 'main',
               url: '../main.html',
             });
-
+            upload_map(lorryid);
          }else{
            api.toast({
               msg: ret.desc,
@@ -122,6 +122,28 @@ $api.addEvt($api.dom("#foot_cancle"), 'click', function(){
 });
 
 }
-
+var upload_map=function(id){
+  // alert(1)
+  var bMap = api.require('bMap');
+  bMap.getLocation({
+      accuracy: '10m',
+      autoStop: true,
+      filter: 1
+  }, function(ret, err) {
+      if (ret.status) {
+        $api.post(url+'app.php/scmap',{
+         body:{
+              lorryid:id,
+              longitude:ret.lon,
+              latitude:ret.lat,
+              }
+         },function(ret){
+        //  alert(ret.desc);
+       },'json');
+      } else {
+          // alert(err.code);
+      }
+  });
+}
 
 </script>

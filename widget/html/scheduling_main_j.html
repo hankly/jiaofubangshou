@@ -187,7 +187,7 @@ $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
 }else{
   api.toast({
           msg :'请物流公司确认',
-          duration : 1000,
+          duration : 2000,
           location : 'middle'
   });
 }
@@ -256,6 +256,32 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
             }
        },function(ret){
          if(ret.result==0){
+           var bMap = api.require('bMap');
+           bMap.getLocation({
+               accuracy: '10m',
+               autoStop: false,
+               filter: 1
+           }, function(msg, err1) {
+               if (msg.status) {
+                 $api.post(url+'app.php/last_map',{
+                  body:{
+                       schedule_id:scheduling_id,
+                       longitude:msg.lon,
+                       latitude:msg.lat,
+                       }
+                  },function(ret1){
+                    api.toast({
+                       msg: ret1.desc,
+                       duration: 1000,
+                      location: 'middle'
+                    });
+                },'json');
+
+               } else {
+                   // alert(err.code);
+
+               }
+           });
            api.toast({
               msg:'申请中，待审核',
               duration: 2000,
@@ -291,6 +317,32 @@ $api.addEvt($api.dom("#foot_cancle_g"),'click',function(){
             }
        },function(ret){
          if(ret.result==0){
+           var bMap = api.require('bMap');
+           bMap.getLocation({
+               accuracy: '10m',
+               autoStop: false,
+               filter: 1
+           }, function(msg, err1) {
+               if (msg.status) {
+                 $api.post(url+'app.php/last_map',{
+                  body:{
+                       schedule_id:scheduling_id,
+                       longitude:msg.lon,
+                       latitude:msg.lat,
+                       }
+                  },function(ret1){
+                    api.toast({
+                       msg: ret1.desc,
+                       duration: 1000,
+                      location: 'middle'
+                    });
+                },'json');
+
+               } else {
+                   // alert(err.code);
+
+               }
+           });
            api.toast({
               msg:'已经上报物流公司',
               duration: 2000,
@@ -314,6 +366,28 @@ $api.addEvt($api.dom("#foot_cancle_g"),'click',function(){
 });
 
 }
-
+var upload_map=function(id){
+  // alert(1)
+  var bMap = api.require('bMap');
+  bMap.getLocation({
+      accuracy: '10m',
+      autoStop: true,
+      filter: 1
+  }, function(ret, err) {
+      if (ret.status) {
+        $api.post(url+'app.php/scmap',{
+         body:{
+              lorryid:id,
+              longitude:ret.lon,
+              latitude:ret.lat,
+              }
+         },function(ret){
+        //  alert(ret.desc);
+       },'json');
+      } else {
+          // alert(err.code);
+      }
+  });
+}
 
 </script>
