@@ -97,7 +97,7 @@ padding-top: 5px;
       <div class="my_card">
            <div  class="my_card_a" tapmode="hover" onclick="funOpenArticle2(this);">
                <!-- <img src="../image/card.png" style="width:20%;margin:10px auto;float:left;"/> -->
-               <img src="../image/card.png" style="width:15%;margin:10px auto;float:left;"/>
+               <img src="../image/card.png" style="width:13%;margin:10px auto;float:left;"/>
                <div style="float:left;line-height:50px;margin-left:5px;" id="mingpian">上传我的位置</div>
            </div>
       </div>
@@ -105,7 +105,7 @@ padding-top: 5px;
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/swipe.js"></script>
-<script type="text/javascript" src="../script/up_check.js"></script>
+<!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
 <script type="text/javascript">
     apiready = function(){
       api.closeWin({
@@ -222,7 +222,7 @@ if(ret.result==0){
     var bMap = api.require('bMap');
     bMap.getLocation({
         accuracy: '10m',
-        autoStop: true,
+        autoStop: false,
         filter: 1
     }, function(ret, err) {
         if (ret.status) {
@@ -244,6 +244,37 @@ if(ret.result==0){
             // alert(err.code);
         }
     });
+  }
+  var check=function(id,time){
+    $api.post(url+'app.php/check',{
+          body:{lorryid:id,
+                time:time,}
+         },function(ret){
+          if(ret.result==4){
+            alert(ret.desc);
+            api.openWin({
+              name: 'index',
+              url:  '../index.html',
+            });
+             setTimeout("api.closeWin({name:'main'})",650);
+             $api.rmStorage('password');
+             var key = 'user';
+             var user = {};
+             var aa=$api.getStorage(key);
+             user.lorryid=aa.lorryid;
+              user.telephone=aa.telephone;
+             user.flag= aa.flag
+             user.pass= '';
+             $api.setStorage(key, user);
+             api.alert({
+               title: '提示消息',
+               msg: ret.desc,
+               buttons: ['确定']
+             });
+           }else{
+            //  alert(ret.desc);
+           }
+         });
   }
 </script>
 </html>
