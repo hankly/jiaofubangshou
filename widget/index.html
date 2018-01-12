@@ -152,8 +152,10 @@
 	<script type="text/javascript" src="script/api.js"></script>
 	<script>
 	apiready = function(){
+
 		setTimeout("api.closeWin({name:'password_second'})",550);
-    api.closeWin({name:'main'});
+		setTimeout("api.closeWin({name:'main'})",650);
+    // api.closeWin({name:'main'});
 		var pressIndex=0;
 		api.addEventListener({
 														name : 'keyback'
