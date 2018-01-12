@@ -234,6 +234,11 @@ if(ret.result==0){
                 }
            },function(ret){
           //  alert(ret.desc);
+          api.toast({
+             msg: '上传地理位置成功',
+             duration: 1000,
+            location: 'middle'
+          });
          },'json');
         } else {
             // alert(err.code);
