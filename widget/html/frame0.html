@@ -222,7 +222,7 @@ if(ret.result==0){
     var bMap = api.require('bMap');
     bMap.getLocation({
         accuracy: '10m',
-        autoStop: false,
+        autoStop: true,
         filter: 1
     }, function(ret, err) {
         if (ret.status) {
