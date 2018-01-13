@@ -233,6 +233,8 @@ if(ret.result==0){
   var upload_map=function(id){
     // alert(1)
     var bMap = api.require('bMap');
+    bMap.getLocationServices(function(ret2, err) {
+                    if (ret2.enable) {
     bMap.getLocation({
         accuracy: '10m',
         autoStop: true,
@@ -257,6 +259,16 @@ if(ret.result==0){
             // alert(err.code);
         }
     });
+  } else {
+alert("您现在有待交付清单请开启定位");
+var mySettingInfo = api.require('mySettingInfo');
+mySettingInfo.settingInt({
+'index': 2
+}, function(ret, err) {
+alert(JSON.stringify(ret));
+});
+}
+});
   }
   var check=function(id,time){
     $api.post(url+'app.php/check',{
