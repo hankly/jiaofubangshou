@@ -56,16 +56,17 @@
 <script type="text/javascript" src="script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
-
+if (api.systemType == "ios") {
       api.addEventListener({
        name:'pause'
      }, function(ret, err){
-       if (api.systemType == "ios") {
+
        api.closeWidget({
                silent : true
        });
-     }
+
     });
+    }
 checkUpdate();
       api.closeToWin({name:'main'});
       var pressIndex=0;
