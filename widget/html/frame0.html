@@ -134,9 +134,14 @@ padding-top: 5px;
       var lorryid=user.lorryid;
       var time=user.time;
       check(lorryid,time);
-        var scanner = api.require('scanner');
-    scanner.open(function(ret, err) {
-        if (ret.msg) {
+    //     var scanner = api.require('scanner');
+    // scanner.open(function(ret, err) {
+        // if (ret.msg) {
+        var FNScanner = api.require('FNScanner');
+FNScanner.openScanner({
+    autorotation: true
+}, function(ret, err) {
+  if(ret.content){
           $api.append($api.dom('body'), '<audio src="../image/Win.mp3" controls="controls" preload id="music1" hidden>');
           $api.dom('#music1').play();
           api.openWin({
@@ -144,13 +149,20 @@ padding-top: 5px;
             url:  './scheduling_main.html',
             pageParam: {
               name:$api.text( $api.dom(".qr_code_z")),
-              scheduling_id:ret.msg,
+              scheduling_id:ret.content,
             }
           });
-          scanner.closeview();
+          // var scanner = api.require('scanner');
+          // scanner.closeview();
             // alert(JSON.stringify(ret.msg));
+            var FNScanner = api.require('FNScanner');
+             FNScanner.closeView();
         } else {
+          // var scanner = api.require('scanner');
+          // scanner.closeview();
             // alert(JSON.stringify(err));
+            var FNScanner = api.require('FNScanner');
+              FNScanner.closeView();
         }
       });
 
