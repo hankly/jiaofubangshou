@@ -91,20 +91,21 @@ $api.addEvt($api.dom("#foot_sure"), 'click', function(){
         if(ret.result==0){
           api.toast({
              msg: ret.desc,
-             duration: 1000,
+             duration: 2000,
             location: 'middle'
           });
-          api.closeToWin({
-              name: 'main',
-            });
+          // api.closeToWin({
+          //     name: 'main',
+          //   });
+            // setTimeout("api.closeToWin({name:'main'})",2000);
             upload_map(lorryid);
          }else{
            api.toast({
               msg: ret.desc,
-              duration: 1000,
+              duration: 2000,
              location: 'middle'
            });
-           setTimeout("api.closeToWin({name:'main'})",1000);
+          //  setTimeout("api.closeToWin({name:'main'})",2000);
          }
        });
 
@@ -113,10 +114,7 @@ $api.addEvt($api.dom("#foot_cancle"), 'click', function(){
   var scheduling_id=api.pageParam.scheduling_id;
   var user = $api.getStorage('user');
   var lorryid=user.lorryid;
-  api.openWin({
-      name: 'main',
-      url: '../main.html',
-  });
+  api.closeWin();
 
 });
 

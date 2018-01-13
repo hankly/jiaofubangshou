@@ -35,7 +35,7 @@
           left:0;
           font-size:14px;
         }
-        #foot_sure_c{
+        /*#foot_sure_c{
           padding-left:10%;
           padding-right:10%;
           padding-top:10px;
@@ -53,8 +53,32 @@
           color:white;
           border-radius:10px;
 
+        }*/
+        #foot_a>div{
+          float:left;
+          width:45%;
+          /*padding-left:2.5%;*/
+          /*padding-right:2.5%;*/
+          text-align: center;
+          background-color:#f16c3c;
+          border-radius:10px;
+          height:40px;
+          line-height:40px;
+          color:white;
         }
-        #foot_cancle_s{
+        .foot_sure_c{
+          margin-right:10%;
+        }
+        .foot_sure{
+          width:100%;
+          text-align: center;
+          background-color:#f16c3c;
+          height:40px;
+          border-radius:10px;
+          line-height:40px;
+          color:white;
+        }
+        /*#foot_cancle_s{
           padding-left:14.8%;
           padding-right:14.8%;
           padding-top:10px;
@@ -63,7 +87,7 @@
           color:white;
           border-radius:10px;
           text-align: center;
-        }
+        }*/
         #foot_cancle_g{
           padding-left:14.8%;
           padding-right:14.8%;
@@ -87,8 +111,10 @@
 
         </div>
         <div id="foot_a">
-            <span class="foot_sure" id="foot_sure_c">物流公司收货</span>
-            <span class="foot_cancle" id="foot_sure_p">收货人签收</span>
+            <!-- <span class="foot_sure" id="foot_sure_c">物流公司收货</span>
+            <span class="foot_cancle" id="foot_sure_p">收货人签收</span> -->
+            <div class="foot_sure_c" id="foot_sure_c">物流公司收货</div>
+            <div class="foot_sure_p" id="foot_sure_p">收货人签收</div>
         </div>
         <div id="foot_b">
             <div class="foot_sure" id="foot_cancle_s">申请退单</div>
@@ -215,6 +241,7 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
     api.openWin({
         name: 'signmain',
         url: './signmain.html',
+        slidBackEnabled:false,
         pageParam: {
             scheduling_id: scheduling_id,
             is_wuliu:2,
