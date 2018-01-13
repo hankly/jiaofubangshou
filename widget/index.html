@@ -160,7 +160,7 @@
 		});
 
 		setTimeout("api.closeWin({name:'password_second'})",550);
-		setTimeout("api.closeWin({name:'main'})",650);
+		// setTimeout("api.closeWin({name:'main'})",650);
     // api.closeWin({name:'main'});
 		var pressIndex=0;
 		api.addEventListener({
@@ -210,7 +210,7 @@
 			 $api.attr($api.dom('.duigou'),'src','image/duigou1.png');
 			 api.openWin({
 				 name: 'main',
-				 url:  './main.html',
+				 url:'./main.html',
 				 slidBackEnabled:false,
 			 });
 			//  setTimeout("api.openWin({name: 'main',url:'./main.html',slidBackEnabled:false,})",750);
@@ -222,7 +222,6 @@
 			}else{
 				$api.val($api.dom('#password'),'');
 			}
-
 		}
 
 

@@ -12,8 +12,8 @@
     <style>
         header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;z-index:999;padding-top:22px;}
         header b{ width: 42px; height: 42px; display: inline-block; position: relative; z-index: 9999; background: url() no-repeat center; background-size: 70% auto;  }
-        header b.ic-back{ background-image: url(../image/back.png);background-size:auto; }
-        /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right;}*/
+        header b.ic-back{ background-image: url(../image/back.png);background-size:25px 25px;}
+        header b.ic-check{ background-image: url(../image/ic-check.png); float: right;}
         header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
         #foot{
           position:relative;;
@@ -78,14 +78,14 @@
         <header class="border-b" >
             <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
             <div class="title"></div>
-            <!-- <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b> -->
+            <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b>
         </header>
         <div id="main" class="flex-con" >
 
         </div>
-        <div id="foot">
+        <!-- <div id="foot">
             <div tapmode="hover" class="foot_sure" id="foot_sure">事故出险</div>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>
@@ -115,59 +115,59 @@ if(api.pageParam.name=="货物交付"){
 }
 var user = $api.getStorage('user');
 var lorry_id=user.lorryid;
-$api.addEvt($api.dom("#foot_sure"),'click',function(){
-  api.confirm({
-    title: '事故出险',
-    msg: '事故出险上报',
-    buttons: ['确定', '取消']
-}, function(ret, err) {
-    var index = ret.buttonIndex;
-    if(index==1){
-
-           var bMap = api.require('bMap');
-           bMap.getLocation({
-               accuracy: '10m',
-               autoStop: false,
-               filter: 1
-           }, function(msg, err1) {
-               if (msg.status) {
-                 $api.post(url+'app.php/change_orders_status2',{
-                  body:{
-                       lorryid:lorry_id,
-                       longitude:msg.lon,
-                       latitude:msg.lat,
-                       }
-                  },function(ret){
-                    if(ret.result==0){
-                      api.toast({
-                         msg:'已经上报物流公司',
-                         duration: 2000,
-                        location: 'middle'
-                      });
-                      // api.closeToWin({
-                      //   name:'main'
-                      // });
-                      setTimeout("api.closeToWin({name:'main'})",2000);
-                     }else{
-                api.toast({
-                   msg:'上报失败',
-                   duration: 2000,
-                  location: 'middle'
-                });
-              }
-
-          },'json');
-               } else {
-                   // alert(err.code);
-
-               }
-           });
-
-
-   }
-});
-
-});
+// $api.addEvt($api.dom("#foot_sure"),'click',function(){
+//   api.confirm({
+//     title: '事故出险',
+//     msg: '事故出险上报',
+//     buttons: ['确定', '取消']
+// }, function(ret, err) {
+//     var index = ret.buttonIndex;
+//     if(index==1){
+//
+//            var bMap = api.require('bMap');
+//            bMap.getLocation({
+//                accuracy: '10m',
+//                autoStop: false,
+//                filter: 1
+//            }, function(msg, err1) {
+//                if (msg.status) {
+//                  $api.post(url+'app.php/change_orders_status2',{
+//                   body:{
+//                        lorryid:lorry_id,
+//                        longitude:msg.lon,
+//                        latitude:msg.lat,
+//                        }
+//                   },function(ret){
+//                     if(ret.result==0){
+//                       api.toast({
+//                          msg:'已经上报物流公司',
+//                          duration: 2000,
+//                         location: 'middle'
+//                       });
+//                       // api.closeToWin({
+//                       //   name:'main'
+//                       // });
+//                       setTimeout("api.closeToWin({name:'main'})",2000);
+//                      }else{
+//                 api.toast({
+//                    msg:'上报失败',
+//                    duration: 2000,
+//                   location: 'middle'
+//                 });
+//               }
+//
+//           },'json');
+//                } else {
+//                    // alert(err.code);
+//
+//                }
+//            });
+//
+//
+//    }
+// });
+//
+// });
 }
 var check=function(id,time){
   $api.post(url+'app.php/check',{
@@ -199,5 +199,69 @@ var check=function(id,time){
           //  alert(ret.desc);
          }
        });
+}
+
+
+function funActionSheet(){
+  var user = $api.getStorage('user');
+  var lorry_id=user.lorryid;
+  api.actionSheet({
+    cancelTitle: '取消',
+    buttons: ['事故出险']
+}, function(ret, err) {
+    var index = ret.buttonIndex;
+    if(index==1){
+      api.confirm({
+        title: '事故出险',
+        msg: '事故出险上报',
+        buttons: ['确定', '取消']
+    }, function(ret, err) {
+        var index = ret.buttonIndex;
+        if(index==1){
+
+               var bMap = api.require('bMap');
+               bMap.getLocation({
+                   accuracy: '10m',
+                   autoStop: false,
+                   filter: 1
+               }, function(msg, err1) {
+                   if (msg.status) {
+                     $api.post(url+'app.php/change_orders_status2',{
+                      body:{
+                           lorryid:lorry_id,
+                           longitude:msg.lon,
+                           latitude:msg.lat,
+                           }
+                      },function(ret){
+                        if(ret.result==0){
+                          api.toast({
+                             msg:'已经上报物流公司',
+                             duration: 2000,
+                            location: 'middle'
+                          });
+                          // api.closeToWin({
+                          //   name:'main'
+                          // });
+                          setTimeout("api.closeToWin({name:'main'})",2000);
+                         }else{
+                    api.toast({
+                       msg:'上报失败',
+                       duration: 2000,
+                      location: 'middle'
+                    });
+                  }
+
+              },'json');
+                   } else {
+                       // alert(err.code);
+
+                   }
+               });
+
+
+       }
+    });
+    }
+});
 }
 </script>
