@@ -324,13 +324,13 @@
 		$api.css($api.dom('.cbox2'),'display:none');
 	});
 
-	$api.get(url+'app.php/lorry_weight',function(ret){
-				if(ret.result==0){
-					for(var i=0;i<ret.vehiche_weight.length;i++){
-						 $api.append($api.dom('#carweight'),'<option value="'+ret.vehiche_weight[i].lorry_load_id+'" >'+ret.vehiche_weight[i].lorry_load+'</option>');
-					}
-				 }
-			 },'json');
+	// $api.get(url+'app.php/lorry_weight',function(ret){
+	// 			if(ret.result==0){
+	// 				for(var i=0;i<ret.vehiche_weight.length;i++){
+	// 					 $api.append($api.dom('#carweight'),'<option value="'+ret.vehiche_weight[i].lorry_load_id+'" >'+ret.vehiche_weight[i].lorry_load+'</option>');
+	// 				}
+	// 			 }
+	// 		 },'json');
 
 			 $api.get(url+'app.php/lorry_long',function(ret){
 						 if(ret.result==0){
