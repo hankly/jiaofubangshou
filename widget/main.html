@@ -56,13 +56,13 @@
 <script type="text/javascript" src="script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
-    //   api.addEventListener({
-    //    name:'pause'
-    //  }, function(ret, err){
-    //    api.closeWidget({
-    //            silent : true
-    //    });
-    // });
+      api.addEventListener({
+       name:'pause'
+     }, function(ret, err){
+       api.closeWidget({
+               silent : true
+       });
+    });
 checkUpdate();
       api.closeToWin({name:'main'});
       var pressIndex=0;
