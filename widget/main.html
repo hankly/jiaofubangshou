@@ -191,11 +191,17 @@ checkUpdate();
             name:'offline'
           },function(ret,err){
             var connectionType = ret.connectionType;
-            api.alert({
-              title: '提示消息',
-              msg: '当前网络不可用，请检查网络设置',
-              buttons: ['确定']
+            // api.alert({
+            //   title: '提示消息',
+            //   msg: '当前网络不可用，请检查网络设置',
+            //   buttons: ['确定']
+            // });
+            api.openWin({
+              name: 'false',
+              url:  './false.html',
+              slidBackEnabled:false,
             });
+            setTimeout("api.closeWin()",600);
             //  Jurl="false.html";
           });
 
