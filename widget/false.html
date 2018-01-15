@@ -7,7 +7,11 @@
 		<title></title>
 		<script type="text/javascript" src="script/config.js"></script>
 		<style>
-
+    body{
+    	background-color: white;
+			width:100%;
+			height:100%;
+    }
      img{
        margin:0 auto;
        margin-top:150px;
@@ -26,4 +30,29 @@
     <img src="image/404.png">
     <div id="p_404">哎呀，加载失败啦~</div>
 	</body>
+	<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="script/local.js"></script>
+	<script type="text/javascript" src="script/APICloud-rest.js"></script>
+	<script type="text/javascript" src="script/api.js"></script>
+	<script>
+	apiready = function(){
+	var pressIndex=0;
+	api.addEventListener({
+													name : 'keyback'
+									}, function(ret, err) {
+													pressIndex++;
+													api.toast({
+																	msg : '再按一次退出应用',
+																	duration : 1000,
+																	location : 'middle'
+													});
+													setTimeout(function() {
+																	pressIndex = 0;
+													}, 1000);
+													if (pressIndex >= 2) {
+															api.toLauncher();
+													}
+									});
+								}
+	</script>
 </html>
