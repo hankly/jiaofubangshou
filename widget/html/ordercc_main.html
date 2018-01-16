@@ -221,8 +221,8 @@ function funActionSheet(){
 
                var bMap = api.require('bMap');
                bMap.getLocation({
-                   accuracy: '10m',
-                   autoStop: false,
+                   accuracy: '100m',
+                   autoStop: true,
                    filter: 1
                }, function(msg, err1) {
                    if (msg.status) {
