@@ -576,10 +576,10 @@ if(j_z&&j_f&&x_z&&x_f){
 								lorryid:lorryid,
 							  type:type,}
 			 },function(ret){
-
+api.hideProgress();
 				if(ret.result==0){
 
-					api.hideProgress();
+
 					// alert("成功")
 					// api.openFrame({
 					//   url: './firstregister2.html?lorryid='+ret.lorryid,
@@ -606,7 +606,6 @@ if(j_z&&j_f&&x_z&&x_f){
 					 }
 					});
 				 }else{
-					 api.hideProgress();
 					 api.toast({
 							msg: ret.desc,
 							duration: 1000,

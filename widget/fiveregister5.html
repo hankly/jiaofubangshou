@@ -265,10 +265,9 @@ if(id_z&&id_f){
 							lorryid:lorryid,
 						  type:type,}
 			 },function(ret){
-
+api.hideProgress();
 				if(ret.result==0){
 
-					api.hideProgress();
 					api.toast({
 						 msg: '上传成功',
 						 duration: 1000,
@@ -298,7 +297,6 @@ if(id_z&&id_f){
 					}
 
 				 }else{
-					 api.hideProgress();
 					 api.toast({
 							msg: ret.desc,
 							duration: 1000,
