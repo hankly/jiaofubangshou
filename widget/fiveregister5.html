@@ -285,6 +285,7 @@ if(id_z&&id_f){
 						 }
 						});
 					}else{
+
 						api.openWin({
 							name: 'fourregister4',
 							url:  './fourregister4.html',
@@ -297,6 +298,7 @@ if(id_z&&id_f){
 					}
 
 				 }else{
+					 api.hideProgress();
 					 api.toast({
 							msg: ret.desc,
 							duration: 1000,

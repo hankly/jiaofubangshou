@@ -154,15 +154,16 @@ var is_true;
            }
 });
 
-$api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
-         leng=ret.result;
-      },'json');
 
-      $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
-               is_true=ret.result;
-            },'json');
 
 $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
+  $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+           leng=ret.result;
+        },'json');
+
+        $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+                 is_true=ret.result;
+              },'json');
   var name=$api.text($api.dom("#foot_sure_c"));
   var bMap = api.require('bMap');
   bMap.getLocation({
@@ -236,6 +237,13 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
   //         scheduling_id: scheduling_id,
   //    }
   // });
+  $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+           leng=ret.result;
+        },'json');
+
+        $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+                 is_true=ret.result;
+              },'json');
   if(is_true==0){
   if(leng!=0){
     api.openWin({
@@ -312,7 +320,7 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
                }
            });
            api.toast({
-              msg:'申请中，待审核',
+              msg:ret.desc,
               duration: 2000,
              location: 'middle'
            });
@@ -322,7 +330,7 @@ $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
            setTimeout("api.closeToWin({name:'main'})",2000);
          }else{
            api.toast({
-              msg:'申请失败',
+              msg:ret.desc,
               duration: 2000,
              location: 'middle'
            });

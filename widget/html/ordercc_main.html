@@ -235,7 +235,7 @@ function funActionSheet(){
                       },function(ret){
                         if(ret.result==0){
                           api.toast({
-                             msg:'已经上报物流公司',
+                             msg:ret.desc,
                              duration: 2000,
                             location: 'middle'
                           });
@@ -245,7 +245,7 @@ function funActionSheet(){
                           setTimeout("api.closeToWin({name:'main'})",2000);
                          }else{
                     api.toast({
-                       msg:'上报失败',
+                       msg:ret.desc,
                        duration: 2000,
                       location: 'middle'
                     });
