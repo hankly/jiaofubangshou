@@ -242,11 +242,11 @@ function timeyun(){
 								var bMap = api.require('bMap');
 							  bMap.getLocation({
 							      accuracy: '10m',
-							      autoStop: false,
+							      autoStop: true,
 							      filter: 1
 							  }, function(ret, err) {
 							      if (ret.status) {
-							        $api.post(url+'app.php/last_map',{
+							        $api.post(url+'app.php/last_map1',{
 							         body:{
 							              schedule_id:qid,
 							              longitude:ret.lon,
