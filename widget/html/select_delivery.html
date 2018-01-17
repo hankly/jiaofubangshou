@@ -65,11 +65,13 @@
   </div>
 	</body>
   <script type="text/javascript">
+	var aaa=0;
   apiready = function(){
 		api.closeWin({
 				name: 'warn'
 		});
     var scheduling_id=api.pageParam.scheduling_id;
+		check_company(scheduling_id);
 		var is_wuliu=api.pageParam.is_wuliu;
 		// alert(is_wuliu);
 //   alert(id);
@@ -96,15 +98,24 @@
     //   // });
     // });
     $api.addEvt($api.dom('.sign'), 'click',function(){
-      api.openWin({
-          name: 'signmain',
-          url: './signmain.html',
-					slidBackEnabled:false,
-          pageParam: {
-                scheduling_id:api.pageParam.scheduling_id,
-								is_wuliu:api.pageParam.is_wuliu,
-                  }
-      });
+			if(aaa==0){
+				api.openWin({
+	          name: 'signmain',
+	          url: './signmain.html',
+						slidBackEnabled:false,
+	          pageParam: {
+	                scheduling_id:api.pageParam.scheduling_id,
+									is_wuliu:api.pageParam.is_wuliu,
+	                  }
+	      });
+			}else{
+				api.toast({
+					 msg: '物流公司请扫码签收',
+					 duration: 2000,
+					location: 'middle'
+				});
+			}
+
     });
 
 		var user = $api.getStorage('user');
@@ -122,5 +133,13 @@ function check_scheduling(lorry_id,scheduling_id){
 		 },'json');
 }
 
+
+function check_company(scheduling_id){
+	$api.get(url+'app.php/company_customer?scheduling_id='+scheduling_id+'',function(ret){
+			 if(ret.result==0){
+         aaa=1;
+			 }
+		 },'json');
+}
   </script>
 </html>
