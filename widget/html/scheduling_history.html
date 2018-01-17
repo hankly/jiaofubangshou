@@ -12,11 +12,11 @@
     }
         .scheduling_a{
           margin:1.5rem;
-          height:150px;
+          /*height:170px;*/
         }
         .scheduling_a_id_a{
           width:100%;
-          height:40px;
+          /*height:40px;*/
           font-size:16px;
         }
 
@@ -131,6 +131,7 @@
                                                       '<div class="scheduling_name">'+"收货单位/人："+ret.schedules[i].customer_name+'</div>'+
                                                       '<div class="scheduling_phone">'+"联系电话："+ret.schedules[i].customer_phone+'</div>'+
                                                       '<div class="scheduling_address">'+"地址："+ret.schedules[i].address+'</div>'+
+                                                      '<div class="scheduling_status">'+"状态："+'<span id="q'+ret.schedules[i].scheduling_id+'"></span></div>'+
                                                       '<div class="scheduling_line"></div>'+
                                                    '</div>'+
                                                 '</div>');
@@ -144,7 +145,16 @@
                                                }
                                             });
                                           });
-
+                                       if(ret.schedules[i].scheduling_status==5){
+                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'签收');
+                                         $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:rgb(23,139,23);');
+                                       }else if(ret.schedules[i].scheduling_status==6||ret.schedules[i].scheduling_status==7){
+                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'退单');
+                                         $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:#1818FF;');
+                                       }else{
+                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'出险');
+                                         $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:red;');
+                                       }
                                   }
      														 }else{
      															 alert(ret.desc);
