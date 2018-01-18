@@ -130,39 +130,76 @@ text-decoration:none;
                     });
                                   for(var i=0;i<ret.schedules.length;i++){
                                     $api.append($api.dom('body'),'<div class="scheduling_a" id="c'+ret.schedules[i].scheduling_id+'">'+
-                                                   '<div class="scheduling_a_id_a">'+
-                                                      '<div class="scheduling_id">'+
+                                                   '<div class="scheduling_a_id_a" id="d'+ret.schedules[i].scheduling_id+'">'+
+                                                      '<div class="scheduling_id" id="e'+ret.schedules[i].scheduling_id+'">'+
                                                          '清单号:<span>'+ret.schedules[i].scheduling_id+'</span>'+
                                                       '</div>'+
-                                                      '<div class="scheduling_to">'+
+                                                      '<div class="scheduling_to" id="f'+ret.schedules[i].scheduling_id+'">'+
                                                       '<span>'+ret.schedules[i].sendcity+'</span>'+
                                                       '<img src="../image/arrows.png" style="width:10%;"/>'+
                                                       '<span>'+ret.schedules[i].receivecity+'</span>'+
                                                       '</div>'+
-                                                      '<div class="scheduling_name">'+"收货单位/人："+ret.schedules[i].customer_name+'</div>'+
+                                                      '<div class="scheduling_name" id="g'+ret.schedules[i].scheduling_id+'">'+"收货单位/人："+ret.schedules[i].customer_name+'</div>'+
                                                       '<div class="scheduling_phone">'+"联系电话："+ret.schedules[i].customer_phone+'<a href="tel:'+ret.schedules[i].customer_phone+'" class="contact">联系Ta</a></div>'+
-                                                      '<div class="scheduling_address">'+"地址："+ret.schedules[i].address+'</div>'+
+                                                      '<div class="scheduling_address" id="h'+ret.schedules[i].scheduling_id+'">'+"地址："+ret.schedules[i].address+'</div>'+
                                                       '<div class="scheduling_line"></div>'+
                                                    '</div>'+
                                                 '</div>');
-                                                $api.addEvt($api.not($api.dom("#c"+ret.schedules[i].scheduling_id),'.scheduling_phone'), 'click', function(){
+                                                $api.addEvt($api.dom("#e"+ret.schedules[i].scheduling_id), 'click', function(){
                                                   var did=$api.attr(this,'id').substring(1);
                                                   api.openWin({
                                                       name: 'scheduling_main_j',
                                                       url: './scheduling_main_j.html',
+                                                      animation:{
+                                                        type:"none",
+                                                      },
                                                       pageParam: {
                                                           scheduling_id: did,
                                                      }
                                                   });
                                                 });
-                                                $api.addEvt($api.dom("a"), 'click', function(){
-                                                  api.closeWin({
-                                                          name:'scheduling_main_j',
-                                                          animation:{
-                                                            type:"none",
-                                                          }
-                                                    });
+                                                $api.addEvt($api.dom("#f"+ret.schedules[i].scheduling_id), 'click', function(){
+                                                  var did=$api.attr(this,'id').substring(1);
+                                                  api.openWin({
+                                                      name: 'scheduling_main_j',
+                                                      url: './scheduling_main_j.html',
+                                                      animation:{
+                                                        type:"none",
+                                                      },
+                                                      pageParam: {
+                                                          scheduling_id: did,
+                                                     }
+                                                  });
                                                 });
+                                                $api.addEvt($api.dom("#g"+ret.schedules[i].scheduling_id), 'click', function(){
+                                                  var did=$api.attr(this,'id').substring(1);
+                                                  api.openWin({
+                                                      name: 'scheduling_main_j',
+                                                      url: './scheduling_main_j.html',
+                                                      animation:{
+                                                        type:"none",
+                                                      },
+                                                      pageParam: {
+                                                          scheduling_id: did,
+                                                     }
+                                                  });
+                                                });
+                                                $api.addEvt($api.dom("#h"+ret.schedules[i].scheduling_id), 'click', function(){
+                                                  var did=$api.attr(this,'id').substring(1);
+                                                  api.openWin({
+                                                      name: 'scheduling_main_j',
+                                                      url: './scheduling_main_j.html',
+                                                      animation:{
+                                                        type:"none",
+                                                      },
+                                                      pageParam: {
+                                                          scheduling_id: did,
+                                                     }
+                                                  });
+                                                });
+                                                // $api.addEvt($api.dom("a"), 'click', function(){
+                                                //   setTimeout("api.closeToWin({name:'ordercc_main',animation:{type:'none',}})",700);
+                                                // });
                                   }
      														 }else{
      															 alert(ret.desc);
