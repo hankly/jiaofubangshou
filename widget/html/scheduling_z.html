@@ -145,7 +145,7 @@ text-decoration:none;
                                                       '<div class="scheduling_line"></div>'+
                                                    '</div>'+
                                                 '</div>');
-                                                $api.addEvt($api.dom("#c"+ret.schedules[i].scheduling_id), 'click', function(){
+                                                $api.addEvt($api.not($api.dom("#c"+ret.schedules[i].scheduling_id),'.scheduling_phone'), 'click', function(){
                                                   var did=$api.attr(this,'id').substring(1);
                                                   api.openWin({
                                                       name: 'scheduling_main_j',
@@ -156,7 +156,12 @@ text-decoration:none;
                                                   });
                                                 });
                                                 $api.addEvt($api.dom("a"), 'click', function(){
-                                                     setTimeout("closewin1()",700);
+                                                  api.closeWin({
+                                                          name:'scheduling_main_j',
+                                                          animation:{
+                                                            type:"none",
+                                                          }
+                                                    });
                                                 });
                                   }
      														 }else{
