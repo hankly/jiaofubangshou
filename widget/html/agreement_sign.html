@@ -130,7 +130,7 @@ function timeyun(){
 					name: 'warn'
 			});
 			api.setScreenOrientation({
-				orientation: 'landscape_left'
+				orientation: 'landscape_right'
 			});
        var agreement_id=api.pageParam.agreement_id;
 			//  alert(is_wuliu);
@@ -221,70 +221,31 @@ function timeyun(){
 				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
 			}, function(ret, err) {
 				if(ret.status) {
+          var agreement_id=api.pageParam.agreement_id;
 					//alert(JSON.stringify(ret));
 					a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
 					// alert(a);
-					$api.post(url+'app.php/receivesc',{
+					$api.post(url+'app.php/sign_agreement',{
 					 body:{
 								agreement_id:agreement_id,
-								lorry_id: lorry_id,
+								lorryid: lorry_id,
 								pic: a
 								}
 					 },function(msg) {
 							if(msg.result == 0) {
-								var bMap = api.require('bMap');
-							  bMap.getLocation({
-							      accuracy: '10m',
-							      autoStop: true,
-							      filter: 1
-							  }, function(ret, err) {
-							      if (ret.status) {
-							        $api.post(url+'app.php/last_map1',{
-							         body:{
-							              schedule_id:qid,
-							              longitude:ret.lon,
-							              latitude:ret.lat,
-							              }
-							         },function(ret){
-												 api.toast({
-														msg: ret.desc,
-														duration: 1000,
-													 location: 'middle'
-												 });
-							       },'json');
 
-							      } else {
-							          // alert(err.code);
-
-							      }
-							  });
-
-                if(is_wuliu==2){
-									$api.post(url+'msend.php/schedules_sign',{
-												body: {
-												 scheduling_id:qid,
-											 }
-										 },function(ret){
-										// alert(ret.desc);
-									},'json');
-								}
 
 								// alert("提交成功");
 								api.toast({
-									 msg: "提交成功",
+									 msg: msg.desc,
 									 duration: 1000,
 									location: 'middle'
 								});
 								// api.closeToWin({
 								//     name: "main"
 								// });
-								setTimeout("api.closeWin({name:'signmain'})",800);
-								setTimeout("api.closeWin({name:'select_delivery'})",700);
-								setTimeout("api.closeWin({name:'order_acc'})", 750);
-								setTimeout("api.closeWin({name:'scheduling_z'})",650);
-								setTimeout("api.closeWin({name:'scheduling_main_j'})",600);
-								setTimeout("api.closeWin({name:'warn'})",550);
-								setTimeout("api.closeFrame({name:'frame0'})",850);
+								setTimeout("api.closeWin({name:'my_agreement'})",600);
+								setTimeout("api.closeWin({name:'agreement_one_main'})",700);
 								var drawingBoard = api.require('drawingBoard');
 								drawingBoard.close();
                 api.openWin({
@@ -292,7 +253,7 @@ function timeyun(){
                     url: '../main.html',
                 });
 
-							} else if(msg.result == 9) {
+							} else if(msg.result == 2) {
 								  // $api.setStorage("user",null);
 									api.toast({
 										 msg: msg.desc,

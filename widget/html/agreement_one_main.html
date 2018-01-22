@@ -70,6 +70,13 @@
 <!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
 <script type="text/javascript">
     apiready = function(){
+      api.addEventListener({
+                            name:'viewappear'
+                        }, function(ret, err){
+                           api.setScreenOrientation({
+                            orientation: 'portrait_up'
+                        });
+                        });
         var agreement_id=api.pageParam.agreement_id;
       $api.text($api.dom("#title"),'合同详情');
       $api.get(url+'app.php/agreement_status?agreement_id='+agreement_id,function(ret){
@@ -100,12 +107,16 @@ $api.addEvt($api.dom("#foot_sure"), 'click', function(){
     api.openWin({
         name: 'agreement_sign',
         url: './agreement_sign.html',
+        slidBackEnabled:false,
         pageParam: {
               agreement_id:agreement_id
                 }
 });
   }else{
 
+    setTimeout("api.closeWin({name:'my_agreement'})",550);
+    setTimeout("api.closeWin({name:'agreement_one_main'})",600);
+    setTimeout("api.openWin({name:'main',url: '../main.html',})",650);
   }
 
 

@@ -125,6 +125,8 @@
       var lorryid=user.lorryid;
       tongji(lorryid);
      setInterval('tongji('+lorryid+')',3000);
+     tongji_agreement(lorryid);
+    setInterval('tongji_agreement('+lorryid+')',3000);
     };
     var mySwipe = new Swipe($api.dom('.swipe'), {
         speed: 400,
@@ -239,6 +241,20 @@ if(ret.result==0){
     }
    },'json');
   }
+
+  var tongji_agreement=function(id){
+    $api.get('http://api.uminfo.cn/app.php/tongji_agreement?lorry_id='+id,function(ret){
+if(ret.result==0){
+      if(ret.count==0){
+        $api.css($api.dom('#tongji1'),'display:none');
+      }else{
+        $api.css($api.dom('#tongji1'),'display:block');
+        $api.text($api.dom('#tongji1'),ret.count);
+      }
+    }
+   },'json');
+  }
+
   var upload_map=function(id){
     // alert(1)
     var bMap = api.require('bMap');

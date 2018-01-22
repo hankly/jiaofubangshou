@@ -148,8 +148,11 @@
                                        if(ret.schedules[i].scheduling_status==5){
                                          $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'签收');
                                          $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:rgb(23,139,23);');
-                                       }else if(ret.schedules[i].scheduling_status==6||ret.schedules[i].scheduling_status==7){
-                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'退单');
+                                       }else if(ret.schedules[i].scheduling_status==6){
+                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'退单中');
+                                         $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:#1818FF;');
+                                       }else if(ret.schedules[i].scheduling_status==7){
+                                         $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'退单成功');
                                          $api.css($api.dom('#q'+ret.schedules[i].scheduling_id),'color:#1818FF;');
                                        }else{
                                          $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'出险');
