@@ -166,17 +166,20 @@
 									 shootPicture.shoot(function(ret, err) {
 									//  api.alert({msg:ret.imagePath});
 									 $api.attr($api.dom("#img_id_z"), "src",ret.imagePath);
-									 var trans = api.require('trans');
-									 trans.decodeImgToBase64({
-										 imgPath:ret.imagePath
-									 }, function(msg, err) {
-										 if(msg.status) {
-											 //alert(JSON.stringify(ret));
-											 id_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
-										 } else {
-											//  alert(JSON.stringify(err));
-										 }
-									 });
+									//  var trans = api.require('trans');
+									//  trans.decodeImgToBase64({
+									// 	 imgPath:ret.imagePath
+									//  }, function(msg, err) {
+									// 	 if(msg.status) {
+									// 		 //alert(JSON.stringify(ret));
+									// 		 id_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+									// 	 } else {
+									// 		//  alert(JSON.stringify(err));
+									// 	 }
+									//  });
+									dealImage(ret.imagePath,function(base){
+										id_z = base;
+									});
 								 });
 							}
 
@@ -234,17 +237,20 @@
 									 shootPicture.shoot(function(ret, err) {
 									//  api.alert({msg:ret.imagePath});
 									 $api.attr($api.dom("#img_id_f"), "src",ret.imagePath);
-									 var trans = api.require('trans');
-									 trans.decodeImgToBase64({
-										 imgPath:ret.imagePath
-									 }, function(msg, err) {
-										 if(msg.status) {
-											 //alert(JSON.stringify(ret));
-											 id_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
-										 } else {
-											//  alert(JSON.stringify(err));
-										 }
-									 });
+									//  var trans = api.require('trans');
+									//  trans.decodeImgToBase64({
+									// 	 imgPath:ret.imagePath
+									//  }, function(msg, err) {
+									// 	 if(msg.status) {
+									// 		 //alert(JSON.stringify(ret));
+									// 		 id_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+									// 	 } else {
+									// 		//  alert(JSON.stringify(err));
+									// 	 }
+									//  });
+									dealImage(ret.imagePath,function(base){
+										id_f = base;
+									});
 								 });
 							}
 
@@ -313,6 +319,24 @@ api.hideProgress();
 }
 		});
 }
+
+function dealImage(path, callback){
+	var img = new Image();
+	img.src = path;
+	img.onload = function(){
+			var w = this.width,
+					h = this.height;
+			var quality = 0.7;
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			canvas.setAttribute("width", w);
+			canvas.setAttribute("height", h);
+
+			ctx.drawImage(this, 0, 0, w, h);
+			var base64 = canvas.toDataURL('image/jpeg', quality);
+			callback(base64);
+	};
+};
 </script>
 
 </html>

@@ -16,7 +16,7 @@
         /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right; }*/
         header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
         #foot_a{
-          position:relative;;
+          position:relative;
           padding-left:10%;
           padding-right:10%;
           width:80%;
@@ -26,7 +26,7 @@
           font-size:14px;
         }
         #foot_b{
-          position:relative;;
+          position:relative;
           margin-left:10%;
           margin-right:10%;
           width:80%;
@@ -130,6 +130,7 @@
 var leng;
 var is_true;
     apiready = function(){
+
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
@@ -281,66 +282,113 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
 var user = $api.getStorage('user');
 var lorry_id=user.lorryid;
 $api.addEvt($api.dom("#foot_cancle_s"),'click',function(){
-  api.confirm({
-    title: '申请退单',
-    msg: '退单上报',
-    buttons: ['确定', '取消']
-}, function(ret, err) {
-    var index = ret.buttonIndex;
-    // alert(index)
-    if(index==1){
-      $api.post(url+'app.php/change_orders_status',{
-       body:{
-            scheduling_id:scheduling_id,
-            lorryid:lorry_id,
-            }
-       },function(ret){
-         if(ret.result==0){
-           var bMap = api.require('bMap');
-           bMap.getLocation({
-               accuracy: '10m',
-               autoStop: false,
-               filter: 1
-           }, function(msg, err1) {
-               if (msg.status) {
-                 $api.post(url+'app.php/last_map',{
-                  body:{
-                       schedule_id:scheduling_id,
-                       longitude:msg.lon,
-                       latitude:msg.lat,
-                       }
-                  },function(ret1){
-                    // api.toast({
-                    //    msg: ret1.desc,
-                    //    duration: 1000,
-                    //   location: 'middle'
-                    // });
-                },'json');
+  $api.post(url+'app.php/search_back_scheduling',{
+   body:{
+        scheduling_id:scheduling_id,
+        }
+   },function(ret){
+      if(ret.result==0){
+                api.toast({
+                   msg:ret.desc,
+                   duration: 2000,
+                  location: 'middle'
+                });
+      }else{
+        api.openFrame({
+            name: 'pop_up',
+            url: './pop_up.html',
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: api.winHeight-$api.dom('header').offsetHeight
+            },
+            pageParam: {
+                scheduling_id: scheduling_id,
+           }
+      });
+      }
+   });
 
-               } else {
-                   // alert(err.code);
-
-               }
-           });
-           api.toast({
-              msg:ret.desc,
-              duration: 2000,
-             location: 'middle'
-           });
-          //  api.closeToWin({
-          //    name:'main'
-          //  });
-           setTimeout("api.closeToWin({name:'main'})",2000);
-         }else{
-           api.toast({
-              msg:ret.desc,
-              duration: 2000,
-             location: 'middle'
-           });
-         }
-     },'json');
-    }
- });
+//   api.prompt({
+//     title:'申请退单',
+//     msg:'请填写原因（20个字以内）',
+//     buttons: ['确定', '取消']
+// }, function(ret, err) {
+//     var index = ret.buttonIndex;
+//     var text = ret.text;
+//     if(index==1){
+//       if(text.length<=20){
+//
+//       }else{
+//         api.toast({
+//            msg: '退单原因不能超过20个字',
+//            duration: 2000,
+//           location: 'middle'
+//         });
+//       }
+//     }
+// });
+//   api.confirm({
+//     title: '申请退单',
+//     msg: '退单上报',
+//     buttons: ['确定', '取消']
+// }, function(ret, err) {
+//     var index = ret.buttonIndex;
+//     // alert(index)
+//     if(index==1){
+//       $api.post(url+'app.php/change_orders_status',{
+//        body:{
+//             scheduling_id:scheduling_id,
+//             lorryid:lorry_id,
+//             }
+//        },function(ret){
+//          if(ret.result==0){
+//            var bMap = api.require('bMap');
+//            bMap.getLocation({
+//                accuracy: '10m',
+//                autoStop: false,
+//                filter: 1
+//            }, function(msg, err1) {
+//                if (msg.status) {
+//                  $api.post(url+'app.php/last_map',{
+//                   body:{
+//                        schedule_id:scheduling_id,
+//                        longitude:msg.lon,
+//                        latitude:msg.lat,
+//                        }
+//                   },function(ret1){
+//                     // api.toast({
+//                     //    msg: ret1.desc,
+//                     //    duration: 1000,
+//                     //   location: 'middle'
+//                     // });
+//                 },'json');
+//
+//                } else {
+//                    // alert(err.code);
+//
+//                }
+//            });
+//            api.toast({
+//               msg:ret.desc,
+//               duration: 2000,
+//              location: 'middle'
+//            });
+//           //  api.closeToWin({
+//           //    name:'main'
+//           //  });
+//            setTimeout("api.closeToWin({name:'main'})",2000);
+//          }else{
+//            api.toast({
+//               msg:ret.desc,
+//               duration: 2000,
+//              location: 'middle'
+//            });
+//          }
+//      },'json');
+//     }
+//  });
 });
 
 $api.addEvt($api.dom("#foot_cancle_g"),'click',function(){

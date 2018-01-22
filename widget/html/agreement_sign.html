@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	</head>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<script type="text/javascript" src="../script/config.js"></script>
+	<script type="text/javascript" src="../script/api.js"></script>
+  <style>
+      header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;padding-top:22px;}
+      header b{ width:42px; height: 42px; display: inline-block; position: relative; z-index: 1; background: url() no-repeat center; background-size: 70% auto;  }
+      header b.ic-back{ background-image: url(../image/back.png);background-size:25px 25px;}
+      header b.ic-check{ float: right;color:white; font-size: 18px;width:84px;}
+      header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.box {
+			width: 100%;
+			height: 310px;
+			margin: 0 auto;
+		}
+
+		.b1 {
+			width: 100%;
+			height: 30px;
+			background: #f16c3c;
+		}
+
+		.b11 {
+			width: 80px;
+			height: 30px;
+			text-align: center;
+			float: left;
+		}
+
+		.b11 img {
+			/*width: 30px;*/
+			height: 25px;
+      margin-top:2.5px;
+		}
+
+		.b12 {
+			width: 408px;
+			height: 30px;
+			text-align: center;
+			color: white;
+			float: left;
+			line-height: 30px;
+		}
+
+		.b13 {
+			width: 80px;
+			height: 30px;
+			text-align: center;
+			color: white;
+			float: left;
+			line-height: 30px;
+		}
+
+		.b2 {
+			width: 100%;
+			height: 250px;
+			text-align: center;
+			line-height: 250px;
+			color: #EDE4C7;
+			font-size: 40px;
+		}
+
+		.b3 {
+		  position:absolute;
+      bottom:0;
+			width: 100%;
+			height: 30px;
+			background: #f16c3c;
+			text-align: center;
+			color: white;
+			line-height: 30px;
+		}
+    .time{
+      width:100%;
+      text-align:right;
+      color:#999999;
+			position:absolute;
+			bottom:30px;
+    }
+	</style>
+
+	<body>
+    <header class="border-b" >
+        <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+        <div class="title" id="scheduling_id">清单号：1111111111111</div>
+        <b tapmode="hover"  class="ic-check">重新输入</b>
+    </header>
+			<div class="b2">收货人在此签字</div>
+      <div class="time"></div>
+      <div id="main" class="flex-con" >
+
+      </div>
+			<div class="b3">收货人已确认本人签名</div>
+			<div class="div" style="display: none;">
+				<!-- <input type="text" class="i1" name="schedule_id">
+				<input type="text" class="i2" name="lorry_id"> -->
+				<input class="img" name="upimage" id="upload_file" type="image" src="" width="320" height="600">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../script/local.js"></script>
+	<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+
+	<script type="text/javascript">
+		user = $api.getStorage('user');
+		var time = user.time;
+		var lorry_id = user.lorryid;
+
+function timeyun(){
+  var da=new Date();
+  $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+}
+     var qid,is_wuliu;
+		apiready = function() {
+			api.closeWin({
+					name: 'warn'
+			});
+			api.setScreenOrientation({
+				orientation: 'landscape_left'
+			});
+       var agreement_id=api.pageParam.agreement_id;
+			//  alert(is_wuliu);
+			 $api.text($api.dom("#scheduling_id"),"清单号:"+agreement_id);
+      //  api.openFrame({
+      //      name: 'signimage',
+      //      url: './signimage.html',
+      //      rect: {
+      //          x: 0,
+      //          y: $api.dom('header').offsetHeight,
+      //          w: api.winWidth,
+      //          h: $api.dom('#main').offsetHeight
+      //      }
+      //  });
+       var da=new Date();
+       $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+      setInterval('timeyun()',1000);
+
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err) {
+				// alert('按了返回键');
+				var drawingBoard = api.require('drawingBoard');
+				drawingBoard.close();
+			});
+			var drawingBoard = api.require('drawingBoard');
+			drawingBoard.open({
+				rect: {
+					x: 0,
+					y: $api.dom('header').offsetHeight,
+					w: api.winHeight,
+					h: api.winWidth-$api.dom('header').offsetHeight-$api.dom('.b3').offsetHeight
+				},
+				styles: {
+					brush: {
+						color: '#000000',
+						width: 6
+					},
+					bgColor: 'transparent'
+				},
+				fixedOn:api.ssg
+			});
+		}
+
+    // $api.addEvt($api.dom(".b2"), 'touchstart', function(){
+    //     $api.text($api.dom(".b2"),'');
+		//
+    // });
+
+	</script>
+	<script type="text/javascript">
+		// $(".b13").on("click", function() {
+		// 	var drawingBoard = api.require('drawingBoard');
+		// 	drawingBoard.clear();
+		// })
+    $api.addEvt($api.dom('.ic-check'), 'click', function(){
+      	var drawingBoard = api.require('drawingBoard');
+      	drawingBoard.clear();
+    });
+
+    $api.addEvt($api.dom('.b11'), 'click', function(){
+      var drawingBoard = api.require('drawingBoard');
+      drawingBoard.close();
+      api.openWin({
+          name: 'main',
+          url: '../main.html',
+      });
+        // var drawingBoard = api.require('drawingBoard');
+        // drawingBoard.clear();
+    });
+
+		$api.addEvt($api.dom('.b3'), 'click', function(){
+      var drawingBoard = api.require('drawingBoard');
+			drawingBoard.save({
+				savePath: 'fs://drawingBoard/result.png',
+				copyToAlbum: false
+			}, function(ret) {
+				//alert(JSON.stringify(ret));
+				// $('.i1').val(qid);
+				// $('.i2').val(lorry_id);
+				// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+        $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+			});
+			drawingBoard.close();
+			var a = null;
+			var trans = api.require('trans');
+			trans.decodeImgToBase64({
+				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+			}, function(ret, err) {
+				if(ret.status) {
+					//alert(JSON.stringify(ret));
+					a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
+					// alert(a);
+					$api.post(url+'app.php/receivesc',{
+					 body:{
+								agreement_id:agreement_id,
+								lorry_id: lorry_id,
+								pic: a
+								}
+					 },function(msg) {
+							if(msg.result == 0) {
+								var bMap = api.require('bMap');
+							  bMap.getLocation({
+							      accuracy: '10m',
+							      autoStop: true,
+							      filter: 1
+							  }, function(ret, err) {
+							      if (ret.status) {
+							        $api.post(url+'app.php/last_map1',{
+							         body:{
+							              schedule_id:qid,
+							              longitude:ret.lon,
+							              latitude:ret.lat,
+							              }
+							         },function(ret){
+												 api.toast({
+														msg: ret.desc,
+														duration: 1000,
+													 location: 'middle'
+												 });
+							       },'json');
+
+							      } else {
+							          // alert(err.code);
+
+							      }
+							  });
+
+                if(is_wuliu==2){
+									$api.post(url+'msend.php/schedules_sign',{
+												body: {
+												 scheduling_id:qid,
+											 }
+										 },function(ret){
+										// alert(ret.desc);
+									},'json');
+								}
+
+								// alert("提交成功");
+								api.toast({
+									 msg: "提交成功",
+									 duration: 1000,
+									location: 'middle'
+								});
+								// api.closeToWin({
+								//     name: "main"
+								// });
+								setTimeout("api.closeWin({name:'signmain'})",800);
+								setTimeout("api.closeWin({name:'select_delivery'})",700);
+								setTimeout("api.closeWin({name:'order_acc'})", 750);
+								setTimeout("api.closeWin({name:'scheduling_z'})",650);
+								setTimeout("api.closeWin({name:'scheduling_main_j'})",600);
+								setTimeout("api.closeWin({name:'warn'})",550);
+								setTimeout("api.closeFrame({name:'frame0'})",850);
+								var drawingBoard = api.require('drawingBoard');
+								drawingBoard.close();
+                api.openWin({
+                    name: 'main',
+                    url: '../main.html',
+                });
+
+							} else if(msg.result == 9) {
+								  // $api.setStorage("user",null);
+									api.toast({
+										 msg: msg.desc,
+										 duration: 1000,
+										location: 'middle'
+									});
+                api.openWin({
+                    name: 'index',
+                    url: '../index.html',
+                });
+							} else {
+								alert(msg.desc);
+
+							}
+						},'json');
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		});
+		// $(".b11").on("click", function() {
+		// 	var drawingBoard = api.require('drawingBoard');
+		// 	drawingBoard.close();
+		// 	window.history.back();
+		// })
+	</script>
+
+</html>

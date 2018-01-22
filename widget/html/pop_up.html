@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+*{
+  margin:0;
+  padding:0;
+}
+    body{
+      margin:0;
+      padding:0;
+    }
+    .pop_body{
+      z-index:99;
+      width:100%;
+      background-color:white;
+      height:200px;
+      /*margin-top:200px;*/
+    }
+    .pop_ap{
+      width:100%;
+      text-align:center;
+      font-size:18px;
+      margin-top:80px;
+    }
+    .pop_reason{
+      width:100%;
+      text-align:center;
+      font-size:14px;
+      margin-top:10px;
+      margin-bottom:10px;
+    }
+    .pop_reason_z{
+      width:80%;
+      margin-left:10%;
+      text-align:center;
+    }
+    .pop_reason_z>textarea{
+      height:80px;
+      width:100%;
+      font-size:20px;
+      rows:2;
+    }
+    .pop_reason_zh{
+      width:80%;
+      margin-left:10%;
+      text-align:center;
+    }
+    .pop_cancle{
+      float:left;
+      width:80px;
+      height:40px;
+      line-height:40px;
+      border-radius:10px;
+      color:white;
+      background-color:#f16c3c;
+    }
+    .pop_sure{
+      float:right;
+      width:80px;
+      height:40px;
+      line-height:40px;
+      border-radius:10px;
+      color:white;
+      background-color:#f16c3c;
+    }
+    .back_g{
+      width:100%;
+      height:100%;
+      top:0;
+      position:absolute;
+      background-color:rgb(87,87,87);
+      z-index: -1;
+      margin:0;
+      opacity:0.5;
+    }
+    </style>
+</head>
+<body>
+  <div class="back_g"></div>
+  <div class="pop_body">
+  <div class="pop_ap">申请退单</div>
+  <div class="pop_reason">请填写原因(20个字以内)</div>
+  <div class="pop_reason_z"><textarea id="reason_z"></textarea></div>
+  <div class="pop_reason_zh"><div class="pop_cancle">取消</div><div class="pop_sure">确定</div></div>
+  </div>
+</body>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
+<script type="text/javascript">
+apiready = function(){
+  var user = $api.getStorage('user');
+  var lorry_id=user.lorryid;
+  var scheduling_id=api.pageParam.scheduling_id;
+
+  $api.addEvt($api.dom(".pop_sure"),'click',function(){
+      var reason=$api.val($api.dom("#reason_z"));
+      // api.closeFrame();
+          $api.post(url+'app.php/change_orders_status',{
+           body:{
+                scheduling_id:scheduling_id,
+                lorryid:lorry_id,
+                reason:reason,
+                }
+           },function(ret){
+             if(ret.result==0){
+               var bMap = api.require('bMap');
+               bMap.getLocation({
+                   accuracy: '10m',
+                   autoStop: false,
+                   filter: 1
+               }, function(msg, err1) {
+                   if (msg.status) {
+                     $api.post(url+'app.php/last_map',{
+                      body:{
+                           schedule_id:scheduling_id,
+                           longitude:msg.lon,
+                           latitude:msg.lat,
+                           }
+                      },function(ret1){
+                        // api.toast({
+                        //    msg: ret1.desc,
+                        //    duration: 1000,
+                        //   location: 'middle'
+                        // });
+                    },'json');
+
+                   } else {
+                       // alert(err.code);
+
+                   }
+               });
+               api.toast({
+                  msg:ret.desc,
+                  duration: 2000,
+                 location: 'middle'
+               });
+              //  api.closeToWin({
+              //    name:'main'
+              //  });
+               setTimeout("api.closeToWin({name:'main'})",2000);
+             }else{
+               api.toast({
+                  msg:ret.desc,
+                  duration: 2000,
+                 location: 'middle'
+               });
+             }
+         },'json');
+
+  });
+
+
+$api.addEvt($api.dom(".pop_cancle"),'click',function(){
+  api.closeFrame();
+});
+
+$api.addEvt($api.dom("#reason_z"),'input',function(){
+  var reason_z=$api.val($api.dom("#reason_z"));
+  if(reason_z.length>=20){
+     $api.val($api.dom("#reason_z"),$api.val($api.dom("#reason_z")).substring(0,20));
+  }
+});
+
+
+
+}
+
+</script>
+</html>

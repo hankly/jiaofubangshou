@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+    body{
+     background-color:white;
+    }
+        .scheduling_a{
+          margin:1.5rem;
+          /*height:170px;*/
+        }
+        .scheduling_a_id_a{
+          width:100%;
+          /*height:40px;*/
+          font-size:16px;
+        }
+
+        .scheduling_id{
+            width:100%;
+          color:#f16c3c;
+        }
+        .scheduling_name{
+          height:30px;
+          margin-top:10px;
+          line-height:30px;
+        }
+        .scheduling_name,.scheduling_address,.scheduling_phone,.scheduling_to{
+          line-height:30px;
+        }
+        .scheduling_to{
+        color:#f16c3c;
+        }
+        .scheduling_line{
+          height:0;
+          width:100%;
+          border-top:1px solid #d2d2d2;
+          margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+  <!-- <div class="scheduling_a">
+     <div class="scheduling_a_id_a">
+        <div class="scheduling_id">
+           合同号:<span>11280874598</span>
+        </div>
+
+        <div class="scheduling_name">
+          甲方：xxx物流公司
+        </div>
+        <div class="scheduling_phone">
+          乙方：朱大
+        </div>
+        <div class="scheduling_address">
+          状态：待签字
+        </div>
+        <div class="scheduling_line"></div>
+     </div>
+  </div> -->
+</body>
+</html>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
+<script type="text/javascript">
+    apiready = function(){
+      var user = $api.getStorage('user');
+      var lorryid=user.lorryid;
+      var telephone=user.telephone;
+      var time=user.time;
+      // alert(user.lorryid)
+         $api.get(url+'app.php/agreement_lorrys?lorry_id='+lorryid,function(ret){
+     							if(ret.result==0){
+                    api.toast({
+                       msg: '成功',
+                       duration: 1000,
+                      location: 'middle'
+                    });
+                                  for(var i=0;i<ret.agreements.length;i++){
+                                    $api.append($api.dom('body'),'<div class="scheduling_a" id="'+ret.agreements[i].agreement_id+'">'+
+                                         '<div class="scheduling_a_id_a">'+
+                                            '<div class="scheduling_id">'+
+                                              '合同号:<span>'+ret.agreements[i].agreement_id+'</span>'+
+                                            '</div>'+
+                                            '<div class="scheduling_name">'+
+                                              '甲方：'+ret.agreements[i].company+''+
+                                            '</div>'+
+                                            '<div class="scheduling_phone">'+
+                                              '乙方：'+ret.agreements[i].driver_name+''+
+                                            '</div>'+
+                                            '<div class="scheduling_address">'+
+                                              '状态：<span id="c'+ret.agreements[i].agreement_id+'"></span>'+
+                                            '</div>'+
+                                            '<div class="scheduling_line"></div>'+
+                                         '</div>'+
+                                      '</div>');
+                                          $api.addEvt($api.dom('#'+ret.agreements[i].agreement_id), 'click',function(){
+                                            var agreement_id=$api.attr(this,'id');
+                                            api.openWin({
+                                                name: 'agreement_one_main',
+                                                url: './agreement_one_main.html',
+                                                pageParam: {
+                                                    agreement_id: agreement_id,
+                                               }
+                                            });
+                                          });
+                                       if(ret.agreements[i].agreement_status==0){
+                                         $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'待签字');
+                                         $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:red;');
+                                       }else if(ret.agreements[i].agreement_status==1){
+                                         $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'已达成');
+                                         $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:green;');
+                                       }else{
+                                         $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'作废');
+                                         $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:black;');
+                                       }
+                                  }
+     														 }else{
+     															 alert(ret.desc);
+     														 }
+                            },'json');
+
+                  };
+                  var check=function(id,time){
+                    $api.post(url+'app.php/check',{
+                          body:{lorryid:id,
+                                time:time,}
+                         },function(ret){
+                          if(ret.result==4){
+                            alert(ret.desc);
+                            api.openWin({
+                              name: 'index',
+                              url:  '../index.html',
+                            });
+                             setTimeout("api.closeWin({name:'main'})",650);
+                             $api.rmStorage('password');
+                             var key = 'user';
+                             var user = {};
+                             var aa=$api.getStorage(key);
+                             user.lorryid=aa.lorryid;
+                              user.telephone=aa.telephone;
+                             user.flag= aa.flag
+                             user.pass= '';
+                             $api.setStorage(key, user);
+                             api.alert({
+                               title: '提示消息',
+                               msg: ret.desc,
+                               buttons: ['确定']
+                             });
+                           }else{
+                            //  alert(ret.desc);
+                           }
+                         });
+                  }
+
+
+</script>
