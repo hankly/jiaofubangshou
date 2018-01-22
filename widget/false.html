@@ -53,6 +53,21 @@
 															api.toLauncher();
 													}
 									});
+
+									setInterval('ifOfflineStatus()',3000);
 								}
+
+								function ifOfflineStatus() {
+                  var s = api.connectionType;
+                    s = s.toLowerCase();
+                        if(s!='none'){
+													api.openWin({
+														name: 'index',
+														url:  './index.html',
+													 }
+													});
+                }else{
+                }
+        };
 	</script>
 </html>

@@ -115,9 +115,12 @@
                                        }else if(ret.agreements[i].agreement_status==1){
                                          $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'已达成');
                                          $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:green;');
-                                       }else{
+                                       }else if(ret.agreements[i].agreement_status==2){
                                          $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'作废');
                                          $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:black;');
+                                       }else{
+                                         $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'出险');
+                                         $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:blue;');
                                        }
                                   }
      														 }else{
