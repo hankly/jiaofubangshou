@@ -27,7 +27,8 @@
 
 .center{
     width: 100%;
-    height: 200px;
+    height: 160px;
+
 }
 .center_1{
   width: 15%;
@@ -41,20 +42,26 @@
     width: 84%;
     /*height: 50px;
     float: left;*/
-    margin-left: 15%;
-    line-height: 50px;
+    margin-left: 10%;
+    line-height: 40px;
     font-size: 18px;
 }
 .center_3{
-    width: 15%;
-    float: left;
-    /* border: 1px solid red; */
-    height: 40px;
-    margin-top: 10px;
-    text-align: right;
+  width: 84%;
+  /*height: 50px;
+  float: left;*/
+  margin-left: 10%;
+  /*padding-left:23px;*/
+  line-height: 40px;
+  font-size: 18px;
 }
 .center_1 img{
     height: 23px;
+}
+.center_2 img{
+    height: 23px;
+    width:23px;
+    vertical-align:middle;
 }
 .center_3 img{
     height: 30px;
@@ -205,6 +212,7 @@
   }
    .centerbox{
           	width: 100%;
+
           }
           .scheduling_a{
           margin:1.5rem;
@@ -226,7 +234,7 @@
         }
 
         .order_intro{
-        	height:130px;
+        	height:100px;
           display:block;
           margin-left:10%;
           margin-right:10px;
@@ -276,23 +284,43 @@
 .disp{
   display:block;
 }
+.fake_img{
+  padding-left:23px;
+}
+.sign_or{
+  width:100%;
+  text-align:right;
+}
+.sign_img_s{
+  height:50px;
+  text-align:right;
+}
+.center_2>*{
+  display:inline;
+}
+.center_3>*{
+  display:inline;
+}
+.inl{
+  display:inline;
+}
     </style>
 </head>
 <body>
 
         <div class="centerbox" id="centerbox">
         <div class="center">
-            <div class="center_1"></div>
-            <div class="center_4"><p>甲<span class="kong"></span>方:<span id="customer_name"></span></p></div>
-            <div class="center_1"></div>
-            <div class="center_4"><p>乙<span class="kong"></span>方:<span id="customer_phone"></span></p></div>
-            <div class="center_3"><img src="../image/3.png" alt=""></div>
-            <div class="center_4"><p>发<span class="kong"></span>站:<span id="sendcity"></span></p></div>
-            <div class="center_3"><img src="../image/1.png" alt=""></div>
-            <div class="center_4"><p>到<span class="kong"></span>站:<span id="acceptcity"></span></p></div>
-
+            <div class="center_3"><span class="fake_img"></span><span>甲<span class="kong"></span>方:<span id="customer_name"></span></span></div>
+            <div class="center_3"><span class="fake_img"></span><span>乙<span class="kong"></span>方:<span id="customer_phone"></span></span></div>
+            <div class="center_2"><img src="../image/add_2.png" alt=""/><span>发<span class="kong"></span>站:<span id="sendcity"></span></span></div>
+            <div class="center_2"><img src="../image/add_3.png" alt=""/><span>到<span class="kong"></span>站:<span id="acceptcity"></span></span></div>
         </div>
-        <div class="xian"></div>
+            <div class="center_2"><img src="../image/add_1.png" alt=""/><span>经<span class="kong"></span>停:<span id="jtcity" class="inl"></span></span></div>
+            <div class="center_2"><img src="../image/money.png" alt=""/><span>运<span class="kong"></span>费:<span id="acceptcost"></span></span></div>
+            <div class="center_2"><img src="../image/bank_card.png" alt=""/><span>支付方式:<span id="paymethod" class="inl"></span></span></div>
+            <div class="center_3"><span class="fake_img"></span><span>备<span class="kong"></span>注:<span id="comment" class="inl"></span></span></div>
+            <div class="center_3"><span class="fake_img"></span><span>预约到达时间:<span id="accepttime" class="inl"></span></span></div>
+            <div class="xian"></div>
           <!-- <div class="center_2"><p>地<span class="kong"></span>址:<span id="accept_address"></span></p></div> -->
 
     <!-- <img src="" id="sure_img_z"/> -->
@@ -321,9 +349,14 @@
                                  $api.text($api.dom('#customer_phone'),ret.agreement.lorry_name);
                                  $api.text($api.dom('#sendcity'),ret.agreement.name);
                                  $api.text($api.dom('#acceptcity'),ret.agreement.rcity);
-
-
+                                 $api.text($api.dom('#jtcity'),ret.agreement.receive_tj_citys);
+                                 $api.text($api.dom('#acceptcost'),ret.agreement.freight);
+                                 $api.text($api.dom('#paymethod'),ret.agreement.pay_method);
+                                 $api.text($api.dom('#comment'),ret.agreement.agreement_require);
+                                 $api.text($api.dom('#accepttime'),ret.agreement.deadline);
+                                //  var jtcity='';
                                  for(var i=0;i<ret.agreement_schedulings.length;i++){
+                                  //  jtcity=jtcity+ret.agreement_schedulings[i].receive_city_name+',';
                                    $api.append($api.dom('#centerbox'),
                                   //  '<div class="order_id">'+
                                   //                      '运单号:<span>'+ret.goods[i].order_id+'</span><span class="look_more" id="r'+ret.goods[i].order_id+'" >查看更多</span>'+
@@ -360,10 +393,15 @@
                                                      });
 
                                  }
+
+                                  if(ret.agreement.sign_img){
+                                    $api.append($api.dom('#centerbox'),'<div class="sign_or"><img src="'+ret.agreement.sign_img+'" class="sign_img_s"/></div>');
+                                  }
                                 }else{
                                   alert(ret.desc);
                                 }
                            },'json');
+
 
     }
     var check=function(id,time){

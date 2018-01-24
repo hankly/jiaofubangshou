@@ -18,7 +18,7 @@
           position:relative;;
           margin:0 auto;
           width:90%;
-          height:50px;
+          height:120px;
           bottom:0;
           left:0;
           font-size:18px;
@@ -36,6 +36,7 @@
           text-align:center;
           margin:0 auto;
           line-height:40px;
+          margin-top:25px;
         }
         .foot_cancle{
           padding-left:17%;
@@ -45,6 +46,23 @@
           background-color:#f16c3c;
           color:white;
           border-radius:10px;
+        }
+        .duigou{
+          vertical-align:middle;
+          line-height:20px;
+          height:20px;
+          text-align:center;
+          margin-top:15px;
+        }
+        .duigou>img{
+          height:20px;
+          vertical-align:middle;
+        }
+        .rights_obligations{
+           text-decoration: underline;
+           color:blue;
+           line-height:20px;
+           height:20px;
         }
     </style>
 </head>
@@ -59,6 +77,7 @@
 
         </div>
         <div id="foot">
+            <div class="duigou"><img src="../image/duigou1.png" id="duigou_img"/><span class="rights_obligations">甲乙双方权利与义务</span></div>
             <div class="foot_sure" id="foot_sure"></div>
             <!-- <span class="foot_cancle" id="foot_cancle">取消</span> -->
         </div>
@@ -83,11 +102,37 @@
        if(ret.result==0){
           if(ret.agreement.agreement_status==0){
              $api.text($api.dom('#foot_sure'),'签字');
+             $api.addEvt($api.dom("#duigou_img"),'click',function(){
+               if($api.attr($api.dom('#duigou_img'),'src')=='../image/duigou1.png'){
+                  $api.attr($api.dom('#duigou_img'),'src','../image/duigou2.png');
+                  $api.css($api.dom('#foot_sure'),'background-color:#999999;');
+               }else{
+                  $api.attr($api.dom('#duigou_img'),'src','../image/duigou1.png');
+                  $api.css($api.dom('#foot_sure'),'background-color:#f16c3c;');
+               }
+
+             });
           }else{
             $api.text($api.dom('#foot_sure'),'确认');
           }
        }
      },'json');
+
+     $api.addEvt($api.dom(".rights_obligations"),'click',function(){
+       api.openFrame({
+           name: 'details',
+           url: './details.html',
+           bounces:false,
+           rect: {
+               x: 0,
+               y: $api.dom('header').offsetHeight,
+               w: api.winWidth,
+               h: api.winHeight-$api.dom('header').offsetHeight
+           },
+     });
+     });
+
+
         api.openFrame({
             name: 'agreement_one',
             url: './agreement_one.html',
@@ -103,7 +148,7 @@
 });
 $api.addEvt($api.dom("#foot_sure"), 'click', function(){
   var sign=$api.text($api.dom('#foot_sure'));
-  if(sign=='签字'){
+  if(sign=='签字'&&($api.attr($api.dom('#duigou_img'),'src')=='../image/duigou1.png')){
     api.openWin({
         name: 'agreement_sign',
         url: './agreement_sign.html',
@@ -112,8 +157,10 @@ $api.addEvt($api.dom("#foot_sure"), 'click', function(){
               agreement_id:agreement_id
                 }
 });
-  }else{
+  }else if(sign=='签字'&&($api.attr($api.dom('#duigou_img'),'src')=='../image/duigou2.png')){
 
+
+  }else{
     setTimeout("api.closeWin({name:'my_agreement'})",550);
     setTimeout("api.closeWin({name:'agreement_one_main'})",600);
     setTimeout("api.openWin({name:'main',url:'../main.html',})",650);

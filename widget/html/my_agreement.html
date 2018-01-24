@@ -93,6 +93,9 @@
                                             '<div class="scheduling_phone">'+
                                               '乙方：'+ret.agreements[i].driver_name+''+
                                             '</div>'+
+                                            '<div class="scheduling_phone" >'+
+                                              '运费：<span id="m'+ret.agreements[i].agreement_id+'">'+ret.agreements[i].freight+'</span>元'+
+                                            '</div>'+
                                             '<div class="scheduling_address">'+
                                               '状态：<span id="c'+ret.agreements[i].agreement_id+'"></span>'+
                                             '</div>'+
@@ -122,6 +125,8 @@
                                          $api.text($api.dom('#c'+ret.agreements[i].agreement_id),'出险');
                                          $api.css($api.dom('#c'+ret.agreements[i].agreement_id),'color:blue;');
                                        }
+                                     $api.css($api.dom("#m"+ret.agreements[i].agreement_id),"color:red;");
+
                                   }
      														 }else{
      															 alert(ret.desc);
