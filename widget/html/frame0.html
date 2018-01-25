@@ -304,16 +304,14 @@ alert(JSON.stringify(ret));
                 time:time,}
          },function(ret){
           if(ret.result==4){
+            setTimeout("api.openWin({name:'index',animation:{type:'none',},url:'../index.html'})",500);
+             setTimeout("api.closeToWin({name:'index',animation:{type:'none',}})",550);
             alert(ret.desc);
             // api.openWin({
             //   name: 'index',
             //   url:  '../index.html',
             // });
-            setTimeout("api.openWin({name:'index',url:'../index.html'})",450);
-             setTimeout("api.closeWin({name:'order_acc'})",650);
-             setTimeout("api.closeWin({name:'delivery_z'})",650);
-             setTimeout("api.closeWin({name:'my_agreement'})",550);
-             setTimeout("api.closeWin({name:'main'})",500);
+
              $api.rmStorage('password');
              var key = 'user';
              var user = {};
