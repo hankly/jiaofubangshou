@@ -309,9 +309,11 @@ alert(JSON.stringify(ret));
             //   name: 'index',
             //   url:  '../index.html',
             // });
-            setTimeout("api.openWin({name:'index',url:'../index.html'})",650);
-             setTimeout("api.closeToWin({name:'main'})",550);
-             setTimeout("api.closeWin({name:'main'})",600);
+            setTimeout("api.openWin({name:'index',url:'../index.html'})",450);
+             setTimeout("api.closeWin({name:'order_acc'})",650);
+             setTimeout("api.closeWin({name:'delivery_z'})",650);
+             setTimeout("api.closeWin({name:'my_agreement'})",550);
+             setTimeout("api.closeWin({name:'main'})",500);
              $api.rmStorage('password');
              var key = 'user';
              var user = {};
