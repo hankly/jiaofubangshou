@@ -144,6 +144,7 @@
                                                     scheduling_id: scheduling_id,
                                                }
                                             });
+                                            check(lorryid,time);
                                           });
                                        if(ret.schedules[i].scheduling_status==5){
                                          $api.text($api.dom('#q'+ret.schedules[i].scheduling_id),'签收');

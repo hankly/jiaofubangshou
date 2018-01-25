@@ -142,7 +142,7 @@
       var user = $api.getStorage('user');
       var lorryid=user.lorryid;
       var time=user.time;
-      check(lorryid,time);
+
     //     var scanner = api.require('scanner');
     // scanner.open(function(ret, err) {
         // if (ret.msg) {
@@ -174,7 +174,7 @@ FNScanner.openScanner({
               FNScanner.closeView();
         }
       });
-
+check(lorryid,time);
   }
     function funOpenArticle2(tdg){
       var user = $api.getStorage('user');
@@ -194,7 +194,7 @@ FNScanner.openScanner({
     var user = $api.getStorage('user');
     var lorryid=user.lorryid;
     var time=user.time;
-    check(lorryid,time);
+
     api.openWin({
         name: 'delivery_z',
         url: './minimain.html',
@@ -202,12 +202,13 @@ FNScanner.openScanner({
             name: $api.text( $api.dom(".delivery_z")),
        }
     });
+    check(lorryid,time);
   }
   function funOpenArticle3(tdg){
     var user = $api.getStorage('user');
     var lorryid=user.lorryid;
     var time=user.time;
-    check(lorryid,time);
+
     api.openWin({
         name: 'order_acc',
         url: './ordercc_main.html',
@@ -215,12 +216,13 @@ FNScanner.openScanner({
             name: $api.text( $api.dom(".order_acc")),
        }
     });
+    check(lorryid,time);
   }
   function message(){
     var user = $api.getStorage('user');
     var lorryid=user.lorryid;
     var time=user.time;
-    check(lorryid,time);
+
     api.openWin({
         name: 'my_agreement',
         url: './minimain.html',
@@ -228,6 +230,7 @@ FNScanner.openScanner({
             name: $api.text( $api.dom(".my_message_z")),
        }
     });
+    check(lorryid,time);
   }
   var tongji=function(id){
     $api.get('http://api.uminfo.cn/app.php/tongji?lorry_id='+id,function(ret){

@@ -166,14 +166,18 @@ $api.addEvt($api.dom("#foot_sure"), 'click', function(){
     setTimeout("api.openWin({name:'main',url:'../main.html',})",650);
   }
 
-
+  var user = $api.getStorage('user');
+  var lorryid=user.lorryid;
+  var time=user.time;
+  check(lorryid,time);
 });
 $api.addEvt($api.dom("#foot_cancle"), 'click', function(){
   var scheduling_id=api.pageParam.scheduling_id;
   var user = $api.getStorage('user');
   var lorryid=user.lorryid;
   api.closeWin();
-
+  var time=user.time;
+  check(lorryid,time);
 });
 
 }
