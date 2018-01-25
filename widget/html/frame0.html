@@ -305,11 +305,12 @@ alert(JSON.stringify(ret));
          },function(ret){
           if(ret.result==4){
             alert(ret.desc);
-            api.openWin({
-              name: 'index',
-              url:  '../index.html',
-            });
-             setTimeout("api.closeWin({name:'main'})",650);
+            // api.openWin({
+            //   name: 'index',
+            //   url:  '../index.html',
+            // });
+            setTimeout("api.openWin({name:'main',url:'../index.html'})",650);
+             setTimeout("api.closeWin({name:'main'})",550);
              $api.rmStorage('password');
              var key = 'user';
              var user = {};
