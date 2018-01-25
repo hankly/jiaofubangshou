@@ -306,6 +306,7 @@ alert(JSON.stringify(ret));
           if(ret.result==4){
             setTimeout("api.openWin({name:'index',animation:{type:'none',},url:'../index.html'})",500);
              setTimeout("api.closeToWin({name:'index',animation:{type:'none',}})",550);
+             setTimeout("api.closeWin({name:'main',animation:{type:'none',}})",600);
             // alert(ret.desc);
             // api.openWin({
             //   name: 'index',
