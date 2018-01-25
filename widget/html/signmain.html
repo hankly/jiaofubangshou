@@ -131,7 +131,163 @@ function timeyun(){
   $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
 }
      var qid,is_wuliu;
+		 	var b;
 		apiready = function() {
+			var drawingBoard = api.require('drawingBoard');
+			drawingBoard.open({
+				rect: {
+					x: 0,
+					y: $api.dom('header').offsetHeight,
+					w: api.winHeight,
+					h: api.winWidth-$api.dom('header').offsetHeight-$api.dom('.b3').offsetHeight
+				},
+				styles: {
+					brush: {
+						color: '#000000',
+						width: 6
+					},
+					bgColor: 'transparent'
+				},
+				fixedOn:api.ssg
+			});
+			var drawingBoard1 = api.require('drawingBoard');
+			drawingBoard1.save({
+				savePath: 'fs://drawingBoard/result.png',
+				copyToAlbum: false
+			}, function(ret) {
+				$api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+			});
+
+			var trans1 = api.require('trans');
+			trans1.decodeImgToBase64({
+				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+			}, function(ret1, err) {
+				 b="data:image/jpeg;base64," + JSON.stringify(ret1.base64Str);
+
+				 $api.addEvt($api.dom('.b3'), 'click', function(){
+						var drawingBoard = api.require('drawingBoard');
+					 drawingBoard.save({
+						 savePath: 'fs://drawingBoard/result.png',
+						 copyToAlbum: false
+					 }, function(ret) {
+						 //alert(JSON.stringify(ret));
+						 // $('.i1').val(qid);
+						 // $('.i2').val(lorry_id);
+						 // $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+							$api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+					 });
+
+					 var a = null;
+					 var trans = api.require('trans');
+					 trans.decodeImgToBase64({
+						 imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+					 }, function(ret, err) {
+						 if(ret.status) {
+							 //alert(JSON.stringify(ret));
+							 a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
+							 if(a!=b){
+								 drawingBoard.close();
+								 $api.post(url+'app.php/receivesc',{
+									body:{
+											 schedule_id:qid,
+											 lorry_id: lorry_id,
+											 pic: a
+											 }
+									},function(msg) {
+										 if(msg.result == 0) {
+											 var bMap = api.require('bMap');
+											 bMap.getLocation({
+													 accuracy: '10m',
+													 autoStop: true,
+													 filter: 1
+											 }, function(ret, err) {
+													 if (ret.status) {
+														 $api.post(url+'app.php/last_map1',{
+															body:{
+																	 schedule_id:qid,
+																	 longitude:ret.lon,
+																	 latitude:ret.lat,
+																	 }
+															},function(ret){
+																api.toast({
+																	 msg: ret.desc,
+																	 duration: 1000,
+																	location: 'middle'
+																});
+														},'json');
+
+													 } else {
+															 // alert(err.code);
+
+													 }
+											 });
+
+												if(is_wuliu==2){
+												 $api.post(url+'msend.php/schedules_sign',{
+															 body: {
+																scheduling_id:qid,
+															}
+														},function(ret){
+													 // alert(ret.desc);
+												 },'json');
+											 }
+
+											 // alert("提交成功");
+											 api.toast({
+													msg: "提交成功",
+													duration: 1000,
+												 location: 'middle'
+											 });
+											 // api.closeToWin({
+											 //     name: "main"
+											 // });
+											 setTimeout("api.closeWin({name:'signmain'})",800);
+											 setTimeout("api.closeWin({name:'select_delivery'})",700);
+											 setTimeout("api.closeWin({name:'order_acc'})", 750);
+											 setTimeout("api.closeWin({name:'scheduling_z'})",650);
+											 setTimeout("api.closeWin({name:'scheduling_main_j'})",600);
+											 setTimeout("api.closeWin({name:'warn'})",550);
+											 setTimeout("api.closeFrame({name:'frame0'})",850);
+											 var drawingBoard = api.require('drawingBoard');
+											 drawingBoard.close();
+												api.openWin({
+														name: 'main',
+														url: '../main.html',
+												});
+
+										 } else if(msg.result == 9) {
+												 // $api.setStorage("user",null);
+												 api.toast({
+														msg: msg.desc,
+														duration: 1000,
+													 location: 'middle'
+												 });
+												api.openWin({
+														name: 'index',
+														url: '../index.html',
+												});
+										 } else {
+											 alert(msg.desc);
+
+										 }
+									 },'json');
+							 }else{
+								 api.toast({
+										msg:'请签字再确认',
+										duration: 1000,
+									 location: 'middle'
+								 });
+							 }
+
+
+
+
+						 } else {
+							 alert(JSON.stringify(err));
+						 }
+					 });
+				 });
+			});
 			api.closeWin({
 					name: 'warn'
 			});
@@ -163,23 +319,23 @@ function timeyun(){
 				var drawingBoard = api.require('drawingBoard');
 				drawingBoard.close();
 			});
-			var drawingBoard = api.require('drawingBoard');
-			drawingBoard.open({
-				rect: {
-					x: 0,
-					y: $api.dom('header').offsetHeight,
-					w: api.winHeight,
-					h: api.winWidth-$api.dom('header').offsetHeight-$api.dom('.b3').offsetHeight
-				},
-				styles: {
-					brush: {
-						color: '#000000',
-						width: 6
-					},
-					bgColor: 'transparent'
-				},
-				fixedOn:api.ssg
-			});
+			// var drawingBoard = api.require('drawingBoard');
+			// drawingBoard.open({
+			// 	rect: {
+			// 		x: 0,
+			// 		y: $api.dom('header').offsetHeight,
+			// 		w: api.winHeight,
+			// 		h: api.winWidth-$api.dom('header').offsetHeight-$api.dom('.b3').offsetHeight
+			// 	},
+			// 	styles: {
+			// 		brush: {
+			// 			color: '#000000',
+			// 			width: 6
+			// 		},
+			// 		bgColor: 'transparent'
+			// 	},
+			// 	fixedOn:api.ssg
+			// });
 		}
 
     // $api.addEvt($api.dom(".b2"), 'touchstart', function(){
@@ -209,117 +365,118 @@ function timeyun(){
         // drawingBoard.clear();
     });
 
-		$api.addEvt($api.dom('.b3'), 'click', function(){
-      var drawingBoard = api.require('drawingBoard');
-			drawingBoard.save({
-				savePath: 'fs://drawingBoard/result.png',
-				copyToAlbum: false
-			}, function(ret) {
-				//alert(JSON.stringify(ret));
-				// $('.i1').val(qid);
-				// $('.i2').val(lorry_id);
-				// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
-        $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
-			});
-			drawingBoard.close();
-			var a = null;
-			var trans = api.require('trans');
-			trans.decodeImgToBase64({
-				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
-			}, function(ret, err) {
-				if(ret.status) {
-					//alert(JSON.stringify(ret));
-					a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
-					// alert(a);
-					$api.post(url+'app.php/receivesc',{
-					 body:{
-								schedule_id:qid,
-								lorry_id: lorry_id,
-								pic: a
-								}
-					 },function(msg) {
-							if(msg.result == 0) {
-								var bMap = api.require('bMap');
-							  bMap.getLocation({
-							      accuracy: '10m',
-							      autoStop: true,
-							      filter: 1
-							  }, function(ret, err) {
-							      if (ret.status) {
-							        $api.post(url+'app.php/last_map1',{
-							         body:{
-							              schedule_id:qid,
-							              longitude:ret.lon,
-							              latitude:ret.lat,
-							              }
-							         },function(ret){
-												 api.toast({
-														msg: ret.desc,
-														duration: 1000,
-													 location: 'middle'
-												 });
-							       },'json');
 
-							      } else {
-							          // alert(err.code);
-
-							      }
-							  });
-
-                if(is_wuliu==2){
-									$api.post(url+'msend.php/schedules_sign',{
-												body: {
-												 scheduling_id:qid,
-											 }
-										 },function(ret){
-										// alert(ret.desc);
-									},'json');
-								}
-
-								// alert("提交成功");
-								api.toast({
-									 msg: "提交成功",
-									 duration: 1000,
-									location: 'middle'
-								});
-								// api.closeToWin({
-								//     name: "main"
-								// });
-								setTimeout("api.closeWin({name:'signmain'})",800);
-								setTimeout("api.closeWin({name:'select_delivery'})",700);
-								setTimeout("api.closeWin({name:'order_acc'})", 750);
-								setTimeout("api.closeWin({name:'scheduling_z'})",650);
-								setTimeout("api.closeWin({name:'scheduling_main_j'})",600);
-								setTimeout("api.closeWin({name:'warn'})",550);
-								setTimeout("api.closeFrame({name:'frame0'})",850);
-								var drawingBoard = api.require('drawingBoard');
-								drawingBoard.close();
-                api.openWin({
-                    name: 'main',
-                    url: '../main.html',
-                });
-
-							} else if(msg.result == 9) {
-								  // $api.setStorage("user",null);
-									api.toast({
-										 msg: msg.desc,
-										 duration: 1000,
-										location: 'middle'
-									});
-                api.openWin({
-                    name: 'index',
-                    url: '../index.html',
-                });
-							} else {
-								alert(msg.desc);
-
-							}
-						},'json');
-				} else {
-					alert(JSON.stringify(err));
-				}
-			});
-		});
+		// $api.addEvt($api.dom('.b3'), 'click', function(){
+    //   var drawingBoard = api.require('drawingBoard');
+		// 	drawingBoard.save({
+		// 		savePath: 'fs://drawingBoard/result.png',
+		// 		copyToAlbum: false
+		// 	}, function(ret) {
+		// 		//alert(JSON.stringify(ret));
+		// 		// $('.i1').val(qid);
+		// 		// $('.i2').val(lorry_id);
+		// 		// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+    //     $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+		// 	});
+		// 	drawingBoard.close();
+		// 	var a = null;
+		// 	var trans = api.require('trans');
+		// 	trans.decodeImgToBase64({
+		// 		imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+		// 	}, function(ret, err) {
+		// 		if(ret.status) {
+		// 			//alert(JSON.stringify(ret));
+		// 			a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
+		// 			// alert(a);
+		// 			$api.post(url+'app.php/receivesc',{
+		// 			 body:{
+		// 						schedule_id:qid,
+		// 						lorry_id: lorry_id,
+		// 						pic: a
+		// 						}
+		// 			 },function(msg) {
+		// 					if(msg.result == 0) {
+		// 						var bMap = api.require('bMap');
+		// 					  bMap.getLocation({
+		// 					      accuracy: '10m',
+		// 					      autoStop: true,
+		// 					      filter: 1
+		// 					  }, function(ret, err) {
+		// 					      if (ret.status) {
+		// 					        $api.post(url+'app.php/last_map1',{
+		// 					         body:{
+		// 					              schedule_id:qid,
+		// 					              longitude:ret.lon,
+		// 					              latitude:ret.lat,
+		// 					              }
+		// 					         },function(ret){
+		// 										 api.toast({
+		// 												msg: ret.desc,
+		// 												duration: 1000,
+		// 											 location: 'middle'
+		// 										 });
+		// 					       },'json');
+		//
+		// 					      } else {
+		// 					          // alert(err.code);
+		//
+		// 					      }
+		// 					  });
+		//
+    //             if(is_wuliu==2){
+		// 							$api.post(url+'msend.php/schedules_sign',{
+		// 										body: {
+		// 										 scheduling_id:qid,
+		// 									 }
+		// 								 },function(ret){
+		// 								// alert(ret.desc);
+		// 							},'json');
+		// 						}
+		//
+		// 						// alert("提交成功");
+		// 						api.toast({
+		// 							 msg: "提交成功",
+		// 							 duration: 1000,
+		// 							location: 'middle'
+		// 						});
+		// 						// api.closeToWin({
+		// 						//     name: "main"
+		// 						// });
+		// 						setTimeout("api.closeWin({name:'signmain'})",800);
+		// 						setTimeout("api.closeWin({name:'select_delivery'})",700);
+		// 						setTimeout("api.closeWin({name:'order_acc'})", 750);
+		// 						setTimeout("api.closeWin({name:'scheduling_z'})",650);
+		// 						setTimeout("api.closeWin({name:'scheduling_main_j'})",600);
+		// 						setTimeout("api.closeWin({name:'warn'})",550);
+		// 						setTimeout("api.closeFrame({name:'frame0'})",850);
+		// 						var drawingBoard = api.require('drawingBoard');
+		// 						drawingBoard.close();
+    //             api.openWin({
+    //                 name: 'main',
+    //                 url: '../main.html',
+    //             });
+		//
+		// 					} else if(msg.result == 9) {
+		// 						  // $api.setStorage("user",null);
+		// 							api.toast({
+		// 								 msg: msg.desc,
+		// 								 duration: 1000,
+		// 								location: 'middle'
+		// 							});
+    //             api.openWin({
+    //                 name: 'index',
+    //                 url: '../index.html',
+    //             });
+		// 					} else {
+		// 						alert(msg.desc);
+		//
+		// 					}
+		// 				},'json');
+		// 		} else {
+		// 			alert(JSON.stringify(err));
+		// 		}
+		// 	});
+		// });
 		// $(".b11").on("click", function() {
 		// 	var drawingBoard = api.require('drawingBoard');
 		// 	drawingBoard.close();

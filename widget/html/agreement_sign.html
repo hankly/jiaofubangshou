@@ -173,6 +173,105 @@ function timeyun(){
 				},
 				fixedOn:api.ssg
 			});
+
+
+
+			var drawingBoard1 = api.require('drawingBoard');
+			drawingBoard1.save({
+				savePath: 'fs://drawingBoard/result.png',
+				copyToAlbum: false
+			}, function(ret) {
+				$api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+			});
+
+			var trans1 = api.require('trans');
+			trans1.decodeImgToBase64({
+				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+			}, function(ret1, err) {
+				 b="data:image/jpeg;base64," + JSON.stringify(ret1.base64Str);
+			$api.addEvt($api.dom('.b3'), 'click', function(){
+	      var drawingBoard = api.require('drawingBoard');
+				drawingBoard.save({
+					savePath: 'fs://drawingBoard/result.png',
+					copyToAlbum: false
+				}, function(ret) {
+					//alert(JSON.stringify(ret));
+					// $('.i1').val(qid);
+					// $('.i2').val(lorry_id);
+					// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+	        $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
+				});
+
+				var a = null;
+				var trans = api.require('trans');
+				trans.decodeImgToBase64({
+					imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
+				}, function(ret, err) {
+					if(ret.status) {
+	          var agreement_id=api.pageParam.agreement_id;
+						//alert(JSON.stringify(ret));
+						a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
+						// alert(a);
+						if(b!=a){
+							drawingBoard.close();
+							$api.post(url+'app.php/sign_agreement',{
+							 body:{
+										agreement_id:agreement_id,
+										lorryid: lorry_id,
+										pic: a
+										}
+							 },function(msg) {
+									if(msg.result == 0) {
+
+
+										// alert("提交成功");
+										api.toast({
+											 msg: msg.desc,
+											 duration: 1000,
+											location: 'middle'
+										});
+										// api.closeToWin({
+										//     name: "main"
+										// });
+										setTimeout("api.closeWin({name:'my_agreement'})",600);
+										setTimeout("api.closeWin({name:'agreement_one_main'})",700);
+										var drawingBoard = api.require('drawingBoard');
+										drawingBoard.close();
+										api.openWin({
+												name: 'main',
+												url: '../main.html',
+										});
+
+									} else if(msg.result == 2) {
+											// $api.setStorage("user",null);
+											api.toast({
+												 msg: msg.desc,
+												 duration: 1000,
+												location: 'middle'
+											});
+										api.openWin({
+												name: 'index',
+												url: '../index.html',
+										});
+									} else {
+										alert(msg.desc);
+
+									}
+								},'json');
+						}else{
+							api.toast({
+								 msg:'请签字再确认',
+								 duration: 1000,
+								location: 'middle'
+							});
+						}
+
+					} else {
+						alert(JSON.stringify(err));
+					}
+				});
+			});
+		});
 		}
 
     // $api.addEvt($api.dom(".b2"), 'touchstart', function(){
@@ -202,78 +301,7 @@ function timeyun(){
         // drawingBoard.clear();
     });
 
-		$api.addEvt($api.dom('.b3'), 'click', function(){
-      var drawingBoard = api.require('drawingBoard');
-			drawingBoard.save({
-				savePath: 'fs://drawingBoard/result.png',
-				copyToAlbum: false
-			}, function(ret) {
-				//alert(JSON.stringify(ret));
-				// $('.i1').val(qid);
-				// $('.i2').val(lorry_id);
-				// $('.img').attr('src', api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
-        $api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
-			});
-			drawingBoard.close();
-			var a = null;
-			var trans = api.require('trans');
-			trans.decodeImgToBase64({
-				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'
-			}, function(ret, err) {
-				if(ret.status) {
-          var agreement_id=api.pageParam.agreement_id;
-					//alert(JSON.stringify(ret));
-					a = "data:image/jpeg;base64," + JSON.stringify(ret.base64Str);
-					// alert(a);
-					$api.post(url+'app.php/sign_agreement',{
-					 body:{
-								agreement_id:agreement_id,
-								lorryid: lorry_id,
-								pic: a
-								}
-					 },function(msg) {
-							if(msg.result == 0) {
 
-
-								// alert("提交成功");
-								api.toast({
-									 msg: msg.desc,
-									 duration: 1000,
-									location: 'middle'
-								});
-								// api.closeToWin({
-								//     name: "main"
-								// });
-								setTimeout("api.closeWin({name:'my_agreement'})",600);
-								setTimeout("api.closeWin({name:'agreement_one_main'})",700);
-								var drawingBoard = api.require('drawingBoard');
-								drawingBoard.close();
-                api.openWin({
-                    name: 'main',
-                    url: '../main.html',
-                });
-
-							} else if(msg.result == 2) {
-								  // $api.setStorage("user",null);
-									api.toast({
-										 msg: msg.desc,
-										 duration: 1000,
-										location: 'middle'
-									});
-                api.openWin({
-                    name: 'index',
-                    url: '../index.html',
-                });
-							} else {
-								alert(msg.desc);
-
-							}
-						},'json');
-				} else {
-					alert(JSON.stringify(err));
-				}
-			});
-		});
 		// $(".b11").on("click", function() {
 		// 	var drawingBoard = api.require('drawingBoard');
 		// 	drawingBoard.close();
