@@ -350,7 +350,10 @@
                                  $api.text($api.dom('#customer_phone'),ret.agreement.lorry_name);
                                  $api.text($api.dom('#sendcity'),ret.agreement.name);
                                  $api.text($api.dom('#acceptcity'),ret.agreement.rcity);
-                                 $api.text($api.dom('#jtcity'),ret.agreement.receive_tj_citys);
+                                 if(ret.agreement.receive_tj_citys){
+                                   $api.text($api.dom('#jtcity'),ret.agreement.receive_tj_citys);
+                                 }
+
                                  $api.text($api.dom('#acceptcost'),ret.agreement.freight);
                                  $api.text($api.dom('#paymethod'),ret.agreement.pay_method);
                                  $api.text($api.dom('#comment'),ret.agreement.agreement_require);

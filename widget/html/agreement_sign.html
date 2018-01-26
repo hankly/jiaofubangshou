@@ -122,7 +122,7 @@
 
 function timeyun(){
   var da=new Date();
-  $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+  $api.text($api.dom(".time"),da.getFullYear()+"年"+(da.getMonth()+1)+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
 }
      var qid,is_wuliu;
 		apiready = function() {
@@ -146,7 +146,7 @@ function timeyun(){
       //      }
       //  });
        var da=new Date();
-       $api.text($api.dom(".time"),da.getFullYear()+"年"+da.getMonth()+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
+       $api.text($api.dom(".time"),da.getFullYear()+"年"+(da.getMonth()+1)+"月"+da.getDate()+"日"+da.getHours()+"时"+da.getMinutes()+"分"+da.getSeconds()+"秒");
       setInterval('timeyun()',1000);
 
 			api.addEventListener({
