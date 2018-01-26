@@ -129,6 +129,7 @@
 <script type="text/javascript">
 var leng;
 var is_true;
+var aaa;
     apiready = function(){
 
       api.addEventListener({
@@ -140,6 +141,7 @@ var is_true;
                       });
       // $api.text($api.dom("#title"),api.pageParam.name);
       var scheduling_id=api.pageParam.scheduling_id;
+      check_company(scheduling_id);
        setInterval('chaxun("'+scheduling_id+'")',1000);
         api.openFrame({
             name: 'scheduling_waitsend',
@@ -243,11 +245,12 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
            leng=ret.result;
         },'json');
 
-        $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
-                 is_true=ret.result;
-              },'json');
+  $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+            is_true=ret.result;
+        },'json');
 
 
+if(aaa!=1){
   if(is_true==0){
   if(leng!=0){
     api.openWin({
@@ -277,6 +280,14 @@ $api.addEvt($api.dom("#foot_sure_p"), 'click', function(){
           location : 'middle'
   });
 }
+}else{
+  api.toast({
+          msg: '商户编号已确定，请扫码接单',
+          duration : 1000,
+          location : 'middle'
+  });
+}
+
 
 });
 var user = $api.getStorage('user');
@@ -518,5 +529,12 @@ function chaxun(scheduling_id){
         $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
                  is_true=ret.result;
               },'json');
+}
+function check_company(scheduling_id){
+  $api.get(url+'app.php/company_customer?scheduling_id='+scheduling_id+'',function(ret){
+       if(ret.result==0){
+         aaa=1;
+       }
+     },'json');
 }
 </script>

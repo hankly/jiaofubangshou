@@ -102,57 +102,66 @@ apiready = function(){
   $api.addEvt($api.dom(".pop_sure"),'click',function(){
       var reason=$api.val($api.dom("#reason_z"));
       // api.closeFrame();
-          $api.post(url+'app.php/change_orders_status',{
-           body:{
-                scheduling_id:scheduling_id,
-                lorryid:lorry_id,
-                reason:reason,
-                }
-           },function(ret){
-             if(ret.result==0){
-               var bMap = api.require('bMap');
-               bMap.getLocation({
-                   accuracy: '10m',
-                   autoStop: false,
-                   filter: 1
-               }, function(msg, err1) {
-                   if (msg.status) {
-                     $api.post(url+'app.php/last_map',{
-                      body:{
-                           schedule_id:scheduling_id,
-                           longitude:msg.lon,
-                           latitude:msg.lat,
-                           }
-                      },function(ret1){
-                        // api.toast({
-                        //    msg: ret1.desc,
-                        //    duration: 1000,
-                        //   location: 'middle'
-                        // });
-                    },'json');
+      if(reason.length==0){
+        api.toast({
+           msg:'请填写退单原因',
+           duration: 1500,
+          location: 'middle'
+        });
+      }else{
+        $api.post(url+'app.php/change_orders_status',{
+         body:{
+              scheduling_id:scheduling_id,
+              lorryid:lorry_id,
+              reason:reason,
+              }
+         },function(ret){
+           if(ret.result==0){
+             var bMap = api.require('bMap');
+             bMap.getLocation({
+                 accuracy: '10m',
+                 autoStop: false,
+                 filter: 1
+             }, function(msg, err1) {
+                 if (msg.status) {
+                   $api.post(url+'app.php/last_map',{
+                    body:{
+                         schedule_id:scheduling_id,
+                         longitude:msg.lon,
+                         latitude:msg.lat,
+                         }
+                    },function(ret1){
+                      // api.toast({
+                      //    msg: ret1.desc,
+                      //    duration: 1000,
+                      //   location: 'middle'
+                      // });
+                  },'json');
 
-                   } else {
-                       // alert(err.code);
+                 } else {
+                     // alert(err.code);
 
-                   }
-               });
-               api.toast({
-                  msg:ret.desc,
-                  duration: 2000,
-                 location: 'middle'
-               });
-              //  api.closeToWin({
-              //    name:'main'
-              //  });
-               setTimeout("api.closeToWin({name:'main'})",2000);
-             }else{
-               api.toast({
-                  msg:ret.desc,
-                  duration: 2000,
-                 location: 'middle'
-               });
-             }
-         },'json');
+                 }
+             });
+             api.toast({
+                msg:ret.desc,
+                duration: 2000,
+               location: 'middle'
+             });
+            //  api.closeToWin({
+            //    name:'main'
+            //  });
+             setTimeout("api.closeToWin({name:'main'})",2000);
+           }else{
+             api.toast({
+                msg:ret.desc,
+                duration: 2000,
+               location: 'middle'
+             });
+           }
+       },'json');
+      }
+
 
   });
 
