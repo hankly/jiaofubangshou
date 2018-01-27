@@ -82,6 +82,23 @@
 		input {
 			-webkit-tap-highlight-color:transparent;
 		}
+		.foot_all{
+			width:75%;
+			margin:0 auto;
+			height:44px;
+		}
+		.foot_all>*{
+			float:left;
+			width:40%;
+			margin-left:5%;
+			margin-right:5%;
+			height:44px;
+			text-align:center;
+			background-color:#f16c3c;
+			border-radius:10px;
+			line-height:44px;
+			color:white;
+		}
 	</style>
 </head>
 
@@ -96,7 +113,11 @@
 			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">正面</div><img src="image/id_card_z.png" style="width:70%;height:100%;float:left;" id="img_x_z"/></div>
 			<div class="tp"><div style="float:left;width:20%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:70%;height:100%;float:left;" id="img_x_f"/></div>
 		</div>
-		<div class="foot" id="foot">确定</div>
+		<!-- <div class="foot" id="foot">确定</div> -->
+		<div class="foot_all">
+				<div class="foot_up" onclick="api.closeWin();">上一步</div>
+				<div class="foot_down" id="foot">下一步</div>
+		</div>
 	</div>
 </body>
 <script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
@@ -105,7 +126,7 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script>
 	apiready = function() {
-			setTimeout("api.closeWin({name:'fiveregister5'})",600);
+			// setTimeout("api.closeWin({name:'fiveregister5'})",600);
 			$api.attr($api.dom("#img_j_z"), "src",'image/id_card_z.png');
 			$api.attr($api.dom("#img_j_f"), "src",'image/id_card_f.png');
 			$api.attr($api.dom("#img_x_z"), "src",'image/id_card_z.png');

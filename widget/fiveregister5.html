@@ -86,6 +86,23 @@
 		input {
 			-webkit-tap-highlight-color:transparent;
 		}
+		.foot_all{
+			width:75%;
+			margin:0 auto;
+			height:44px;
+		}
+		.foot_all>*{
+			float:left;
+			width:40%;
+			margin-left:5%;
+			margin-right:5%;
+			height:44px;
+			text-align:center;
+			background-color:#f16c3c;
+			border-radius:10px;
+			line-height:44px;
+			color:white;
+		}
 	</style>
 </head>
 
@@ -99,7 +116,11 @@
       <div class="cen"></div>
 			<div class="fp"><div style="float:left;width:30%;height:100%;line-height:70px;">反面</div><img src="image/id_card_f.png" style="width:65%;height:100%;float:left;" id="img_id_f"/></div>
 		</div>
-		<div class="foot" id="foot">下一步</div>
+		<!-- <div class="foot" id="foot">下一步</div> -->
+		<div class="foot_all">
+				<div class="foot_up" onclick="api.closeWin();">上一步</div>
+				<div class="foot_down" id="foot">下一步</div>
+		</div>
 	</div>
 </body>
 <script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
@@ -108,7 +129,7 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script>
 	apiready = function() {
-		setTimeout("api.closeWin({name:'threeregister3'})",600);
+		// setTimeout("api.closeWin({name:'threeregister3'})",600);
 		$api.attr($api.dom("#img_id_z"), "src",'image/id_card_z.png');
 		$api.attr($api.dom("#img_id_f"), "src",'image/id_card_z.png');
      var id_z,id_f;
