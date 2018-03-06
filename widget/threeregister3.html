@@ -201,23 +201,6 @@
 			input {
 				-webkit-tap-highlight-color:transparent;
 			}
-			.foot_all{
-				width:75%;
-				margin:0 auto;
-				height:44px;
-			}
-			.foot_all>*{
-				float:left;
-				width:40%;
-				margin-left:5%;
-				margin-right:5%;
-				height:44px;
-				text-align:center;
-				background-color:#f16c3c;
-				border-radius:10px;
-				line-height:44px;
-				color:white;
-			}
 		</style>
 	</head>
 
@@ -295,11 +278,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="foot">下一步</div> -->
-			<div class="foot_all">
-					<div class="foot_up" onclick="api.closeWin();">上一步</div>
-					<div class="foot_down" id="foot">下一步</div>
-			</div>
+			<div class="foot">下一步</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
@@ -323,7 +302,7 @@
 	</script> -->
 	<script>
 	apiready = function(){
-		// setTimeout("api.closeWin({name:'firstregister2'})",600);
+		setTimeout("api.closeWin({name:'firstregister2'})",600);
 		$api.val($api.dom('#plate_number'),'');
 		$api.val($api.dom('#carlong'),'');
 		$api.val($api.dom('#cartype'),'');
@@ -369,7 +348,7 @@
 							}
 						},'json');
 
-	$api.addEvt($api.dom('#foot'), 'click', function(){
+	$api.addEvt($api.dom('.foot'), 'click', function(){
 		        if(lorryid==null){
 							api.openWin({
 								name: 'fiveregister1',
