@@ -183,6 +183,7 @@ function timeyun(){
 			}, function(ret) {
 				$api.attr($api.dom('.img'),'src',api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png');
 			});
+
 			var trans1 = api.require('trans');
 			trans1.decodeImgToBase64({
 				imgPath: api.fsDir + '/' + 'drawingBoard' + '/' + 'result.png'

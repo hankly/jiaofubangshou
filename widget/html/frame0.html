@@ -233,7 +233,6 @@ check(lorryid,time);
     check(lorryid,time);
   }
   var tongji=function(id){
-
     $api.get(url+'app.php/tongji?lorry_id='+id,function(ret){
 if(ret.result==0){
       if(ret.count==0){
@@ -263,7 +262,7 @@ if(ret.result==0){
     // alert(1)
     var bMap = api.require('bMap');
     bMap.getLocationServices(function(ret2, err) {
-    if (ret2.enable) {
+                    if (ret2.enable) {
     bMap.getLocation({
         accuracy: '10m',
         autoStop: true,
