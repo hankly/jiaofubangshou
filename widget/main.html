@@ -56,6 +56,16 @@
 <script type="text/javascript" src="script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
+
+
+      var isAndroid = (/android/gi).test(navigator.appVersion);
+if (isAndroid) {
+    var rb = api.require('runBackground');
+    rb.hideActivity();
+}
+
+
+
 if (api.systemType == "ios") {
       api.addEventListener({
        name:'pause'
@@ -83,7 +93,9 @@ checkUpdate();
                                       pressIndex = 0;
                               }, 1000);
                               if (pressIndex >= 2) {
-                                  api.toLauncher();
+                                  // api.toLauncher();
+                                  var rb = api.require('runBackground');
+                                 rb.hideActivity();
                               }
                       });
 
@@ -93,7 +105,7 @@ checkUpdate();
       var time=user.time;
 
       upload_map(lorryid);
-      // setInterval("upload_map("+lorryid+")",5000);
+      setInterval("upload_map("+lorryid+")",5000);
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
