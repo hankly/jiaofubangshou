@@ -58,11 +58,6 @@
     apiready = function(){
 
 
-      var isAndroid = (/android/gi).test(navigator.appVersion);
-if (isAndroid) {
-    var rb = api.require('runBackground');
-    rb.hideActivity();
-}
 
 
 
@@ -93,9 +88,8 @@ checkUpdate();
                                       pressIndex = 0;
                               }, 1000);
                               if (pressIndex >= 2) {
-                                  // api.toLauncher();
-                                  var rb = api.require('runBackground');
-                                 rb.hideActivity();
+                                   api.toLauncher();
+
                               }
                       });
 
