@@ -57,10 +57,6 @@
 <script type="text/javascript">
     apiready = function(){
 
-
-
-
-
 if (api.systemType == "ios") {
       api.addEventListener({
        name:'pause'
@@ -72,7 +68,19 @@ if (api.systemType == "ios") {
 
     });
     }
-checkUpdate();
+
+    var isAndroid = (/android/gi).test(navigator.appVersion);
+
+    api.addEventListener({
+        name:'pause'
+    },function(ret,err){
+      if (isAndroid) {
+          var rb = api.require('runBackground');
+          rb.hideActivity();
+      }
+    });
+
+      checkUpdate();
       api.closeToWin({name:'main'});
       var pressIndex=0;
       api.addEventListener({
@@ -88,10 +96,12 @@ checkUpdate();
                                       pressIndex = 0;
                               }, 1000);
                               if (pressIndex >= 2) {
-                                   api.toLauncher();
-
+                                  // api.toLauncher();
+                                  var rb = api.require('runBackground');
+                                 rb.hideActivity();
                               }
                       });
+
 
       setInterval(addEventListener,3000);
       var user = $api.getStorage('user');
