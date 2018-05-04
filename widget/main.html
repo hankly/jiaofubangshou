@@ -237,6 +237,9 @@ if (api.systemType == "ios") {
                                 msg : str,
                                 buttons : ['确定', '取消']
                             }, function(ret, err) {
+							    api.alert({
+								msg:ret.buttonIndex
+								});
                                 if (ret.buttonIndex == 1) {
                                     if (api.systemType == "android") {
                                         api.download({
