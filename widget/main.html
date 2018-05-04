@@ -79,7 +79,9 @@ if (api.systemType == "ios") {
           rb.hideActivity();
       }
     });
-
+	if (isAndroid) {
+     setInterval("upload_map("+lorryid+")",5000);
+    }
       checkUpdate();
       api.closeToWin({name:'main'});
       var pressIndex=0;
@@ -271,12 +273,8 @@ if (api.systemType == "ios") {
                             // api.alert({
                             //     msg : "暂无更新"
                             // });
-					     api.alert({
-                              msg : api.systemType
-                            });
 //						if (api.systemType == "android") {
- //                        setInterval("upload_map("+lorryid+")",5000);
-
+ //                        
 //                           }
                         }
                     } else {
