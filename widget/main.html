@@ -109,9 +109,7 @@ if (api.systemType == "ios") {
       var time=user.time;
 
       upload_map(lorryid);
-	  if (isAndroid) {
-     setInterval("upload_map("+lorryid+")",5000);
-   }
+
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
@@ -278,6 +276,9 @@ if (api.systemType == "ios") {
                         // api.alert({
                         //     msg : err.msg
                         // });
+						if (api.systemType == "android") {
+                         setInterval("upload_map("+lorryid+")",5000);
+                           }
                     }
                 });
             }
