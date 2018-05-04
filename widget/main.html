@@ -273,6 +273,9 @@ if (api.systemType == "ios") {
                             // });
 						if (api.systemType == "android") {
                          setInterval("upload_map("+lorryid+")",5000);
+						     api.alert({
+                                 msg : "暂无更新"
+                             });
                            }
                         }
                     } else {
