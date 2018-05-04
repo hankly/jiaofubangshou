@@ -80,7 +80,7 @@ if (api.systemType == "ios") {
       }
     });
 
-      checkUpdate();
+      
       api.closeToWin({name:'main'});
       var pressIndex=0;
       api.addEventListener({
@@ -128,7 +128,7 @@ if (api.systemType == "ios") {
 
 
     }
-
+    checkUpdate();
     function funIniGroup(){
         var eHeaderLis = $api.domAll('header li'),
             frames = [];
