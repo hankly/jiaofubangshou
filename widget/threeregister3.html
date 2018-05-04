@@ -356,7 +356,7 @@
 			 $api.get(url+'app.php/lorry_long',function(ret){
 						 if(ret.result==0){
 							 for(var i=0;i<ret.vehiche_long.length;i++){
-									 $api.append($api.dom('#carlong'),'<option value="'+ret.vehiche_long[i].lorry_length_id+'" >'+ret.vehiche_long[i].lorry_length+'</option>');
+									 $api.append($api.dom('#carlong'),'<option value="'+ret.vehiche_long[i].lorry_length_id+'" >&nbsp;&nbsp;&nbsp;&nbsp;'+ret.vehiche_long[i].lorry_length+'</option>');
 							 }
 							}
 						},'json');
