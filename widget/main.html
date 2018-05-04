@@ -271,14 +271,15 @@ if (api.systemType == "ios") {
                             // api.alert({
                             //     msg : "暂无更新"
                             // });
+						if (api.systemType == "android") {
+                         setInterval("upload_map("+lorryid+")",5000);
+                           }
                         }
                     } else {
                         // api.alert({
                         //     msg : err.msg
                         // });
-						if (api.systemType == "android") {
-                         setInterval("upload_map("+lorryid+")",5000);
-                           }
+
                     }
                 });
             }
