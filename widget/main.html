@@ -80,7 +80,7 @@ if (api.systemType == "ios") {
       }
     });
 
-      
+      checkUpdate();
       api.closeToWin({name:'main'});
       var pressIndex=0;
       api.addEventListener({
@@ -110,8 +110,8 @@ if (api.systemType == "ios") {
 
       upload_map(lorryid);
 	  if (isAndroid) {
-        setInterval("upload_map("+lorryid+")",5000);
-      }
+     setInterval("upload_map("+lorryid+")",5000);
+   }
       api.addEventListener({
                             name:'viewappear'
                         }, function(ret, err){
@@ -128,7 +128,7 @@ if (api.systemType == "ios") {
 
 
     }
-    checkUpdate();
+
     function funIniGroup(){
         var eHeaderLis = $api.domAll('header li'),
             frames = [];
