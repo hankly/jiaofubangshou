@@ -244,7 +244,6 @@ if (api.systemType == "ios") {
                                             report : true
                                         }, function(ret, err) {
                                             if (ret && 0 == ret.state) {
-											  clearInterval(intervalId);
                                               api.showProgress({
                                                   title: '更新中...',
                                                   text: '先喝杯茶，正在下载应用',
