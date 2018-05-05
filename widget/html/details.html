@@ -128,7 +128,7 @@
   <div class="back_g"></div>
   <div class="pop_body">
     <div class="pop_body_a">
-    <div style="font-size:20px;text-align:center;">甲方的权利与义务</div>
+    <!-- <div style="font-size:20px;text-align:center;">甲方的权利与义务</div>
     <div>1.甲方须如实填写货物信息，严禁夹带法律禁运物品，造成后果由甲方负责。</div>
     <div>2.甲方应对所托货物按照行业标准妥善包装，使其适合运输。</div>
     <div>3.甲方应确保所提供收货人信息准确，电话通畅，如因此造成收货延误，乙方不负违约责任。乙方确认交货后，甲方如有异议须在三天内以书面方式提出，否则视同乙方运输义务完成。运输完成后，甲方应主动按约定支付运费。</div>
@@ -139,8 +139,8 @@
     <div>4.货物途中如被查超载造成罚款，由乙方承担，货物途中如被查超载造成卸货费用及货物到达卸货地点前一切费用由乙方负全责，甲方不予列支。</div>
     <div>5.因发生自然灾害等不可抗力造成货物无法按期运达目的地时，乙方应将情况及时通知甲方并取得相关证明，以便甲方与客户协调；非因自然灾害等不可抗力造成货物无法按时到达，乙方须在最短时间内运至甲方指定的收货地点并交给收货人，且赔偿逾期承运给甲方造成的全部经济损失。
     本合同不得无故违约，如有法律纠纷，在甲方所在地人民法院受理。</div>
-    </div>
-    <div class="pop_close">关闭</div>
+    </div> -->
+    <!-- <div class="pop_close">关闭</div> -->
   </div>
 </body>
 <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
@@ -148,16 +148,12 @@
 <!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
 <script type="text/javascript">
 apiready = function(){
-
-
-$api.addEvt($api.dom(".pop_close"),'click',function(){
-  api.closeFrame();
-});
-
-
-
-
+  $api.get(url+'app.php/get_agreement_html',function(ret){
+    $api.html($api.dom('.pop_body_a'),ret);
+    $api.addEvt($api.dom(".pop_close"),'click',function(){
+      api.closeFrame();
+    });
+  },'text');
 }
-
 </script>
 </html>
