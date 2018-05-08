@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<title></title>
+	<script type="text/javascript" src="script/config.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color:white;
+		}
+		.box {
+			width: 100%;
+			height: 100%;
+		}
+		.foot {
+			width: 64%;
+			margin-left: 18%;
+			height: 44px;
+			background-color:#f16c3c;
+			line-height: 44px;
+			text-align: center;
+			color: white;
+			font-size: 20px;
+			border-radius: 10px;
+      margin-top:20px;
+      margin-bottom:20px;
+		}
+    .box_a,.box_d,.box_g,.box_j,.box_m{
+      margin:0 auto;
+      width:90%;
+      height:40px;
+    }
+    .box_a>div,.box_d>div,.box_g>div,.box_j>div,.box_m>div{
+      float:left;
+      height:40px;
+      font-size:20px;
+      vertical-align:middle;
+      text-align:center;
+    }
+    .box_c>input{
+      height:30px;
+    }
+    .box_f_a,.box_i_a,.box_o_a{
+      width:70px;
+      height:30px;
+    }
+    .box_f_b,.box_l>input{
+      width:160px;
+      height:30px;
+    }
+    .box_p{
+      width:90%;
+      height:190px;
+      margin:0 auto;
+    }
+    .box_q{
+      width:60px;
+      height:20px;
+    }
+    .box_s,.box_r{
+      width:100%;
+      height:80px;
+      margin:0 auto;
+    }
+    .box_r{
+      margin-bottom:10px;
+    }
+    .box_r>div,.box_s>div{
+      float:left;
+    }
+    .box_r_b,.box_s_b{
+      line-height:80px;
+      width:30%;
+      height:80px;
+      text-align:center;
+    }
+    .box_r_a,.box_s_a{
+      width:70%;
+      height:80px;
+    }
+    .box_r_a>img,.box_s_a>img{
+      width:150px;
+      height:80px;
+      border-radius:10px;
+    }
+    .boxa{
+      width:100px;
+      height:30px;
+      margin:0 auto;
+      margin-top:20px;
+      margin-bottom:20px;
+      text-align:center;
+      line-height:30px;
+      font-size:20px;
+    }
+    input{
+      font-size:16px;
+    }
+    .box_o_a{
+      width:120px;
+    }
+	</style>
+</head>
+
+<body>
+	<div class="box">
+    <div class="boxa">驾驶员信息</div>
+    <div class="box_a"><div class="box_b">姓名:</div><div class="box_c"><input type="text" id="name"/></div></div>
+    <div class="box_a"><div class="box_b">身份证:</div><div class="box_c"><input type="text" id="id_c"/></div></div>
+    <div class="box_a"><div class="box_b">电话号码:</div><div class="box_c"><input type="text" id="phone"/></div></div>
+    <div class="box_d">
+      <div class="box_e">车牌:</div>
+      <div class="box_f">
+        <select class="box_f_a" id='province'>
+          <option value="京"  id="pro_1">京</option>
+          <option value="津"  id="pro_2">津</option>
+          <option value="冀"  id="pro_3">冀</option>
+          <option value="晋"  id="pro_4">晋</option>
+          <option value="蒙"  id="pro_5">蒙</option>
+          <option value="辽"  id="pro_6">辽</option>
+          <option value="吉"  id="pro_7">吉</option>
+          <option value="黑"  id="pro_8">黑</option>
+          <option value="沪"  id="pro_9">沪</option>
+          <option value="苏"  id="pro_10">苏</option>
+          <option value="浙"  id="pro_11">浙</option>
+          <option value="皖"  id="pro_12">皖</option>
+          <option value="闽"  id="pro_13">闽</option>
+          <option value="赣"  id="pro_14">赣</option>
+          <option value="鲁"  id="pro_15">鲁</option>
+          <option value="豫"  id="pro_16">豫</option>
+          <option value="鄂"  id="pro_17">鄂</option>
+          <option value="湘"  id="pro_18">湘</option>
+          <option value="粤"  id="pro_19">粤</option>
+          <option value="桂"  id="pro_20">桂</option>
+          <option value="琼"  id="pro_21">琼</option>
+          <option value="川"  id="pro_22">川</option>
+          <option value="贵"  id="pro_23">贵</option>
+          <option value="云"  id="pro_24">云</option>
+          <option value="渝"  id="pro_25">渝</option>
+          <option value="藏"  id="pro_26">藏</option>
+          <option value="陕"  id="pro_27">陕</option>
+          <option value="甘"  id="pro_28">甘</option>
+          <option value="青"  id="pro_29">青</option>
+          <option value="宁"  id="pro_30">宁</option>
+          <option value="新"  id="pro_31">新</option>
+          <option value="港"  id="pro_32">港</option>
+          <option value="澳"  id="pro_33">澳</option>
+          <option value="台"  id="pro_34">台</option>
+        </select>
+        <input type="text" class="box_f_b"/>
+      </div>
+    </div>
+    <div class="box_g">
+      <div class="box_h">车长/米:</div>
+      <div class="box_i">
+        <select class="box_i_a">
+        </select>
+      </div>
+    </div>
+    <div class="box_j">
+      <div class="box_k">车重/吨:</div>
+      <div class="box_l">
+        <input type="text" id="weight"/>
+      </div>
+    </div>
+    <div class="box_m">
+      <div class="box_n">车型:</div>
+      <div class="box_o">
+        <select class="box_o_a">
+        </select>
+      </div>
+    </div>
+    <div class="box_p">
+      <div class="box_q">身份证</div>
+      <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="id_card_z"/></div></div>
+      <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="id_card_f"/></div></div>
+    </div>
+    <div class="box_p">
+      <div class="box_q">驾驶证</div>
+      <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="j_s_z"/></div></div>
+      <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="j_s_f"/></div></div>
+    </div>
+    <div class="box_p">
+      <div class="box_q">行驶证</div>
+      <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="x_s_z"/></div></div>
+      <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="x_s_f"/></div></div>
+    </div>
+		<div class="foot" id="foot">修改上传</div>
+	</div>
+</body>
+<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="script/local.js"></script>
+<script type="text/javascript" src="script/APICloud-rest.js"></script>
+<script type="text/javascript" src="script/api.js"></script>
+<script>
+	apiready = function() {
+    setTimeout("api.closeWin({name:'main'})",500);
+    var user = $api.getStorage('user');
+    var lorryid=user.lorryid;
+    $api.get(url+'app_lorry_nedb.php/getAppLorry_app?app_lorry_id='+lorryid,function(ret){
+      if(ret.result==0){
+         $api.val($api.dom("#name"),ret.lorry.name);
+         $api.val($api.dom("#id_c"),ret.lorry.id_number);
+         $api.val($api.dom("#phone"),ret.lorry.phone);
+         $api.val($api.dom("#weight"),ret.lorry.deadweight);
+         $api.attr($api.dom("#id_card_z"),'src',ret.lorry.identity_card_z);
+         $api.attr($api.dom("#id_card_f"),'src',ret.lorry.identity_card_f);
+         $api.attr($api.dom("#j_s_z"),'src',ret.lorry.driver_license_fp);
+         $api.attr($api.dom("#j_s_f"),'src',ret.lorry.driver_license_tp);
+         $api.attr($api.dom("#x_s_z"),'src',ret.lorry.driving_license_fp);
+         $api.attr($api.dom("#x_s_f"),'src',ret.lorry.driving_license_tp);
+         var length=ret.lorry.length;
+         var type=ret.lorry.type;
+         var plate_number=ret.lorry.plate_number;
+        //  alert(plate_number.substring(0,1));
+         var province=$api.domAll('#province option');
+        //  alert($($api.domAll('#province')).eq(0).val());
+        //  $api.val($api.dom('#province'),'苏');
+         for(var i=0;i<province.length;i++){
+             if(plate_number.substring(0,1)==$(province).eq(i).val()){
+                var pro_id=$(province).eq(i).attr('id');
+                $api.attr($api.dom('#'+pro_id),'selected','selected');
+             }
+         }
+         $api.val($api.dom('.box_f_b'),plate_number.substring(1));
+         $api.get(url+'app.php/lorry_long',function(ret){
+               if(ret.result==0){
+                 for(var i=0;i<ret.vehiche_long.length;i++){
+                     $api.append($api.dom('.box_i_a'),'<option value="'+ret.vehiche_long[i].lorry_length_id+'" id="ve_long'+ret.vehiche_long[i].lorry_length_id+'">&nbsp;&nbsp;&nbsp;&nbsp;'+ret.vehiche_long[i].lorry_length+'</option>');
+                     $api.attr($api.dom('#ve_long'+length),'selected','selected');
+                 }
+                }
+              },'json');
+
+         $api.get(url+'app.php/lorry_type',function(ret){
+               if(ret.result==0){
+                 for(var i=0;i<ret.lorry_type.length;i++){
+                     $api.append($api.dom('.box_o_a'),'<option value="'+ret.lorry_type[i].lorry_type_id+'" id="ve_type'+ret.lorry_type[i].lorry_type_id+'">'+ret.lorry_type[i].lorry_type_name+'</option>');
+                     $api.attr($api.dom('#ve_type'+type),'selected','selected');
+                 }
+                }
+              },'json');
+      }
+    },'json');
+var i_z='';
+var i_f='';
+var j_z='';
+var j_f='';
+var x_z='';
+var x_f='';
+    $api.addEvt($api.dom("#id_card_z"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#id_card_z"), "src",ret.base64Data);
+                        i_z=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#id_card_z"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       i_z = base;
+                });
+              });
+                }
+            });
+    });
+
+    $api.addEvt($api.dom("#id_card_f"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#id_card_f"), "src",ret.base64Data);
+                        i_f=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#id_card_f"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       i_f = base;
+                });
+              });
+                }
+            });
+    });
+
+
+    $api.addEvt($api.dom("#j_s_z"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#j_s_z"), "src",ret.base64Data);
+                        j_z=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#j_s_z"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       j_z = base;
+                });
+              });
+                }
+            });
+    });
+
+
+    $api.addEvt($api.dom("#j_s_f"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#j_s_f"), "src",ret.base64Data);
+                        j_f=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#j_s_f"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       j_f= base;
+                });
+              });
+                }
+            });
+    });
+
+
+    $api.addEvt($api.dom("#x_s_z"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#x_s_z"), "src",ret.base64Data);
+                        x_z=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#x_s_z"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       x_z = base;
+                });
+              });
+                }
+            });
+    });
+
+
+    $api.addEvt($api.dom("#x_s_f"),'click',function(){
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: ['相册','相机']
+            },function(ret,err){
+                if(ret.buttonIndex==1){
+                  api.getPicture({
+                    sourceType: 'album',
+                    encodingType: 'jpg',
+                    mediaValue: 'pic',
+                    destinationType: 'base64',
+                    allowEdit: false,
+                    quality: 100,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      if(ret.base64Data){
+                        $api.attr($api.dom("#x_s_f"), "src",ret.base64Data);
+                        x_f=ret.base64Data;
+                      }
+                    } else {
+                    }
+                  });
+                }else if(ret.buttonIndex==2){
+             var shootPicture = api.require("shootPicture");
+                shootPicture.shoot(function(ret, err) {
+                $api.attr($api.dom("#x_s_f"), "src",ret.imagePath);
+                dealImage(ret.imagePath,function(base){
+                       x_f= base;
+                });
+              });
+                }
+            });
+    });
+
+    $api.addEvt($api.dom('#foot'),'click',function(){
+      var plate_number=$api.val($api.dom("#province"))+$api.val($api.dom('.box_f_b'));
+      var name=$api.val($api.dom('#name'));
+      var phone=$api.val($api.dom('#phone'));
+      var id_card=$api.val($api.dom('#id_c'));
+      var length=$api.val($api.dom('.box_i_a'));
+      var weight=$api.val($api.dom('#weight'));
+      var type=$api.val($api.dom('.box_o_a'));
+      if(!(/^[冀豫云辽黑湘皖鲁苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼渝京津沪新京军空海北沈兰济南广成使领A-Z]{1}[a-zA-Z0-9]{5}[a-zA-Z0-9挂学警港澳]{1}$/.test(plate_number))){
+                api.toast({
+                   msg: '车牌格式有误',
+                   duration: 1000,
+                  location: 'middle'
+                });
+              }else if(!(/^((0\d{2,3}-\d{7,8})|(1[35784]\d{9}))$/.test(phone))){
+                api.toast({
+                   msg: '手机号码不正确',
+                   duration: 1000,
+                  location: 'middle'
+                });
+
+              }else if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(id_card))){
+                  api.toast({
+                     msg: '身份证格式有误',
+                     duration: 1000,
+                    location: 'middle'
+                  });
+              }else if(plate_number&&name&&phone&&id_card&&length&&weight&&type){
+        api.showProgress({
+            title: '上传中...',
+            text: '先喝杯茶...',
+            modal: true
+           });
+        $api.post(url+'app.php/change_lorry_status',{
+              body:{
+                       pic3:j_z,
+                       pic4:j_f,
+                       pic5:x_z,
+                       pic6:x_f,
+                       pic1:i_z,
+                       pic2:i_f,
+                       lorryid:lorryid,
+                       plate_number:plate_number,
+                       phone:phone,
+                       length:length,
+                       name:name,
+                       id_card:id_card,
+                       weight:weight,
+                       type:type,}
+             },function(ret){
+              if(ret.result==0){
+                api.hideProgress();
+                api.toast({
+                   msg: '上传成功',
+                   duration: 1000,
+                  location: 'middle'
+                });
+                api.openWin({
+                  name: 'main',
+                  url:  './main.html',
+                  slidBackEnabled:false,
+                });
+               }else{
+                 api.hideProgress();
+                 api.toast({
+                    msg: ret.desc,
+                    duration: 1000,
+                   location: 'middle'
+                 });
+               }
+             });
+
+      }else{
+        api.hideProgress();
+        api.toast({
+           msg:"驾驶员信息未填写完整",
+           duration: 1000,
+          location: 'middle'
+        });
+      }
+      });
+}
+</script>
+
+</html>
