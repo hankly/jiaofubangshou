@@ -569,6 +569,23 @@ var x_f='';
       }
       });
 }
+	function dealImage(path, callback){
+    var img = new Image();
+    img.src = path;
+    img.onload = function(){
+        var w = this.width,
+            h = this.height;
+        var quality = 0.7;
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.setAttribute("width", w);
+        canvas.setAttribute("height", h);
+
+        ctx.drawImage(this, 0, 0, w, h);
+        var base64 = canvas.toDataURL('image/jpeg', quality);
+        callback(base64);
+    };
+};
 </script>
 
 </html>
