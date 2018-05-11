@@ -18,7 +18,7 @@
 	<preference name="fullScreen" value="false"/>
 	<preference name="autoUpdate" value="false"/>
 	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>	<preference name="softInputMode" value="resize"/>
+	<preference name="debug" value="false"/>	<preference name="softInputMode" value="resize"/>
 	<preference name="statusBarAppearance" value="true"/>
 <feature name="baiduLocation">
     <param name="android_api_key" value="irTYrMdEy6L3bgTbAqPiHmGxb21WB9wY" />
@@ -26,7 +26,7 @@
 </feature>
   <preference name="backgroundMode" value="location"/>
 	<permission name="readPhoneState" />
-	<permission name="camera" />
+	<permission name="camera" />		<permission name="call" />
 	<permission name="record" />
 	<permission name="location" />
 	<permission name="fileSystem" />

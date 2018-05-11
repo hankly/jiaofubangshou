@@ -73,14 +73,14 @@ if (api.systemType == "ios") {
 
     var isAndroid = (/android/gi).test(navigator.appVersion);
 
-    api.addEventListener({
-        name:'pause'
-    },function(ret,err){
-      if (isAndroid) {
-          var rb = api.require('runBackground');
-          rb.hideActivity();
-      }
-    });
+   // api.addEventListener({
+    //    name:'pause'
+    //},function(ret,err){
+     // if (isAndroid) {
+      //    var rb = api.require('runBackground');
+      //    rb.hideActivity();
+     // }
+    //});
 
       // checkUpdate();
       api.closeToWin({name:'main'});
