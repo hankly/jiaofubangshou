@@ -210,11 +210,11 @@ function timeyun(){
 																	 latitude:ret.lat,
 																	 }
 															},function(ret){
-																api.toast({
-																	 msg: ret.desc,
-																	 duration: 1000,
-																	location: 'middle'
-																});
+															//	api.toast({
+															//		 msg: ret.desc,
+															//		 duration: 1000,
+															//		location: 'middle'
+															//	});
 														},'json');
 
 													 } else {
@@ -236,7 +236,7 @@ function timeyun(){
 											 // alert("提交成功");
 											 api.toast({
 													msg: "提交成功",
-													duration: 1000,
+													duration: 2000,
 												 location: 'middle'
 											 });
 											 // api.closeToWin({
@@ -251,10 +251,11 @@ function timeyun(){
 											 setTimeout("api.closeFrame({name:'frame0'})",850);
 											 //var drawingBoard = api.require('drawingBoard');
 											 //drawingBoard.close();
-												api.openWin({
-														name: 'main',
-														url: '../main.html',
-												});
+											 setTimeout("api.openWin({name:'main',url:'../main.html',})",1000);
+												//api.openWin({
+												//		name: 'main',
+												//		url: '../main.html',
+												//});
 
 										 } else if(msg.result == 9) {
 												 // $api.setStorage("user",null);
