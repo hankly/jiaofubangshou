@@ -55,10 +55,11 @@
            <div class="flex-con flex-wrap flex-vertical">
                <div tapmode="hover" onclick="funOpenArticle( this );" class="flex-wrap flex-con flex-2 layout-wrap">
                    <div class="flex-con layout ic-hot">
+                     <div style="display:none;width:50px;height:50px;background-color:red;position:absolute;border-radius:25px;left:8.2rem;top:1.0rem;text-align:center;line-height:50px;" id="tongji2"></div>
                      <div class="qr_code">
-                       <img src="../image/scan_a_QR_code.png" style="width:60%;margin:0 auto;"/>
+                       <img src="../image/my_document.png" style="width:65%;margin:0 auto;"/>
                      </div>
-                      <div class="qr_code_z">扫码接单</div>
+                      <div class="qr_code_z">新的运单</div>
                    </div>
                </div>
                <div tapmode="hover" onclick="funOpenArticle1( this );"  class="flex-wrap flex-con flex-2 layout-wrap">
@@ -124,9 +125,11 @@
       var user = $api.getStorage('user');
       var lorryid=user.lorryid;
       tongji(lorryid);
-     setInterval('tongji('+lorryid+')',3000);
+     setInterval('tongji('+lorryid+')',2000);
      tongji_agreement(lorryid);
-    setInterval('tongji_agreement('+lorryid+')',3000);
+    setInterval('tongji_agreement('+lorryid+')',2000);
+    tongji_scheduling(lorryid);
+    setInterval('tongji_scheduling('+lorryid+')',2000);
     };
     var mySwipe = new Swipe($api.dom('.swipe'), {
         speed: 400,
@@ -139,42 +142,50 @@
         }
     });
     function funOpenArticle( tag ){
-      var user = $api.getStorage('user');
-      var lorryid=user.lorryid;
-      var time=user.time;
+//       var user = $api.getStorage('user');
+//       var lorryid=user.lorryid;
+//       var time=user.time;
+//
+//     //     var scanner = api.require('scanner');
+//     // scanner.open(function(ret, err) {
+//         // if (ret.msg) {
+//         var FNScanner = api.require('FNScanner');
+// FNScanner.openScanner({
+//     autorotation: true
+// }, function(ret, err) {
+//   if(ret.content){
+//           $api.append($api.dom('body'), '<audio src="../image/Win.mp3" controls="controls" preload id="music1" hidden>');
+//           $api.dom('#music1').play();
+//           api.openWin({
+//             name: 'scheduling_main',
+//             url:  './scheduling_main.html',
+//             pageParam: {
+//               name:$api.text( $api.dom(".qr_code_z")),
+//               scheduling_id:ret.content,
+//             }
+//           });
+//           // var scanner = api.require('scanner');
+//           // scanner.closeview();
+//             // alert(JSON.stringify(ret.msg));
+//             var FNScanner = api.require('FNScanner');
+//              FNScanner.closeView();
+//         } else {
+//           // var scanner = api.require('scanner');
+//           // scanner.closeview();
+//             // alert(JSON.stringify(err));
+//             var FNScanner = api.require('FNScanner');
+//               FNScanner.closeView();
+//         }
+//       });
+// check(lorryid,time);
 
-    //     var scanner = api.require('scanner');
-    // scanner.open(function(ret, err) {
-        // if (ret.msg) {
-        var FNScanner = api.require('FNScanner');
-FNScanner.openScanner({
-    autorotation: true
-}, function(ret, err) {
-  if(ret.content){
-          $api.append($api.dom('body'), '<audio src="../image/Win.mp3" controls="controls" preload id="music1" hidden>');
-          $api.dom('#music1').play();
           api.openWin({
-            name: 'scheduling_main',
-            url:  './scheduling_main.html',
+            name: 'danju_main',
+            url:  './danju_main.html',
             pageParam: {
               name:$api.text( $api.dom(".qr_code_z")),
-              scheduling_id:ret.content,
             }
           });
-          // var scanner = api.require('scanner');
-          // scanner.closeview();
-            // alert(JSON.stringify(ret.msg));
-            var FNScanner = api.require('FNScanner');
-             FNScanner.closeView();
-        } else {
-          // var scanner = api.require('scanner');
-          // scanner.closeview();
-            // alert(JSON.stringify(err));
-            var FNScanner = api.require('FNScanner');
-              FNScanner.closeView();
-        }
-      });
-check(lorryid,time);
   }
     function funOpenArticle2(tdg){
       var user = $api.getStorage('user');
@@ -233,6 +244,7 @@ check(lorryid,time);
     check(lorryid,time);
   }
   var tongji=function(id){
+
     $api.get(url+'app.php/tongji?lorry_id='+id,function(ret){
 if(ret.result==0){
       if(ret.count==0){
@@ -258,11 +270,24 @@ if(ret.result==0){
    },'json');
   }
 
+var tongji_scheduling=function(id){
+  $api.get(url+'app.php/wait_schedulings?lorry_id='+id,function(ret){
+if(ret.result==0){
+    if(ret.schedules.length==0){
+      $api.css($api.dom('#tongji2'),'display:none');
+    }else{
+      $api.css($api.dom('#tongji2'),'display:block');
+      $api.text($api.dom('#tongji2'),ret.schedules.length);
+    }
+  }
+ },'json');
+}
+
   var upload_map=function(id){
     // alert(1)
     var bMap = api.require('bMap');
     bMap.getLocationServices(function(ret2, err) {
-                    if (ret2.enable) {
+    if (ret2.enable) {
     bMap.getLocation({
         accuracy: '10m',
         autoStop: true,
@@ -288,13 +313,12 @@ if(ret.result==0){
         }
     });
   } else {
-alert("您现在有待交付清单请开启定位");
+alert("您现在有待交付清单,司机还在运送中,请开启定位");
 var mySettingInfo = api.require('mySettingInfo');
 mySettingInfo.settingInt({
 'index': 2
 }, function(ret, err) {
-//alert(JSON.stringify(ret));
-alert("您现在有待交付清单请开启定位");
+alert(JSON.stringify(ret));
 });
 }
 });
