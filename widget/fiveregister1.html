@@ -144,15 +144,15 @@
 												 duration: 1000,
 												location: 'middle'
 											});
-										}else if(password.length==0){
+                                        }else if((!(/^[0-9a-zA-Z_]{1,}$/).test(password))||password.length==0){
 											api.toast({
-												 msg: '密码不能为空',
+												 msg: '密码为字母或数字',
 												 duration: 1000,
 												location: 'middle'
 											});
-										}else if(password_s.length==0){
+										}else if((!(/^[0-9a-zA-Z_]{1,}$/).test(password_s))||password_s.length==0){
 											api.toast({
-												 msg: '确认密码不能为空',
+												 msg: '确认密码为字母或数字',
 												 duration: 1000,
 												location: 'middle'
 											});
