@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+	</head>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<style>
+  header{ background-color: #f16c3c; line-height: 42px; height: 42px; position: relative;z-index:999;padding-top:22px;}
+  header b{ width: 42px; height: 100%; display: inline-block; position: relative; z-index: 1; background: url() no-repeat center; background-size: 70% auto;  }
+  header b.ic-back{ background-image: url(../image/back.png);background-size:25px 25px;}
+  /*header b.ic-check{ background-image: url(../image/ic-check.png); float: right; }*/
+  header .title{ position: absolute; left: 0; bottom: 0; right: 0;  text-align: center; font-size: 18px;color:white;}
+  *{
+    margin: 0;
+    padding: 0;
+  }
+	body{
+		width:100%;
+		height:100%;
+		background-color:white;
+	}
+		.change{
+        margin:10px;
+				background-color:white;
+				padding:10px;
+			}
+      .change_word{
+        margin-left:10px;
+				line-height:30px;
+				height:30px;
+      }
+			.change_word1{
+				margin-left:10px;
+				line-height:30px;
+				height:30px;
+			}
+      .back{
+        margin-top:10px;
+        background-color:white;
+        padding:20px;
+      }
+      .sure_back{
+        margin:0 auto;
+        width:50%;
+        height:35px;
+        border-radius:10px;
+        background-color:#f16c3c;
+        text-align:center;
+        line-height:35px;
+        color:white;
+      }
+      .kong_hui{
+        width:100%;
+        height:10px;
+        background-color:#EEEEEE;
+      }
+			.name{
+				height:20px;
+			}
+			.name1{
+				height:30px;
+			}
+			img{
+				vertical-align:middle;
+			}
+			a{
+				text-decoration:none;
+				color:black;
+			}
+	</style>
+	<body>
+    <div id="wrap" class="flex-wrap flex-vertical" >
+        <header class="border-b" >
+            <b tapmode="hover" onclick="api.closeWin();" class="ic-back"></b>
+            <span class="title">加盟公司列表</span>
+            <!-- <b tapmode="hover" onclick="funActionSheet();"  class="ic-check"></b> -->
+        </header>
+      </div>
+   	<!-- <div class="change">
+		<div class="change_word"><span>靖江万事鑫</span><span>已加盟</span></div>
+	  </div>
+    <div class="kong_hui">
+
+    </div> -->
+
+	</body>
+  <script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../script/swipe.js"></script>
+  <script type="text/javascript" src="../script/api.js"></script>
+	<!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
+  <script>
+  apiready = function(){
+		var user = $api.getStorage('user');
+    var app_lorry_id=user.lorryid;
+    api.addEventListener({
+                          name:'viewappear'
+                      }, function(ret, err){
+                         api.setScreenOrientation({
+                          orientation: 'portrait_up'
+                      });
+                      });
+
+    $api.get(url+'ticket.php/gettickets?lorry_id='+app_lorry_id,function(ret){
+      for(var i=0;i<ret.ticket.length;i++){
+        if(ret.ticket[i].is_check==1){
+          $api.append($api.dom("body"), '<div class="change">'+
+              '<div class="change_word"><span>'+ret.ticket[i].company+'</span><span style="background-color:red;padding:5px;color:white;right:10px;position:absolute;line-height:100%;border-radius:5px;" onclick="q_jiameng2('+ret.ticket[i].id+')">已加盟</span></div>'+
+              '</div>'+
+              '<div class="kong_hui">'+
+              '</div>');
+        // }else if(ret.ticket[i].is_check==2){
+        //   $api.append($api.dom("body"), '<div class="change">'+
+        //       '<div class="change_word"><span>'+ret.ticket[i].company+'</span><span style="background-color:red;padding:5px;color:white;right:10px;position:absolute;line-height:100%;border-radius:5px;" onclick="q_jiameng('+ret.ticket[i].id+')">审核未通过</span></div>'+
+        //       '</div>'+
+        //       '<div class="kong_hui">'+
+        //       '</div>');
+        // }else if(ret.ticket[i].is_check==0){
+				// 	$api.append($api.dom("body"), '<div class="change">'+
+				// 			'<div class="change_word"><span>'+ret.ticket[i].company+'</span><span style="background-color:red;padding:5px;color:white;right:10px;position:absolute;line-height:100%;border-radius:5px;" onclick="q_jiameng2('+ret.ticket[i].id+')">加盟审核中</span></div>'+
+				// 			'</div>'+
+				// 			'<div class="kong_hui">'+
+				// 			'</div>');
+				}else{
+					$api.append($api.dom("body"), '<div class="change">'+
+							'<div class="change_word"><span>'+ret.ticket[i].company+'</span><span style="background-color:red;padding:5px;color:white;right:10px;position:absolute;line-height:100%;border-radius:5px;" onclick="q_jiameng('+ret.ticket[i].id+')">去加盟</span></div>'+
+							'</div>'+
+							'<div class="kong_hui">'+
+							'</div>');
+				}
+
+      }
+    },'json');
+
+
+
+	}
+
+  function q_jiameng2(id){
+
+    api.openFrame({
+        name: 'jiameng',
+        url: './jiameng.html',
+        bounces:false,
+        rect: {
+            x: 0,
+            y: $api.dom('header').offsetHeight,
+            w: api.winWidth,
+            h: api.winHeight-$api.dom('header').offsetHeight
+        },
+         pageParam: {
+          id:id,
+          zhi:'关闭',
+    }
+  });
+  }
+  function q_jiameng(id){
+    api.openFrame({
+        name: 'jiameng',
+        url: './jiameng.html',
+        bounces:false,
+        rect: {
+            x: 0,
+            y: $api.dom('header').offsetHeight,
+            w: api.winWidth,
+            h: api.winHeight-$api.dom('header').offsetHeight
+        },
+         pageParam: {
+          id:id,
+    }
+  });
+  }
+  </script>
+</html>

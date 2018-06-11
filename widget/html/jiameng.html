@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <script type="text/javascript" src="../script/config.js"></script>
+    <style>
+*{
+  margin:0;
+  padding:0;
+}
+    body{
+      margin:0;
+      padding:0;
+    }
+    .pop_body{
+      margin-top:10px;
+      z-index:99;
+      width:100%;
+      background-color:white;
+      height:500px;
+      /*overflow-y:scroll;*/
+      /*margin-top:200px;*/
+    }
+    .pop_body_a{
+      margin:0 auto;
+      margin-left:5%;
+      width:90%;
+      height:460px;
+      overflow-y:scroll;
+    }
+    .pop_ap{
+      width:100%;
+      text-align:center;
+      font-size:18px;
+      margin-top:80px;
+    }
+    .pop_reason{
+      width:100%;
+      text-align:center;
+      font-size:14px;
+      margin-top:10px;
+      margin-bottom:10px;
+    }
+    .pop_reason_z{
+      width:90%;
+      margin-left:5%;
+      text-align:center;
+    }
+    .pop_reason_z>textarea{
+      height:80px;
+      width:100%;
+      font-size:20px;
+      rows:2;
+    }
+    .pop_reason_zh{
+      width:80%;
+      margin-left:10%;
+      text-align:center;
+    }
+    .pop_cancle{
+      float:left;
+      width:80px;
+      height:40px;
+      line-height:40px;
+      border-radius:10px;
+      color:white;
+      background-color:#f16c3c;
+    }
+    .pop_sure{
+      float:right;
+      width:80px;
+      height:40px;
+      line-height:40px;
+      border-radius:10px;
+      color:white;
+      background-color:#f16c3c;
+    }
+    .back_g{
+      width:100%;
+      height:100%;
+      top:0;
+      position:absolute;
+      background-color:rgb(87,87,87);
+      z-index: -1;
+      margin:0;
+      opacity:0.5;
+    }
+    .pop_close{
+      height:30px;
+      margin-left:25%;
+      width：50%;
+      margin-right:25%;
+      margin-top:5px;
+      margin-bottom:5px;
+      border-radius:10px;
+      background-color:#333333;
+      color:white;
+      text-align:center;
+      line-height:30px;
+    }
+    ::-webkit-scrollbar-track-piece{
+                background-color:#fff;
+                -webkit-border-radius:0;
+            }
+            ::-webkit-scrollbar{
+                width:8px;
+                height:8px;
+            }
+            ::-webkit-scrollbar-thumb:vertical{
+    height:50px;
+    background-color:#999;
+    -webkit-border-radius:4px;
+    outline:2px solid #fff;
+    outline-offset:-2px;
+    border:2px solid #fff;
+}
+::-webkit-scrollbar-thumb:hover{
+    height:50px;
+    background-color:#9f9f9f;
+    -webkit-border-radius:4px;
+}
+#yifang2{
+  height:60px;
+  line-height:60px;
+}
+#yifang2>div{
+  float:left;
+}
+#yifang21{
+  height:60px;
+}
+    </style>
+</head>
+<body>
+  <div class="back_g"></div>
+  <div class="pop_body">
+    <div class="pop_body_a">
+      <div>盟：</div>
+      <div style="font-size:20px;text-align:center;font-weight:900;">免费加盟协议</div>
+      <div id="jiafang">甲方：靖江市万事鑫联运服务有限公司</div>
+      <div id="yifang">乙方: 驾驶员姓名：       车号：        ，　联系电话：</div>
+
+
+      <div>加盟条款：</div>
+      <div>1．甲方可向驾驶员（乙方）不定期的提供的运输货源。</div>
+      <div>2. 甲方不得向乙方收取任何加盟费用（包括货物中介费，信息费，管理费等）。</div>
+      <div>3. 乙方在运输过程中，应保证货物的安全，保证货物无短缺，无损坏，否则应承担由此引起的一切赔偿责任。运输过程中产生的一切成本与甲方无关。</div>
+      <div>4．货物途中如被查，因超载等违章行为造成的罚款、超载造成卸货费用及货物到达卸货地点前一切费用均由乙方负全责。</div>
+
+      <div>本合同不得无故违约，如有法律纠纷，在甲方所在地人民法院受理</div>
+
+      <div id="jiafang2"></div>
+
+      <div id="yifang2"><div>乙方：</div><div id="yifang21"></div></div>
+      <div id="date_time">签订日期：</div>
+    </div>
+    <div class="pop_close">同意加盟</div>
+  </div>
+</body>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
+<script type="text/javascript">
+apiready = function(){
+   var zhi=api.pageParam.zhi;
+   var id=api.pageParam.id;
+   var user = $api.getStorage('user');
+   var app_lorry_id=user.lorryid;
+   if(zhi){
+     $api.text($api.dom('.pop_close'),zhi);
+     $api.get(url+'ticket.php/getticket_lorry?app_lorry_id='+app_lorry_id+'&id='+id,function(ret){
+      //  $api.html($api.dom('#yifang21'),'<img src="'+ret.ticket.sign_img+'" style="height:60px;"/>');
+      $api.html($api.dom('#yifang21'),ret.ticket.name);
+      //  if(ret.ticket.is_check==1){
+         $api.html($api.dom('#date_time'),'签订日期:'+ret.ticket.commit_time);
+      //  }
+
+     },'json');
+
+   }else{
+     $api.css($api.dom('#jiafang2'),'display:none');
+     $api.css($api.dom('#yifang2'),'display:none');
+     $api.css($api.dom('#date_time'),'display:none');
+   }
+
+
+
+  $api.get(url+'app_lorry_nedb.php/getAppLorry1?app_lorry_id='+app_lorry_id,function(ret){
+    $api.text($api.dom('#yifang'),'乙方:驾驶员姓名:'+ret.lorrys[0].name+'车号:'+ret.lorrys[0].plate_number+',联系电话:'+ret.lorrys[0].phone);
+
+  },'json');
+  var company;
+  $api.get(url+'ticket.php/getticket?id='+id,function(ret){
+   company=ret.ticket.company;
+   $api.text($api.dom('#jiafang'),'甲方:'+company);
+   $api.text($api.dom('#jiafang2'),'甲方:'+company);
+
+ },'json');
+
+
+
+$api.addEvt($api.dom(".pop_close"),'click',function(){
+  // api.closeFrame();
+  if($api.text($api.dom('.pop_close'))=='同意加盟'){
+    // api.openWin({
+    //     name: 'jiameng_sign',
+    //     url: './jiameng_sign.html',
+    //      pageParam: {
+    //       id:id,
+    // }
+    //   })
+    $api.post(url+'ticket.php/addticketlorry',{
+     body:{
+          id:id,
+          app_lorry_id: app_lorry_id,
+          }
+     },function(msg) {
+       if(msg.result==0){
+
+         setTimeout("api.closeWin({name:'kp_gongsilist'})",500);
+         setTimeout("api.closeFrame({name:'jiameng'})",600);
+         setTimeout("api.closeWin({name:'jiameng_sign'})",700);
+       }
+       api.toast({
+          msg:msg.desc,
+          duration: 1000,
+         location: 'middle'
+       });
+      },'json');
+  }else{
+    api.closeFrame();
+  }
+
+});
+
+
+
+
+}
+
+</script>
+</html>
