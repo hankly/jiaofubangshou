@@ -124,6 +124,24 @@
       });
       var user = $api.getStorage('user');
       var lorryid=user.lorryid;
+      $api.get(url+'app.php/get_lorry_status?lorry_id='+lorryid,function(ret){
+        if(ret.result==0){
+          api.openFrame({
+              name: 'reject',
+              url: '../reject.html',
+              bounces:false,
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: api.winWidth,
+                  h: api.winHeight
+              },
+              pageParam: {
+                 reason:ret.reject.reason,
+                }
+           });
+        }
+      },'json');
       tongji(lorryid);
      setInterval('tongji('+lorryid+')',2000);
      tongji_agreement(lorryid);
@@ -244,7 +262,6 @@
     check(lorryid,time);
   }
   var tongji=function(id){
-
     $api.get(url+'app.php/tongji?lorry_id='+id,function(ret){
 if(ret.result==0){
       if(ret.count==0){
@@ -253,6 +270,8 @@ if(ret.result==0){
         $api.css($api.dom('#tongji'),'display:block');
         $api.text($api.dom('#tongji'),ret.count);
       }
+    }else{
+      $api.css($api.dom('#tongji'),'display:none');
     }
    },'json');
   }
@@ -266,6 +285,8 @@ if(ret.result==0){
         $api.css($api.dom('#tongji1'),'display:block');
         $api.text($api.dom('#tongji1'),ret.count);
       }
+    }else{
+      $api.css($api.dom('#tongji1'),'display:none');
     }
    },'json');
   }
@@ -279,6 +300,8 @@ if(ret.result==0){
       $api.css($api.dom('#tongji2'),'display:block');
       $api.text($api.dom('#tongji2'),ret.schedules.length);
     }
+  }else{
+    $api.css($api.dom('#tongji2'),'display:none');
   }
  },'json');
 }

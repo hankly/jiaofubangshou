@@ -16,7 +16,7 @@
       padding:0;
     }
     .pop_body{
-      margin-top:10px;
+      margin-top:200px;
       z-index:99;
       width:100%;
       background-color:white;
@@ -129,6 +129,33 @@
   padding-top:30px;
   text-align: center;
 }
+.pop_close_all{
+  width:80%;
+  height:30px;
+  margin:0 auto;
+  line-height:30px;
+  text-align:center;
+}
+.pop_close_lorry{
+  width:30%;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  float:left;
+  border-radius:10px;
+  background-color:#333333;
+  color:white;
+}
+.pop_close_alllorry{
+  width:30%;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  float:right;
+  border-radius:10px;
+  background-color:#333333;
+  color:white;
+}
     </style>
 </head>
 <body>
@@ -138,7 +165,11 @@
     <div style="font-size:20px;text-align:center;padding-top:50px;">您的注册资料被驳回</div>
     <div id="pop_body_b"></div>
     </div>
-    <div class="pop_close">去修改</div>
+    <!-- <div class="pop_close">去修改</div> -->
+    <div class="pop_close_all">
+      <div class="pop_close_lorry">修改车辆</div>
+      <div class="pop_close_alllorry">修改全部</div>
+    </div>
   </div>
 </body>
 <script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
@@ -149,13 +180,27 @@ apiready = function(){
   var reason=api.pageParam.reason;
    $api.html($api.dom('#pop_body_b'), reason);
 
-   $api.addEvt($api.dom('.pop_close'), 'click',function(){
-     api.openWin({
-       name: 'change_ziliao',
-       url:'./change_ziliao.html',
-       slidBackEnabled:false,
-     });
-   });
+  //  $api.addEvt($api.dom('.pop_close'), 'click',function(){
+  //    api.openWin({
+  //      name: 'change_ziliao',
+  //      url:'./change_ziliao.html',
+  //      slidBackEnabled:false,
+  //    });
+  //  });
+  $api.addEvt($api.dom('.pop_close_alllorry'), 'click',function(){
+    api.openWin({
+      name: 'change_ziliao',
+      url:'./change_ziliao.html',
+      slidBackEnabled:false,
+    });
+  });
+  $api.addEvt($api.dom('.pop_close_lorry'), 'click',function(){
+    api.openWin({
+      name: 'change_lorryziliao',
+      url:'./change_lorryziliao.html',
+      slidBackEnabled:false,
+    });
+  });
 }
 </script>
 </html>

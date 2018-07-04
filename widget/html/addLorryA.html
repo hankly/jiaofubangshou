@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 		<title></title>
-		<script type="text/javascript" src="script/config.js"></script>
+		<script type="text/javascript" src="../script/config.js"></script>
 		<style>
 			* {
 				margin: 0;
@@ -223,16 +223,16 @@
 
 	<body>
 		<div class="box">
-			<div class="top">第3步:请选择您的车辆信息</div>
+			<div class="top">第1步:请选择您的车辆信息</div>
 			<div class="center">
 				<div class="cbox1">
 					<div class="ctitle">类型</div>
-					<div id="pcar"><img id="pimg" src="image/rgchose.png">
+					<div id="pcar"><img id="pimg" src="../image/rgchose.png">
 						<div class="cname">运输车辆</div>
 					</div>
-					<div id="ycar"><img id="yimg" src="image/rchose.png">
+					<!-- <div id="ycar"><img id="yimg" src="../image/rchose.png">
 						<div class="cname">派送车辆</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="cbox2">
 					<div class="ctitle">信息</div>
@@ -297,15 +297,15 @@
 			</div>
 			<!-- <div class="foot">下一步</div> -->
 			<div class="foot_all">
-					<div class="foot_up" onclick="api.closeWin();">上一步</div>
-					<div class="foot_down" id="foot">下一步</div>
+        <div class="foot_up" onclick="api.closeWin();">上一步</div>
+				<div class="foot_down" id="foot">下一步</div>
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="script/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="script/local.js"></script>
-	<script type="text/javascript" src="script/APICloud-rest.js"></script>
-	<script type="text/javascript" src="script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../script/local.js"></script>
+	<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+	<script type="text/javascript" src="../script/api.js"></script>
 	<!-- <script>
 		$("#pcar").on("click", function() {
 			$("#pimg").attr("src", "img/rgchose.png");
@@ -330,17 +330,17 @@
 		$api.val($api.dom('#carweight'),'');
 	var lorryid=api.pageParam.lorryid;
 	$api.addEvt($api.dom('#pcar'), 'click',function(){
-		$api.attr($api.dom('#pimg'),'src','image/rgchose.png');
+		$api.attr($api.dom('#pimg'),'src','../image/rgchose.png');
 		$api.css($api.dom('#pcar'),'color:#f16c3c');
-		$api.attr($api.dom('#yimg'),'src','image/rchose.png');
+		$api.attr($api.dom('#yimg'),'src','../image/rchose.png');
 		$api.css($api.dom('#ycar'),'color:#000000');
     $api.css($api.dom('.cbox2'),'display:block');
 	});
 
 	$api.addEvt($api.dom('#ycar'), 'click',function(){
-		$api.attr($api.dom('#yimg'),'src','image/rgchose.png');
+		$api.attr($api.dom('#yimg'),'src','../image/rgchose.png');
 		$api.css($api.dom('#ycar'),'color:#f16c3c');
-		$api.attr($api.dom('#pimg'),'src','image/rchose.png');
+		$api.attr($api.dom('#pimg'),'src','../image/rchose.png');
 		$api.css($api.dom('#pcar'),'color:#000000');
 		$api.css($api.dom('.cbox2'),'display:none');
 	});
@@ -370,13 +370,7 @@
 						},'json');
 
 	$api.addEvt($api.dom('#foot'), 'click', function(){
-		        if(lorryid==null){
-							api.openWin({
-								name: 'fiveregister1',
-								url:  './fiveregister1.html',
-							});
-						}
-						if($api.cssVal($api.dom('.cbox2'),'display')!='none'){
+
 							var province=$api.val($api.dom('#province'));
 							var plate_number=province+''+$api.val($api.dom('#plate_number'));
 							var carlong=$api.val($api.dom('#carlong'));
@@ -413,8 +407,8 @@
 													location: 'middle'
 												});
 											}else{
-                      	$api.post(url+'app.php/addlorry2',{
-															body:{type:0,
+                      	$api.post(url+'app.php/addlorryA',{
+															body:{
 															long:carlong,
 															ctype:cartype,
 															cweight:cweight,
@@ -428,16 +422,12 @@
 																	 duration: 1000,
 																	location: 'middle'
 																});
-																// api.openFrame({
-																//   url: './firstregister2.html?lorryid='+ret.lorryid,
-																//  });
 																 api.openWin({
-																	 name: 'fiveregister5',
-																	 url:  './fiveregister5.html',
+																	 name: 'addLorryB',
+																	 url:  'addLorryB.html',
 																	 slidBackEnabled:false,
 																	 pageParam: {
 																	 lorryid: ret.lorryid,
-																	 type:0
 																	}
 																 });
 															 }else{
@@ -449,17 +439,6 @@
 															 }
 														 });
 													 }
-						}else{
-							api.openWin({
-								name: 'fiveregister5',
-								url:  './fiveregister5.html',
-								slidBackEnabled:false,
-								pageParam: {
-								lorryid: api.pageParam.lorryid,
-								type:1
-							 }
-							});
-						}
 					})
         }
 

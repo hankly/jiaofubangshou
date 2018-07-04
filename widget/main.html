@@ -43,7 +43,7 @@
     <div id="footer" class="border-t">
         <ul class="flex-wrap" >
             <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active" >我的主页</li>
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >车辆管理</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" id="app_lorry">车辆管理</li>
             <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >我的资料</li>
             <!-- <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >文档</li> -->
         </ul>
@@ -56,7 +56,15 @@
 <script type="text/javascript" src="script/up_check.js"></script>
 <script type="text/javascript">
     apiready = function(){
-
+var index22=0;
+var yingxiang = 0;
+yingxiang=$api.getStorage('yingxiang');
+if(yingxiang==1){
+index22=1;
+randomSwitchBtn($api.dom('#app_lorry'));
+$api.rmStorage('yingxiang');
+$api.setStorage('yingxiang', 0);
+}
 
 
 if (api.systemType == "ios") {
@@ -109,24 +117,7 @@ if (api.systemType == "ios") {
       var user = $api.getStorage('user');
       var lorryid=user.lorryid;
       var time=user.time;
-      $api.get(url+'app.php/get_lorry_status?lorry_id='+lorryid,function(ret){
-        if(ret.result==0){
-          api.openFrame({
-              name: 'reject',
-              url: 'reject.html',
-              bounces:false,
-              rect: {
-                  x: 0,
-                  y: $api.dom('header').offsetHeight,
-                  w: api.winWidth,
-                  h: api.winHeight-$api.dom('header').offsetHeight
-              },
-              pageParam: {
-                 reason:ret.reject.reason,
-                }
-           });
-        }
-      },'json');
+
       upload_map(lorryid);
       setInterval("upload_map("+lorryid+")",5000);
       api.addEventListener({
@@ -141,12 +132,14 @@ if (api.systemType == "ios") {
             style: 'light',
             color: '#333333'
         });
-        funIniGroup();
+        // alert(index22)
+        funIniGroup(index22);
 
 
     }
 
-    function funIniGroup(){
+    function funIniGroup(index1){
+
         var eHeaderLis = $api.domAll('header li'),
             frames = [];
         for (var i = 0,len = eHeaderLis.length; i < len; i++) {
@@ -166,7 +159,8 @@ if (api.systemType == "ios") {
                 w: api.winWidth,
                 h: $api.dom('#main').offsetHeight
             },
-            index: 0,
+            index:index1,
+            preload:3,
             frames: frames
         }, function (ret, err) {
 
@@ -195,7 +189,8 @@ if (api.systemType == "ios") {
         $api.addCls( eHeaderLis[index], 'active');
         api.setFrameGroupIndex({
             name: 'group',
-            index: index
+            index: index,
+            reload:true,
         });
     }
     var upload_map=function(id){

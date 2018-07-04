@@ -111,10 +111,7 @@
 
 <body>
 	<div class="box">
-    <div class="boxa">驾驶员信息</div>
-    <div class="box_a"><div class="box_b">姓名:</div><div class="box_c"><input type="text" id="name"/></div></div>
-    <div class="box_a"><div class="box_b">身份证:</div><div class="box_c"><input type="text" id="id_c"/></div></div>
-    <div class="box_a"><div class="box_b">电话号码:</div><div class="box_c"><input type="text" id="phone"/></div></div>
+    <div class="boxa">车辆信息</div>
     <div class="box_d">
       <div class="box_e">车牌:</div>
       <div class="box_f">
@@ -178,16 +175,6 @@
       </div>
     </div>
     <div class="box_p">
-      <div class="box_q">身份证</div>
-      <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="id_card_z"/></div></div>
-      <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="id_card_f"/></div></div>
-    </div>
-    <div class="box_p">
-      <div class="box_q">驾驶证</div>
-      <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="j_s_z"/></div></div>
-      <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="j_s_f"/></div></div>
-    </div>
-    <div class="box_p">
       <div class="box_q">行驶证</div>
       <div class="box_r"><div class="box_r_b">正面</div><div class="box_r_a"><img src="image/bank_card.png" id="x_s_z"/></div></div>
       <div class="box_s"><div class="box_s_b">反面</div><div class="box_s_a"><img src="image/bank_card.png" id="x_s_f"/></div></div>
@@ -206,14 +193,7 @@
     var lorryid=user.lorryid;
     $api.get(url+'app_lorry_nedb.php/getAppLorry_app?app_lorry_id='+lorryid,function(ret){
       if(ret.result==0){
-         $api.val($api.dom("#name"),ret.lorry.name);
-         $api.val($api.dom("#id_c"),ret.lorry.id_number);
-         $api.val($api.dom("#phone"),ret.lorry.phone);
          $api.val($api.dom("#weight"),ret.lorry.deadweight);
-         $api.attr($api.dom("#id_card_z"),'src',ret.lorry.identity_card_z);
-         $api.attr($api.dom("#id_card_f"),'src',ret.lorry.identity_card_f);
-         $api.attr($api.dom("#j_s_z"),'src',ret.lorry.driver_license_fp);
-         $api.attr($api.dom("#j_s_f"),'src',ret.lorry.driver_license_tp);
          $api.attr($api.dom("#x_s_z"),'src',ret.lorry.driving_license_fp);
          $api.attr($api.dom("#x_s_f"),'src',ret.lorry.driving_license_tp);
          var length=ret.lorry.length;
@@ -249,166 +229,8 @@
               },'json');
       }
     },'json');
-var i_z='';
-var i_f='';
-var j_z='';
-var j_f='';
 var x_z='';
 var x_f='';
-    $api.addEvt($api.dom("#id_card_z"),'click',function(){
-            api.actionSheet({
-                title: '请选择',
-                cancelTitle: '取消',
-                buttons: ['相册','相机']
-            },function(ret,err){
-                if(ret.buttonIndex==1){
-                  api.getPicture({
-                    sourceType: 'album',
-                    encodingType: 'jpg',
-                    mediaValue: 'pic',
-                    destinationType: 'base64',
-                    allowEdit: false,
-                    quality: 100,
-                    targetWidth: 300,
-                    targetHeight: 300,
-                    saveToPhotoAlbum: false
-                  }, function(ret, err) {
-                    if (ret) {
-                      if(ret.base64Data){
-                        $api.attr($api.dom("#id_card_z"), "src",ret.base64Data);
-                        i_z=ret.base64Data;
-                      }
-                    } else {
-                    }
-                  });
-                }else if(ret.buttonIndex==2){
-             var shootPicture = api.require("shootPicture");
-                shootPicture.shoot(function(ret, err) {
-                $api.attr($api.dom("#id_card_z"), "src",ret.imagePath);
-                dealImage(ret.imagePath,function(base){
-                       i_z = base;
-                });
-              });
-                }
-            });
-    });
-
-    $api.addEvt($api.dom("#id_card_f"),'click',function(){
-            api.actionSheet({
-                title: '请选择',
-                cancelTitle: '取消',
-                buttons: ['相册','相机']
-            },function(ret,err){
-                if(ret.buttonIndex==1){
-                  api.getPicture({
-                    sourceType: 'album',
-                    encodingType: 'jpg',
-                    mediaValue: 'pic',
-                    destinationType: 'base64',
-                    allowEdit: false,
-                    quality: 100,
-                    targetWidth: 300,
-                    targetHeight: 300,
-                    saveToPhotoAlbum: false
-                  }, function(ret, err) {
-                    if (ret) {
-                      if(ret.base64Data){
-                        $api.attr($api.dom("#id_card_f"), "src",ret.base64Data);
-                        i_f=ret.base64Data;
-                      }
-                    } else {
-                    }
-                  });
-                }else if(ret.buttonIndex==2){
-             var shootPicture = api.require("shootPicture");
-                shootPicture.shoot(function(ret, err) {
-                $api.attr($api.dom("#id_card_f"), "src",ret.imagePath);
-                dealImage(ret.imagePath,function(base){
-                       i_f = base;
-                });
-              });
-                }
-            });
-    });
-
-
-    $api.addEvt($api.dom("#j_s_z"),'click',function(){
-            api.actionSheet({
-                title: '请选择',
-                cancelTitle: '取消',
-                buttons: ['相册','相机']
-            },function(ret,err){
-                if(ret.buttonIndex==1){
-                  api.getPicture({
-                    sourceType: 'album',
-                    encodingType: 'jpg',
-                    mediaValue: 'pic',
-                    destinationType: 'base64',
-                    allowEdit: false,
-                    quality: 100,
-                    targetWidth: 300,
-                    targetHeight: 300,
-                    saveToPhotoAlbum: false
-                  }, function(ret, err) {
-                    if (ret) {
-                      if(ret.base64Data){
-                        $api.attr($api.dom("#j_s_z"), "src",ret.base64Data);
-                        j_z=ret.base64Data;
-                      }
-                    } else {
-                    }
-                  });
-                }else if(ret.buttonIndex==2){
-             var shootPicture = api.require("shootPicture");
-                shootPicture.shoot(function(ret, err) {
-                $api.attr($api.dom("#j_s_z"), "src",ret.imagePath);
-                dealImage(ret.imagePath,function(base){
-                       j_z = base;
-                });
-              });
-                }
-            });
-    });
-
-
-    $api.addEvt($api.dom("#j_s_f"),'click',function(){
-            api.actionSheet({
-                title: '请选择',
-                cancelTitle: '取消',
-                buttons: ['相册','相机']
-            },function(ret,err){
-                if(ret.buttonIndex==1){
-                  api.getPicture({
-                    sourceType: 'album',
-                    encodingType: 'jpg',
-                    mediaValue: 'pic',
-                    destinationType: 'base64',
-                    allowEdit: false,
-                    quality: 100,
-                    targetWidth: 300,
-                    targetHeight: 300,
-                    saveToPhotoAlbum: false
-                  }, function(ret, err) {
-                    if (ret) {
-                      if(ret.base64Data){
-                        $api.attr($api.dom("#j_s_f"), "src",ret.base64Data);
-                        j_f=ret.base64Data;
-                      }
-                    } else {
-                    }
-                  });
-                }else if(ret.buttonIndex==2){
-             var shootPicture = api.require("shootPicture");
-                shootPicture.shoot(function(ret, err) {
-                $api.attr($api.dom("#j_s_f"), "src",ret.imagePath);
-                dealImage(ret.imagePath,function(base){
-                       j_f= base;
-                });
-              });
-                }
-            });
-    });
-
 
     $api.addEvt($api.dom("#x_s_z"),'click',function(){
             api.actionSheet({
@@ -489,9 +311,6 @@ var x_f='';
 
     $api.addEvt($api.dom('#foot'),'click',function(){
       var plate_number=$api.val($api.dom("#province"))+$api.val($api.dom('.box_f_b'));
-      var name=$api.val($api.dom('#name'));
-      var phone=$api.val($api.dom('#phone'));
-      var id_card=$api.val($api.dom('#id_c'));
       var length=$api.val($api.dom('.box_i_a'));
       var weight=$api.val($api.dom('#weight'));
       var type=$api.val($api.dom('.box_o_a'));
@@ -501,39 +320,19 @@ var x_f='';
                    duration: 1000,
                   location: 'middle'
                 });
-              }else if(!(/^((0\d{2,3}-\d{7,8})|(1[35784]\d{9}))$/.test(phone))){
-                api.toast({
-                   msg: '手机号码不正确',
-                   duration: 1000,
-                  location: 'middle'
-                });
-
-              }else if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(id_card))){
-                  api.toast({
-                     msg: '身份证格式有误',
-                     duration: 1000,
-                    location: 'middle'
-                  });
-              }else if(plate_number&&name&&phone&&id_card&&length&&weight&&type){
+              }else if(plate_number&&length&&weight&&type){
         api.showProgress({
             title: '上传中...',
             text: '先喝杯茶...',
             modal: true
            });
-        $api.post(url+'app.php/change_lorry_status',{
+        $api.post(url+'app.php/change_lorry_status1',{
               body:{
-                       pic3:j_z,
-                       pic4:j_f,
                        pic5:x_z,
                        pic6:x_f,
-                       pic1:i_z,
-                       pic2:i_f,
                        lorryid:lorryid,
                        plate_number:plate_number,
-                       phone:phone,
                        length:length,
-                       name:name,
-                       id_card:id_card,
                        weight:weight,
                        type:type,}
              },function(ret){

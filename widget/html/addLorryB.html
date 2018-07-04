@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<title></title>
+	<script type="text/javascript" src="../script/config.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color:white;
+		}
+		.box {
+			width: 100%;
+			height: 100%;
+		}
+
+		.top {
+			height: 50px;
+			width: 100%;
+			margin-top: 50px;
+			line-height: 50px;
+			text-align: center;
+			font: 20px "微软雅黑";
+			color: rgb(17, 64, 108);
+		}
+
+		.center {
+			width: 70%;
+			margin:0 auto;
+			text-align: center;
+			height: 400px;
+		}
+
+		.title {
+			width: 60%;
+			margin:0 auto;
+			margin-top:10px;
+			text-align:center;
+			color: rgb(17, 64, 108);
+		}
+
+		.fp {
+			height: 80px;
+			width: 90%;
+			margin:0 auto;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
+    .fp>img{
+    	border-radius: 10px;
+    }
+		.tp {
+			height: 80px;
+			width: 90%;
+			margin-left: 45%;
+			margin-top: 8px;
+			border-radius: 10px;
+		}
+
+		.foot {
+			width: 64%;
+			margin-left: 18%;
+			height: 44px;
+			background-color: #f16c3c;
+			line-height: 44px;
+			text-align: center;
+			color: white;
+			font-size: 20px;
+			border-radius: 10px;
+		}
+    .cen{
+      width:100%;
+      height:50px;
+    }
+		.img_id_z,.img_id_f{
+			-ms-transform:rotate(90deg);
+-moz-transform:rotate(90deg);
+-webkit-transform:rotate(90deg);
+-o-transform:rotate(90deg);
+		}
+		input {
+			-webkit-tap-highlight-color:transparent;
+		}
+		.foot_all{
+			width:75%;
+			margin:0 auto;
+			height:44px;
+		}
+		.foot_all>*{
+			float:left;
+			width:40%;
+			margin-left:5%;
+			margin-right:5%;
+			height:44px;
+			text-align:center;
+			background-color:#f16c3c;
+			border-radius:10px;
+			line-height:44px;
+			color:white;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="box">
+		<div class="top">第2步:请上传您的信息</div>
+		<div class="center">
+			<div class="title">请上传行驶证信息</div>
+      <div class="cen"></div>
+			<div class="fp" ><div style="float:left;width:30%;height:100%;line-height:70px;">正本</div><img src="image/id_card_z.png" style="width:65%;height:100%;float:left;" id="img_id_z"/></div>
+      <div class="cen"></div>
+			<div class="fp"><div style="float:left;width:30%;height:100%;line-height:70px;">副本</div><img src="image/id_card_f.png" style="width:65%;height:100%;float:left;" id="img_id_f"/></div>
+		</div>
+		<!-- <div class="foot" id="foot">下一步</div> -->
+		<div class="foot_all">
+				<div class="foot_up" onclick="api.closeWin();">上一步</div>
+				<div class="foot_down" id="foot">下一步</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/local.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+	apiready = function() {
+		// setTimeout("api.closeWin({name:'threeregister3'})",600);
+		$api.attr($api.dom("#img_id_z"), "src",'../image/id_card_z.png');
+		$api.attr($api.dom("#img_id_f"), "src",'../image/id_card_z.png');
+     var id_z,id_f;
+     var lorryid=api.pageParam.lorryid;
+		$api.addEvt($api.dom('#img_id_z'), 'click', function() {
+					api.actionSheet({
+							title: '请选择',
+							cancelTitle: '取消',
+							buttons: ['相册','相机']
+					},function(ret,err){
+							if(ret.buttonIndex==1){
+								api.getPicture({
+									sourceType: 'album',
+									encodingType: 'jpg',
+									mediaValue: 'pic',
+									destinationType: 'base64',
+									allowEdit: false,
+									quality: 100,
+									targetWidth: 300,
+									targetHeight: 300,
+									saveToPhotoAlbum: false
+								}, function(ret, err) {
+									if (ret) {
+										if(ret.base64Data){
+											$api.attr($api.dom("#img_id_z"), "src",ret.base64Data);
+											id_z=ret.base64Data;
+										}
+									} else {
+										// alert(JSON.stringify(err));
+									}
+								});
+							}else if(ret.buttonIndex==2){
+								// api.getPicture({
+								// 	sourceType: 'camera',
+								// 	encodingType: 'jpg',
+								// 	mediaValue: 'pic',
+								// 	destinationType: 'base64',
+								// 	allowEdit: false,
+								// 	quality: 100,
+								// 	targetWidth: 300,
+								// 	targetHeight: 300,
+								// 	saveToPhotoAlbum: false
+								// }, function(ret, err) {
+								// 	if (ret) {
+								// 		if(ret.base64Data){
+								// 			$api.attr($api.dom("#img_id_z"), "src",ret.base64Data);
+								// 		}
+								// 		id_z=ret.base64Data;
+								// 	} else {
+								// 		alert(JSON.stringify(err));
+								// 	}
+								// });
+								var shootPicture = api.require("shootPicture");
+									 shootPicture.shoot(function(ret, err) {
+									//  api.alert({msg:ret.imagePath});
+									 $api.attr($api.dom("#img_id_z"), "src",ret.imagePath);
+									//  var trans = api.require('trans');
+									//  trans.decodeImgToBase64({
+									// 	 imgPath:ret.imagePath
+									//  }, function(msg, err) {
+									// 	 if(msg.status) {
+									// 		 //alert(JSON.stringify(ret));
+									// 		 id_z = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+									// 	 } else {
+									// 		//  alert(JSON.stringify(err));
+									// 	 }
+									//  });
+									dealImage(ret.imagePath,function(base){
+										id_z = base;
+									});
+								 });
+							}
+
+					});
+		});
+		$api.addEvt($api.dom('#img_id_f'), 'click', function() {
+					api.actionSheet({
+							title: '请选择',
+							cancelTitle: '取消',
+							buttons: ['相册','相机']
+					},function(ret,err){
+							if(ret.buttonIndex==1){
+								api.getPicture({
+									sourceType: 'album',
+									encodingType: 'jpg',
+									mediaValue: 'pic',
+									destinationType: 'base64',
+									allowEdit: false,
+									quality: 100,
+									targetWidth: 300,
+									targetHeight: 300,
+									saveToPhotoAlbum: false
+								}, function(ret, err) {
+									if (ret) {
+										if(ret.base64Data){
+											$api.attr($api.dom("#img_id_f"), "src",ret.base64Data);
+											id_f=ret.base64Data;
+										}
+									} else {
+										// alert(JSON.stringify(err));
+									}
+								});
+							}else if(ret.buttonIndex==2){
+								// api.getPicture({
+								// 	sourceType: 'camera',
+								// 	encodingType: 'jpg',
+								// 	mediaValue: 'pic',
+								// 	destinationType: 'base64',
+								// 	allowEdit: false,
+								// 	quality: 100,
+								// 	targetWidth: 300,
+								// 	targetHeight: 300,
+								// 	saveToPhotoAlbum: false
+								// }, function(ret, err) {
+								// 	if (ret) {
+								// 		if(ret.base64Data){
+								// 			$api.attr($api.dom("#img_id_f"), "src",ret.base64Data);
+								// 		}
+								// 		id_f=ret.base64Data;
+								// 	} else {
+								// 		alert(JSON.stringify(err));
+								// 	}
+								// });
+								var shootPicture = api.require("shootPicture");
+									 shootPicture.shoot(function(ret, err) {
+									//  api.alert({msg:ret.imagePath});
+									 $api.attr($api.dom("#img_id_f"), "src",ret.imagePath);
+									//  var trans = api.require('trans');
+									//  trans.decodeImgToBase64({
+									// 	 imgPath:ret.imagePath
+									//  }, function(msg, err) {
+									// 	 if(msg.status) {
+									// 		 //alert(JSON.stringify(ret));
+									// 		 id_f = "data:image/jpeg;base64," + JSON.stringify(msg.base64Str);
+									// 	 } else {
+									// 		//  alert(JSON.stringify(err));
+									// 	 }
+									//  });
+									dealImage(ret.imagePath,function(base){
+										id_f = base;
+									});
+								 });
+							}
+
+					});
+})
+
+		$api.addEvt($api.dom('#foot'), 'click', function() {
+
+if(id_z&&id_f){
+	api.showProgress({
+			title: '上传中...',
+			text: '先喝杯茶...',
+			modal: true
+		 });
+	$api.post(url+'app.php/addlorryB',{
+				body:{id_pic5:id_z,
+							id_pic6:id_f,
+							lorryid:lorryid,}
+			 },function(ret){
+api.hideProgress();
+				if(ret.result==0){
+
+					api.toast({
+						 msg: '添加车辆成功',
+						 duration: 1000,
+						location: 'middle'
+					});
+					// setTimeout("api.closeWin({name:'main'})",350);
+          setTimeout("api.closeWin({name:'addLorryB'})",650);
+          setTimeout("api.closeWin({name:'addLorryA'})",550);
+					api.openWin({name:'main',url: '../main.html',reload:true,});
+					$api.setStorage('yingxiang', 1);
+					// setTimeout("api.closeToWin({name:'main'})",550);
+				 }else{
+					 api.toast({
+							msg: ret.desc,
+							duration: 1000,
+						 location: 'middle'
+					 });
+				 }
+			 });
+}else{
+	api.toast({
+		 msg: "请上传图片",
+		 duration: 800,
+		location: 'middle'
+	});
+}
+		});
+}
+
+function dealImage(path, callback){
+	var img = new Image();
+	img.src = path;
+	img.onload = function(){
+			var w = this.width,
+					h = this.height;
+			var quality = 0.7;
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			canvas.setAttribute("width", w);
+			canvas.setAttribute("height", h);
+
+			ctx.drawImage(this, 0, 0, w, h);
+			var base64 = canvas.toDataURL('image/jpeg', quality);
+			callback(base64);
+	};
+};
+</script>
+
+</html>
