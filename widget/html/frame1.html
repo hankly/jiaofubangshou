@@ -18,29 +18,42 @@
 			}
       .body_ab{
       	float:left;
-				width:25%;
-				background-color: red;
-				height:100%;
+				width:20%;
+				background-color: #f16c3c;
+				height:40px;
 				text-align:center;
-				line-height:60px;
+				line-height:40px;
 				color:white;
+				margin-left:2.5%;
+				margin-right:2.5%;
+				margin-top:10px;
+				margin-bottom:10px;
+				border-radius:5px;
       }
 			.body_ac{
 				float:left;
 				width:50%;
-				background-color: yellow;
-				height:100%;
+				background-color: white;
+				height:40px;
 				text-align:center;
-				line-height:60px;
+				line-height:40px;
+				margin-top:10px;
+				margin-bottom:10px;
+				border-radius:5px;
 			}
 			.body_ad{
 				float:left;
-				width:25%;
-				background-color: blue;
-				height:100%;
+				width:20%;
+				background-color: gray;
+				height:40px;
 				text-align:center;
-				line-height:60px;
+				line-height:40px;
 				color: white;
+				margin-left:2.5%;
+				margin-right:2.5%;
+				margin-top:10px;
+				margin-bottom:10px;
+				border-radius:5px;
 			}
 			.foot_a{
 				position:relative;
@@ -103,7 +116,7 @@
 					}else{
 						$api.get(url+'app.php/getAppLorry?phone='+phone,function(ret){
 							for(var i=0;i<ret.app_lorrys.length;i++){
-                $api.append($api.dom('#bod'), '<div class="body_a"><div class="body_ac"><label><input type="radio" name="plate_number" id="c'+ret.app_lorrys[i].app_lorry_id+'"/><span>车牌号:'+ret.app_lorrys[i].plate_number+'</span></label></div><div class="body_ab" id="d'+ret.app_lorrys[i].app_lorry_id+'">查看</div><div class="body_ad" id="e'+ret.app_lorrys[i].app_lorry_id+'">删除</div></div>');
+                $api.append($api.dom('#bod'), '<div class="body_a"><div class="body_ac"><label><input type="radio" name="plate_number" id="c'+ret.app_lorrys[i].app_lorry_id+'"/><span>车牌号'+ret.app_lorrys[i].plate_number+'</span></label></div><div class="body_ab" id="d'+ret.app_lorrys[i].app_lorry_id+'">查看</div><div class="body_ad" id="e'+ret.app_lorrys[i].app_lorry_id+'">删除</div></div>');
 								var flag=ret.app_lorrys[i].flag;
 								$api.addEvt($api.dom('#c'+ret.app_lorrys[i].app_lorry_id),'click',function(){
 										var user = $api.getStorage('user');
@@ -122,6 +135,11 @@
 			 									user.flag=flag;
 			 									user.pass= password;
 			 									$api.setStorage(key, user);
+												api.toast({
+													 msg:ret1.plate_number+'为当前车辆',
+													 duration: 2000,
+													location: 'middle'
+												});
 											});
 								});
 								$api.addEvt($api.dom('#d'+ret.app_lorrys[i].app_lorry_id),'click',function(){
