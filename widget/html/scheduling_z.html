@@ -129,6 +129,10 @@ text-decoration:none;
                       location: 'middle'
                     });
                                   for(var i=0;i<ret.schedules.length;i++){
+                                    var name=ret.schedules[i].customer_name;
+                                    if(name.length>11){
+                                      name=name.substring(0,11)+'...';
+                                    }
                                     $api.append($api.dom('body'),'<div class="scheduling_a" id="c'+ret.schedules[i].scheduling_id+'">'+
                                                    '<div class="scheduling_a_id_a" id="d'+ret.schedules[i].scheduling_id+'">'+
                                                       '<div class="scheduling_id" id="e'+ret.schedules[i].scheduling_id+'">'+
@@ -139,7 +143,7 @@ text-decoration:none;
                                                       '<img src="../image/arrows.png" style="width:10%;"/>'+
                                                       '<span>'+ret.schedules[i].receivecity+'</span>'+
                                                       '</div>'+
-                                                      '<div class="scheduling_name" id="g'+ret.schedules[i].scheduling_id+'">'+"收货单位/人："+ret.schedules[i].customer_name+'</div>'+
+                                                      '<div class="scheduling_name" id="g'+ret.schedules[i].scheduling_id+'">'+"收货单位/人："+name+'</div>'+
                                                       '<div class="scheduling_phone">'+"联系电话："+ret.schedules[i].customer_phone+'<a href="tel:'+ret.schedules[i].customer_phone+'" class="contact">联系Ta</a></div>'+
                                                       '<div class="scheduling_address" id="h'+ret.schedules[i].scheduling_id+'">'+"地址："+ret.schedules[i].address+'</div>'+
                                                       '<div class="scheduling_line"></div>'+

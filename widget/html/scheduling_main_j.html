@@ -169,6 +169,8 @@ $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
               },'json');
   var name=$api.text($api.dom("#foot_sure_c"));
   var bMap = api.require('bMap');
+  bMap.getLocationServices(function(ret2, err) {
+  if (ret2.enable) {
   bMap.getLocation({
       accuracy: '10m',
       autoStop: true,
@@ -194,6 +196,16 @@ $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
 
       }
   });
+}else{
+  alert("您现在有待交付清单,司机还在运送中,请开启定位");
+  var mySettingInfo = api.require('mySettingInfo');
+  mySettingInfo.settingInt({
+  'index': 2
+  }, function(ret, err) {
+  alert(JSON.stringify(ret));
+  });
+}
+});
 
   if(is_true==0){
   if(leng!=0){

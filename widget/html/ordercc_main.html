@@ -210,6 +210,7 @@ function funActionSheet(){
     buttons: ['事故出险']
 }, function(ret, err) {
     var index = ret.buttonIndex;
+
     if(index==1){
       api.confirm({
         title: '事故出险',
@@ -218,8 +219,9 @@ function funActionSheet(){
     }, function(ret, err) {
         var index = ret.buttonIndex;
         if(index==1){
-
                var bMap = api.require('bMap');
+               bMap.getLocationServices(function(ret2, err) {
+               if (ret2.enable) {
                bMap.getLocation({
                    accuracy: '100m',
                    autoStop: true,
@@ -230,7 +232,7 @@ function funActionSheet(){
                       body:{
                            lorryid:lorry_id,
                            longitude:msg.lon,
-                           latitude:msg.lat,
+                           latitude:msg.lat
                            }
                       },function(ret){
                         if(ret.result==0){
@@ -257,7 +259,16 @@ function funActionSheet(){
 
                    }
                });
-
+}else{
+  alert("您现在有待交付清单,司机还在运送中,请开启定位");
+  var mySettingInfo = api.require('mySettingInfo');
+  mySettingInfo.settingInt({
+  'index': 2
+  }, function(ret, err) {
+  alert(JSON.stringify(ret));
+  });
+}
+});
 
        }
     });

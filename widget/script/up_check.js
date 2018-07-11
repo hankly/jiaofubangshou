@@ -55,3 +55,33 @@ var check=function(id,time){
 //     api.toLauncher();
 // });
 // }
+
+var check_map=function(){
+  var bMap = api.require('bMap');
+			bMap.getLocation({
+				accuracy: '10m',
+				autoStop: true,
+				filter: 1
+			}, function(ret, err) {
+				if(ret.status) {
+				} else {
+					bMap.getLocationServices(function(ret, err) {
+						if(ret.enable) {
+						} else {
+							var con;
+							con = confirm("app需要获取定位才能使用，请确认开启定位");
+							if(con == true) {
+								var mySettingInfo = api.require('mySettingInfo');
+								mySettingInfo.settingInt({
+									'index': 2
+								}, function(ret, err) {
+									alert(JSON.stringify(ret));
+								});
+							} else {
+								window.location.href = "first.html";
+							}
+						}
+					});
+				}
+			});
+}
