@@ -103,7 +103,11 @@
 							 });
 							//  alert(ret.orderCosts.length)
                              for(var i=0;i<ret.orderCosts.length;i++){
-                               $api.append($api.dom('#tb3'),'<tr><td>'+ret.orderCosts[i].order_id+'</td><td>'+ret.orderCosts[i].order_cost+'元</td></tr>');
+															 var collectcost=ret.orderCosts[i].collect_cost;
+															 if(!collectcost){
+																 collectcost=ret.orderCosts[i].order_cost;
+															 }
+                               $api.append($api.dom('#tb3'),'<tr><td>'+ret.orderCosts[i].order_id+'</td><td>'+collectcost+'元</td></tr>');
                              }
 														//  alert(ret.orderCosts.length)
                             }else{
