@@ -54,22 +54,22 @@
           border-radius:10px;
 
         }*/
-        #foot_a>div{
+        /*#foot_a>div{
           float:left;
           width:45%;
           /*padding-left:2.5%;*/
           /*padding-right:2.5%;*/
-          text-align: center;
+          /*text-align: center;
           background-color:#f16c3c;
           border-radius:10px;
           height:40px;
           line-height:40px;
           color:white;
-        }
+        }*/
         .foot_sure_c{
-          margin-right:10%;
+          margin:10%;
         }
-        .foot_sure{
+        .foot_sure,.foot_sure_cp{
           width:100%;
           text-align: center;
           background-color:#f16c3c;
@@ -113,8 +113,9 @@
         <div id="foot_a">
             <!-- <span class="foot_sure" id="foot_sure_c">物流公司收货</span>
             <span class="foot_cancle" id="foot_sure_p">收货人签收</span> -->
-            <div class="foot_sure_c" id="foot_sure_c">物流公司收货</div>
-            <div class="foot_sure_p" id="foot_sure_p">收货人签收</div>
+            <!-- <div class="foot_sure_c" id="foot_sure_c">物流公司收货</div>
+            <div class="foot_sure_p" id="foot_sure_p">收货人签收</div> -->
+            <div class="foot_sure_cp" id="foot_sure_cp">去签收</div>
         </div>
         <div id="foot_b">
             <div class="foot_sure" id="foot_cancle_s">申请退单</div>
@@ -127,7 +128,7 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <!-- <script type="text/javascript" src="../script/up_check.js"></script> -->
 <script type="text/javascript">
-var leng;
+var leng,typenumber;
 var is_true;
 var aaa;
     apiready = function(){
@@ -142,6 +143,14 @@ var aaa;
       // $api.text($api.dom("#title"),api.pageParam.name);
       var scheduling_id=api.pageParam.scheduling_id;
       check_company(scheduling_id);
+      $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+               leng=ret.result;
+               typenumber=ret.type;
+            },'json');
+
+            $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+                     is_true=ret.result;
+                  },'json');
        setInterval('chaxun("'+scheduling_id+'")',1000);
         api.openFrame({
             name: 'scheduling_waitsend',
@@ -162,6 +171,7 @@ var aaa;
 $api.addEvt($api.dom("#foot_sure_c"), 'click', function(){
   $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
            leng=ret.result;
+           typenumber=ret.type;
         },'json');
 
         $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
@@ -477,6 +487,120 @@ $api.addEvt($api.dom("#foot_cancle_g"),'click',function(){
 
 });
 
+
+
+$api.addEvt($api.dom("#foot_sure_cp"), 'click', function(){
+  $api.get(url+'app.php/getOrderCosts?scheduling_id='+scheduling_id,function(ret){
+           leng=ret.result;
+           typenumber=ret.type;
+        },'json');
+        $api.get(url+'app.php/schedule_on?scheduling_id='+scheduling_id,function(ret){
+                 is_true=ret.result;
+              },'json');
+  var name=$api.text($api.dom("#foot_sure_c"));
+  var bMap = api.require('bMap');
+  bMap.getLocationServices(function(ret2, err) {
+  if (ret2.enable) {
+  bMap.getLocation({
+      accuracy: '10m',
+      autoStop: true,
+      filter: 1
+  }, function(ret, err) {
+      if (ret.status) {
+        $api.post(url+'app.php/last_map',{
+         body:{
+              schedule_id:scheduling_id,
+              longitude:ret.lon,
+              latitude:ret.lat,
+              }
+         },function(ret){
+          //  api.toast({
+          //     msg: ret.desc,
+          //     duration: 1000,
+          //    location: 'middle'
+          //  });
+       },'json');
+
+      } else {
+          // alert(err.code);
+
+      }
+  });
+}else{
+  alert("您现在有待交付清单,司机还在运送中,请开启定位");
+  var mySettingInfo = api.require('mySettingInfo');
+  mySettingInfo.settingInt({
+  'index': 2
+  }, function(ret, err) {
+  alert(JSON.stringify(ret));
+  });
+}
+});
+
+  if(is_true==0){
+    if(typenumber==1){
+      if(leng!=0){
+        api.openWin({
+            name: 'select_delivery',
+            url: './select_delivery.html',
+            pageParam: {
+                scheduling_id: scheduling_id,
+                is_wuliu:1,
+           }
+        });
+      }else{
+        api.openWin({
+          name:'warn',
+          url:'./warn.html',
+          pageParam:{
+            scheduling_id: scheduling_id,
+            apptype:1,
+            is_wuliu:1,
+          }
+        });
+      }
+    }else{
+        if(leng!=0){
+          api.openWin({
+              name: 'signmain',
+              url: './signmain.html',
+              slidBackEnabled:false,
+              pageParam: {
+                  scheduling_id: scheduling_id,
+                  is_wuliu:2,
+             }
+          });
+        }else{
+          api.openWin({
+            name:'warn',
+            url:'./warn.html',
+            pageParam:{
+              scheduling_id: scheduling_id,
+              apptype:2,
+              is_wuliu:2,
+            }
+          });
+        }
+
+
+}
+}else{
+  api.toast({
+          msg :'请物流公司确认',
+          duration : 2000,
+          location : 'middle'
+  });
+}
+
+  // api.openWin({
+  //     name: 'select_delivery',
+  //     url: './select_delivery.html',
+  //     pageParam: {
+  //         scheduling_id: scheduling_id,
+  //    }
+  // });
+
+});
 }
 var upload_map=function(id){
   // alert(1)
@@ -549,4 +673,6 @@ function check_company(scheduling_id){
        }
      },'json');
 }
+
+
 </script>

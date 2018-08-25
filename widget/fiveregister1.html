@@ -156,13 +156,6 @@
 												 duration: 1000,
 												location: 'middle'
 											});
-										}else if(!(/^((0\d{2,3}-\d{7,8})|(1[35784]\d{9}))$/.test(mobile))){
-											api.toast({
-												 msg: '手机号码不正确',
-												 duration: 1000,
-												location: 'middle'
-											});
-
 										}else if(password.length<6||password.length>20){
 												api.toast({
 													 msg: '密码为6~20位',
